@@ -3,24 +3,110 @@
 <mapper namespace="edu.dgut.networkengin2018_2.wechat_mall.dao.GoodsAttrMapper">
     <resultMap id="BaseResultMap" type="edu.dgut.networkengin2018_2.wechat_mall.entity.Goodsattr">
         <id column="attr_id" jdbcType="INTEGER" property="attrId"/>
-        <result column="user_name" jdbcType="VARCHAR" property="attrName"/>
-        <result column="user_email_code" jdbcType="VARCHAR" property="attrPrice"/>
-        <result column="user_is_active" jdbcType="VARCHAR" property="attrSel"/>
-        <result column="user_sex" jdbcType="VARCHAR" property="attrValue"/>
-        <result column="user_qq" jdbcType="VARCHAR" property="attrWrite"/>
+        <result column="attr_name" jdbcType="VARCHAR" property="attrName"/>
+        <result column="attr_price" jdbcType="DECIMAL" property="attrPrice"/>
+        <result column="attr_sel" jdbcType="VARCHAR" property="attrSel"/>
+        <result column="attr_value" jdbcType="VARCHAR" property="attrValue"/>
+        <result column="attr_write" jdbcType="VARCHAR" property="attrWrite"/>
 
 
     </resultMap>
-    <insert id="insert"></insert>
+    <sql id="BaseColumnList">
+attr_id,attr_name,attr_price,attr_sel,attr_value,attr_write
+    </sql>
 
-    <update id="updateByPrimaryKey"></update>
+    <sql id="goodsattrColumns">
+        <trim suffixOverrides=",">
+            <if test="attrName != null">attr_name,</if>
+            <if test="attrPrice != null">attr_price,</if>
+            <if test="attrSel != null">attr_sel,</if>
+            <if test="attrValue != null">attr_value,</if>
+            <if test="attrWrite!= null">attr_write,</if>
+        </trim>
+    </sql>
 
-    <delete id="deleteByPrimaryKey"></delete>
+    <sql id="goodsattrValues">
+        <trim suffixOverrides=",">
+            <if test="attrName != null">#{attrName},</if>
+            <if test="attrPrice != null">#{attrPrice},</if>
+            <if test="attrSel != null">#{attrSel},</if>
+            <if test="attrValue != null">#{attrValue},</if>
+            <if test="attrWrite!= null">#{attrWrite},</if>
+        </trim>
+    </sql>
 
-    <select id="getAllList" resultType="edu.dgut.networkengin2018_2.wechat_mall.entity.Goodsattr"></select>
+    <insert id="insert" useGeneratedKeys="true" keyProperty="attrId">
+        insert into tb_goods_attr (<include refid="goodsattrColumns"/>) values (<include refid="goodsattrValues"/>)
+    </insert>
 
-    <select id="selectByPrimaryKey" resultType="edu.dgut.networkengin2018_2.wechat_mall.entity.Goodsattr"></select>
+    <update id="updateByPrimaryKey" parameterType="edu.dgut.networkengin2018_2.wechat_mall.entity.Goodsattr">
+        update tb_goods
+        <set>
+            <if test="attrName != null">
+                attr_name = #{attrName},
+            </if>
+            <if test="attrPrice != null">
+                attr_price = #{attrPrice},
+            </if>
+            <if test="attrSel != null">
+                attr_sel = #{attrSel},
+            </if>
+            <if test="attrValue != null">
+                attr_value = #{attrValue},
+            </if>
+            <if test="attrWrite!= null">
+                attr_write = #{attrWrite},
+            </if>
 
-    <select id="findUsersList" resultType="edu.dgut.networkengin2018_2.wechat_mall.entity.Goodsattr"></select>
+        </set>
+        where goods_id = #{goodsId}
+    </update>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+                delete
+        from tb_goods_attr
+        where attr_id = #{attrId}
+    </delete>
+
+    <select id="getAllList" resultMap="BaseResultMap">
+            select *
+        from tb_goods_attr
+    </select>
+
+    <select id="findUsersList" resultMap="BaseResultMap" parameterType="java.util.Map">
+        select
+        <include refid="BaseColumnList"/>
+        from tb_goods_attr
+        <where>
+            <if test="attrName !=null and attrName!=''">
+                and attrName like CONCAT ('%','#{attrName}')
+            </if>
+            <if test="keyword!=null and keyword!=''">
+                and (attr_name like CONCAT('%',#{keyword},'%') or attr_write like CONCAT('%',#{keyword},'%'))
+            </if>
+            <if test="attrPrice !=null and attrPrice!=''">
+                and attr_price #{attrPrice}
+            </if>
+            <if test="startTime != null and startTime.trim() != ''">
+                and create_time &gt; #{startTime}
+            </if>
+            <if test="endTime != null and endTime.trim() != ''">
+                and create_time &lt; #{endTime}
+            </if>
+        </where>
+        order by attr_id desc
+        /*分页查询*/
+        <if test="start != null and limit != null">
+            limit #{start},#{limit}
+        </if>
+    </select>
+
+
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap">
+                select *
+        from tb_goods_attr
+        where attr_id = #{attrId}
+    </select>
+
 
 </mapper>

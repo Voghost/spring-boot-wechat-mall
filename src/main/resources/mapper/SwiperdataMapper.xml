@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="edu.dgut.networkengin2018_2.wechat_mall.dao.SwiperdataMapper">
+    <resultMap id="BaseResultMap" type="edu.dgut.networkengin2018_2.wechat_mall.entity.Swiperdata">
+        <id column="swiper_id" jdbcType="INTEGER" property="swiperId"/>
+        <result column="image_src" jdbcType="VARCHAR" property="imageSrc"/>
+        <result column="open_type" jdbcType="DECIMAL" property="openType"/>
+        <result column="goods_id" jdbcType="INTEGER" property="goodsId"/>
+        <result column="navigator_url" jdbcType="VARCHAR" property="navigatorUrl"/>
+    </resultMap>
+
+    <!--相当于一个常量，后面可以引用-->
+    <sql id="BaseColumnList">
+        swiper_id,
+        image_src,open_type,goods_id,navigator_url
+    </sql>
+
+
+    <sql id="swiperdataColumns">
+        <trim suffixOverrides=",">
+            <if test="swiperId != null">swiper_id,</if>
+            <if test="imageSrc != null">image_src,</if>
+            <if test="openType != null">open_type,</if>
+            <if test="goodsId != null">goods_id,</if>
+            <if test="navigatorUrl!= null">navigator_url,</if>
+        </trim>
+    </sql>
+
+    <sql id="swiperdataValues">
+        <trim suffixOverrides=",">
+            <if test="swiperId != null">#{swiperId},</if>
+            <if test="imageSrc != null">#{imageSrc},</if>
+            <if test="openType != null">#{openType},</if>
+            <if test="goodsId != null">#{goodsId},</if>
+            <if test="navigatorUrl!= null">#{navigatorUrl},</if>
+        </trim>
+    </sql>
+
+    <insert id="insert" useGeneratedKeys="true" keyProperty="swiperId">
+        insert into tb_swiperdata (<include refid="swiperdataColumns"/>) values (<include refid="swiperdataValues"/>)
+    </insert>
+
+    <!--更新-->
+    <update id="updateByPrimaryKey" parameterType="edu.dgut.networkengin2018_2.wechat_mall.entity.Swiperdata">
+        update tb_swiperdata
+        <set>
+            <if test="imageSrc != null">
+                image_src = #{imageSrc},
+            </if>
+            <if test="openType != null">
+                open_type = #{openType},
+            </if>
+            <if test="goodsId != null">
+                goods_id = #{goodsId},
+            </if>
+            <if test="navigatorUrl != null">
+                navigator_url = #{navigatorUrl},
+            </if>
+        </set>
+        where swiper_id = #{swiperId}
+    </update>
+
+    <!--删除 通过主键-->
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+        delete
+        from tb_swiperdata
+        where swiper_id = #{swiperId}
+    </delete>
+
+    <!--获得所有列表-->
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap">
+        select *
+        from tb_swiperdata
+        where swiper_id = #{swiperId}
+    </select>
+
+    <!--通过 主键查找商品-->
+    <select id="getAllList" resultMap="BaseResultMap">
+        select *
+        from tb_swiperdata
+    </select>
+
+    <!--通过参数(map)<分页>查询-->
+    <select id="findSwiperdataList" parameterType="java.util.Map" resultMap="BaseResultMap">
+        select
+        <include refid="BaseColumnList"/>
+        from tb_swiperdata
+        <where>
+        </where>
+        order by goods_id desc
+        /*分页查询*/
+        <if test="start != null and limit != null">
+            limit #{start},#{limit}
+        </if>
+    </select>
+
+
+</mapper>

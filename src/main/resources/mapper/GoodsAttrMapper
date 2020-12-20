@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="edu.dgut.networkengin2018_2.wechat_mall.dao.GoodsAttrMapper">
+    <resultMap id="BaseResultMap" type="edu.dgut.networkengin2018_2.wechat_mall.entity.Goodsattr">
+        <id column="attr_id" jdbcType="INTEGER" property="attrId"/>
+        <result column="user_name" jdbcType="VARCHAR" property="attrName"/>
+        <result column="user_email_code" jdbcType="VARCHAR" property="attrPrice"/>
+        <result column="user_is_active" jdbcType="VARCHAR" property="attrSel"/>
+        <result column="user_sex" jdbcType="VARCHAR" property="attrValue"/>
+        <result column="user_qq" jdbcType="VARCHAR" property="attrWrite"/>
+
+
+    </resultMap>
+    <insert id="insert"></insert>
+
+    <update id="updateByPrimaryKey"></update>
+
+    <delete id="deleteByPrimaryKey"></delete>
+
+    <select id="getAllList" resultType="edu.dgut.networkengin2018_2.wechat_mall.entity.Goodsattr"></select>
+
+    <select id="selectByPrimaryKey" resultType="edu.dgut.networkengin2018_2.wechat_mall.entity.Goodsattr"></select>
+
+    <select id="findUsersList" resultType="edu.dgut.networkengin2018_2.wechat_mall.entity.Goodsattr"></select>
+
+</mapper>

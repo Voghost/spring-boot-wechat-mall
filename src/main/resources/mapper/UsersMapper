@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="edu.dgut.networkengin2018_2.wechat_mall.dao.UsersMapper">
+    <resultMap id="BaseResultMap" type="edu.dgut.networkengin2018_2.wechat_mall.entity.Users">
+        <id column="user_id" jdbcType="INTEGER" property="userId"/>
+        <result column="user_name" jdbcType="VARCHAR" property="userName"/>
+        <result column="user_email_code" jdbcType="VARCHAR" property="userEmailCode"/>
+        <result column="user_is_active" jdbcType="VARCHAR" property="userIsActive"/>
+        <result column="user_sex" jdbcType="VARCHAR" property="userSex"/>
+        <result column="user_qq" jdbcType="VARCHAR" property="userQQ"/>
+        <result column="user_tel" jdbcType="VARCHAR" property="userTel"/>
+        <result column="user_xueli" jdbcType="VARCHAR" property="userXueli"/>
+        <result column="user_hobby" jdbcType="VARCHAR" property="userHobby"/>
+        <result column="user_introduce" jdbcType="VARCHAR" property="userIntroduce"/>
+        <result column="user_create_time" jdbcType="DATETIME" property="userCreateTime"/>
+        <result column="user_token" jdbcType="VARCHAR" property="userToken"/>
+
+    </resultMap>
+    <sql id="BaseColumnList">
+user_id,user_name,user_email_code,user_is_active,user_sex,user_qq,user_tel,user_xueli,user_hobby,user_introduce,user_create_time,user_token
+    </sql>
+
+    <sql id="userColumns">
+        <trim suffixOverrides=",">
+            <if test="userName != null">user_name,</if>
+            <if test="userEmailCode != null">user_email_code,</if>
+            <if test="userIsActive != null">user_is_active,</if>
+            <if test="userSex != null">user_sex,</if>
+            <if test="userQQ!= null">user_qq,</if>
+            <if test="userTel != null">user_tel,</if>
+            <if test="userXueli != null">user_xueli,</if>
+            <if test="userHobby != null">user_hobby,</if>
+            <if test="userIntroduce != null">user_introduce,</if>
+            <if test="userCreateTime != null">user_create_time,</if>
+            <if test="userToken != null">user_token,</if>
+        </trim>
+    </sql>
+
+    <sql id="userValues">
+        <trim suffixOverrides=",">
+            <if test="userName != null">#{userName},</if>
+            <if test="userEmailCode != null">#{userEmailCode},</if>
+            <if test="userIsActive != null">#{userIsActive},</if>
+            <if test="userSex != null">#{userSex},</if>
+            <if test="userQQ!= null">#{userQQ},</if>
+            <if test="userTel != null">#{userTel},</if>
+            <if test="userXueli != null">#{userXueli},</if>
+            <if test="userHobby != null">#{userHobby},</if>
+            <if test="userIntroduce != null">#{userIntroduce},</if>
+            <if test="userCreateTime != null">#{userCreateTime},</if>
+            <if test="userToken != null">#{userToken},</if>
+        </trim>
+    </sql>
+
+    <insert id="insert" useGeneratedKeys="true" keyProperty="userId">
+        insert into tb_users (<include refid="userColumns"/>) values (<include refid="userValues"/>)
+    </insert>
+
+    <update id="updateByPrimaryKey" parameterType="edu.dgut.networkengin2018_2.wechat_mall.entity.Users">
+        update tb_users
+        <set>
+            <if test="userName != null">
+                user_name = #{userName},
+            </if>
+            <if test="userEmailCode != null">
+                user_email_code = #{userEmailCode},
+            </if>
+            <if test="userIsActive != null">
+                user_is_active = #{userIsActive},
+            </if>
+            <if test="userSex != null">
+               user_sex = #{userSex},
+            </if>
+            <if test="userQQ!= null">
+                user_qq = #{userQQ},
+            </if>
+            <if test="userTel != null">
+                user_tel = #{userTel},
+            </if>
+            <if test="userXueli != null">
+                user_xueli = #{userXueli},
+            </if>
+            <if test="userHobby != null">
+                user_hobby = #{userHobby},
+            </if>
+            <if test="userIntroduce != null">
+                user_introduce = #{userIntroduce},
+            </if>
+            <if test="userCreateTime != null">
+                user_create_time = #{userCreateTime},
+            </if>
+            <if test="userToken != null">
+                user_token = #{userToken},
+            </if>
+
+        </set>
+        where user_id = #{userId}
+    </update>
+
+    <delete id="deleteByPrimaryKey"  parameterType="java.lang.Integer">
+                delete
+        from tb_users
+        where user_id = #{userId}
+    </delete>
+
+    <select id="getAllList" resultMap="BaseResultMap">
+                select *
+        from tb_users
+        where user_id = #{userId}
+    </select>
+
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap">
+                select *
+        from tb_users
+    </select>
+
+    <select id="findUsersList" resultMap="BaseResultMap" parameterType="java.util.Map">
+        select
+        <include refid="BaseColumnList"/>
+        from tb_goods
+        <where>
+            <if test="userName !=null and userName!=''">
+                and user_name like CONCAT ('%','#{userName}')
+            </if>
+            <if test="keyword!=null and keyword!=''">
+                and (user_name like CONCAT('%',#{keyword},'%') or goods_introduce like CONCAT('%',#{keyword},'%'))
+            </if>
+            <if test="userEmailCode !=null and userEmailCode!=''">
+                and user_email_code #{userEmailCode}
+            </if>
+            <if test="startTime != null and startTime.trim() != ''">
+                and create_time &gt; #{startTime}
+            </if>
+            <if test="endTime != null and endTime.trim() != ''">
+                and create_time &lt; #{endTime}
+            </if>
+        </where>
+        order by user_id desc
+        /*分页查询*/
+        <if test="start != null and limit != null">
+            limit #{start},#{limit}
+        </if>
+    </select>
+
+</mapper>

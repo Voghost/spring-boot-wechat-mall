@@ -21,6 +21,11 @@ public class GoodsServiceImpl implements GoodsService {
      */
     @Override
     public List<Goods> getAllGoods() {
-        return goodsMapper.getAllGoodsList();
+        return goodsMapper.getAllList();
+    }
+
+    @Override
+    public int insertGoods(Goods goods) {
+        return goodsMapper.insert(goods);
     }
 }

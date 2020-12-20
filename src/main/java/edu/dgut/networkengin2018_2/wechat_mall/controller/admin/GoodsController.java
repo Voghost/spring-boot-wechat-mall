@@ -23,7 +23,7 @@ public class GoodsController {
     private Map<String,Object> listGoods(){
         Map<String,Object> modelMap = new HashMap<>();
         List<Goods> list= goodsService.getAllGoods();
-        modelMap.put("areaList",list);
+        modelMap.put("goodsList",list);
         return modelMap;
     }
 }

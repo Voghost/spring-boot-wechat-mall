@@ -15,18 +15,180 @@
         <result column="goods_add_time" jdbcType="TIMESTAMP" property="goodsAddTime"/>
         <result column="goods_upd_time" jdbcType="TIMESTAMP" property="goodsUpdateTime"/>
         <result column="goods_delete_time" jdbcType="TIMESTAMP" property="goodsDeleteTime"/>
-        <result column="goods_delete_time" jdbcType="TIMESTAMP" property="goodsDeleteTime"/>
+        <!--        <result column="goods_delete_time" jdbcType="TIMESTAMP" property="goodsDeleteTime"/>-->
         <result column="goods_hot_number" jdbcType="INTEGER" property="goodsHotNumber"/>
         <result column="goods_is_promote" jdbcType="BIT" property="goodsIsPromote"/>
         <result column="goods_cat_one_id" jdbcType="INTEGER" property="goodsCatOneId"/>
         <result column="goods_cat_two_id" jdbcType="INTEGER" property="goodsCatTwoId"/>
         <result column="goods_cat_three_id" jdbcType="INTEGER" property="goodsCatThreeId"/>
-
-
-
-
     </resultMap>
-    <select id="getAllGoodsList" resultMap="BaseResultMap">
-        select * from tb_goods
+
+    <!--相当于一个常量，后面可以引用-->
+    <sql id="BaseColumnList">
+        goods_id
+        ,goods_name, goods_price, goods_number, goods_weight, goods_introduce, goods_big_logo,goods_small_logo, goods_state,
+        goods_add_time, goods_add_time, goods_upd_time,goods_delete_time, goods_hot_number, goods_is_promote,
+        goods_cat_one_id, goods_cat_two_id,goods_cat_three_id
+    </sql>
+
+
+    <sql id="goodsColumns">
+        <trim suffixOverrides=",">
+            <if test="goodsName != null">goods_name,</if>
+            <if test="goodsPrice != null">goods_price,</if>
+            <if test="goodsNumber != null">goods_number,</if>
+            <if test="goodsWeight != null">goods_weight,</if>
+            <if test="goodsIntroduce!= null">goods_introduce,</if>
+            <if test="goodsBigLogo != null">goods_big_logo,</if>
+            <if test="goodsSmallLogo != null">goods_small_logo,</if>
+            <if test="goodsState != null">goods_state,</if>
+            <if test="goodsAddTime != null">goods_add_time,</if>
+            <if test="goodsUpdateTime != null">goods_upd_time,</if>
+            <if test="goodsDeleteTime != null">goods_delete_time,</if>
+            <if test="goodsHotNumber != null">goods_hot_number,</if>
+            <if test="goodsIsPromote != null">goods_is_promote,</if>
+            <if test="goodsCatOneId != null">goods_cat_one_id,</if>
+            <if test="goodsCatTwoId != null">goods_cat_two_id,</if>
+            <if test="goodsCatThreeId != null">goods_cat_three_id</if>
+        </trim>
+    </sql>
+
+    <sql id="goodsValues">
+        <trim suffixOverrides=",">
+            <if test="goodsName != null">#{goodsName},</if>
+            <if test="goodsPrice != null">#{goodsPrice},</if>
+            <if test="goodsNumber != null">#{goodsNumber},</if>
+            <if test="goodsWeight != null">#{goodsWeight},</if>
+            <if test="goodsIntroduce!= null">#{goodsIntroduce},</if>
+            <if test="goodsBigLogo != null">#{goodsBigLogo},</if>
+            <if test="goodsSmallLogo != null">#{goodsSmallLogo},</if>
+            <if test="goodsState != null">#{goodsState},</if>
+            <if test="goodsAddTime != null">#{goodsAddTime},</if>
+            <if test="goodsUpdateTime != null">#{goodsUpdateTime},</if>
+            <if test="goodsDeleteTime != null">#{goodsDeleteTime},</if>
+            <if test="goodsHotNumber != null">#{goodsHotNumber},</if>
+            <if test="goodsIsPromote != null">#{goodsIsPromote},</if>
+            <if test="goodsCatOneId != null">#{goodsCatOneId},</if>
+            <if test="goodsCatTwoId != null">#{goodsCatTwoId},</if>
+            <if test="goodsCatThreeId != null">#{goodsCatThreeId}</if>
+        </trim>
+    </sql>
+
+    <!--插入
+        userGeneratedKeys:返回的主键存入传入的实体里
+        insert into tb_goods (goods_name, goods_price, goods_number, goods_weight, goods_introduce, goods_big_logo,
+                              goods_small_logo, goods_state, goods_add_time, goods_upd_time,
+                              goods_delete_time, goods_hot_number, goods_is_promote, goods_cat_one_id, goods_cat_two_id,
+                              goods_cat_three_id)
+        values (#{goodsName}, #{goodsPrice}, #{goodsNumber}, #{goodsWeight}, #{goodsIntroduce}, #{goodsBigLogo},
+                #{goodsSmallLogo}, #{goodsState}, #{goodsAddTime}, #{goodsUpdateTime}, #{goodsDeleteTime},
+                #{goodsHotNumber}, #{goodsIsPromote}, #{goodsCatOneId}, #{goodsCatTwoId}, #{goodsCatThreeId})
+    -->
+    <insert id="insert" useGeneratedKeys="true" keyProperty="goodsId">
+        insert into tb_goods (<include refid="goodsColumns"/>) values (<include refid="goodsValues"/>)
+    </insert>
+
+    <!--更新-->
+    <update id="updateByPrimaryKey" parameterType="edu.dgut.networkengin2018_2.wechat_mall.entity.Goods">
+        update tb_goods
+        <set>
+            <if test="goodsName != null">
+                goods_name = #{goodsName},
+            </if>
+            <if test="goodsPrice != null">
+                goods_price = #{goodsPrice},
+            </if>
+            <if test="goodsNumber != null">
+                goods_number = #{goodsNumber},
+            </if>
+            <if test="goodsWeight != null">
+                goods_weight = #{goodsWeight},
+            </if>
+            <if test="goodsIntroduce!= null">
+                goods_introduce = #{goodsIntroduce},
+            </if>
+            <if test="goodsBigLogo != null">
+                goods_big_logo = #{goodsBigLogo},
+            </if>
+            <if test="goodsSmallLogo != null">
+                goods_small_logo = #{goodsSmallLogo},
+            </if>
+            <if test="goodsState != null">
+                goods_state = #{goodsState},
+            </if>
+            <if test="goodsUpdateTime != null">
+                goods_upd_time = #{goodsUpdateTime},
+            </if>
+            <if test="goodsDeleteTime != null">
+                goods_delete_time = #{goodsDeleteTime},
+            </if>
+            <if test="goodsHotNumber != null">
+                goodsHotNumber = #{goodsHotNumber},
+            </if>
+            <if test="goodsIsPromote != null">
+                goods_is_promote = #{goodsIsPromote},
+            </if>
+            <if test="goodsCatOneId != null">
+                goods_cat_one_id = #{goodsCatOneId},
+            </if>
+            <if test="goodsCatTwoId != null">
+                goods_cat_two_id = #{goodsCatTwoId},
+            </if>
+            <if test="goodsCatThreeId != null">
+                goods_cat_three_id = #{goodsCatThreeId},
+            </if>
+        </set>
+            where goods_id = #{goodsId}
+    </update>
+
+    <!--删除 通过主键-->
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+        delete
+        from tb_goods
+        where goods_id = #{goodsId}
+    </delete>
+
+    <!--获得所有列表-->
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap">
+        select *
+        from tb_goods
+        where goods_id = #{goodsId}
     </select>
+
+    <!--通过 主键查找商品-->
+    <select id="getAllList" resultMap="BaseResultMap">
+        select *
+        from tb_goods
+    </select>
+
+    <!--通过参数(map)<分页>查询-->
+    <select id="findGoodsList" parameterType="java.util.Map" resultMap="BaseResultMap">
+        select
+        <include refid="BaseColumnList"/>
+        from tb_goods
+        <where>
+            <if test="goodsName !=null and goodsName!=''">
+                and goods_name like CONCAT ('%','#{goodsName}')
+            </if>
+            <if test="keyword!=null and keyword!=''">
+                and (goods_name like CONCAT('%',#{keyword},'%') or goods_introduce like CONCAT('%',#{keyword},'%'))
+            </if>
+            <if test="goodsState !=null and goodsState!=''">
+                and goods_state #{goodsState}
+            </if>
+            <if test="startTime != null and startTime.trim() != ''">
+                and create_time &gt; #{startTime}
+            </if>
+            <if test="endTime != null and endTime.trim() != ''">
+                and create_time &lt; #{endTime}
+            </if>
+        </where>
+        order by goods_id desc
+        /*分页查询*/
+        <if test="start != null and limit != null">
+            limit #{start},#{limit}
+        </if>
+    </select>
+
+
 </mapper>

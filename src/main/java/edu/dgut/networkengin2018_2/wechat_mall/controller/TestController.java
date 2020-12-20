@@ -23,7 +23,7 @@ public class TestController {
      */
     @GetMapping({"", "/", "/index", "/index.html"})
     public String index(HttpServletRequest request) {
-        request.setAttribute("path", "index");
+        request.setAttribute("path", "indexx");
         return "admin/index";
     }
 

@@ -21,6 +21,7 @@ public class Goods {
     private Integer goodsId;            //商品id
     private String goodsName;           //商品名称
     private Double goodsPrice;          //商品价格 取两位小数解决精度问题
+    private int goodsNumber;            //商品数量
     private Double goodsWeight;         //商品重量 取两位小数
     private String goodsIntroduce;      //商品介绍
     private String goodsBigLogo;        //商品大logo : url

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="edu.dgut.networkengin2018_2.wechat_mall.dao.GoodsMapper">
+    <resultMap id="BaseResultMap" type="edu.dgut.networkengin2018_2.wechat_mall.entity.Goods">
+        <id column="goods_id" jdbcType="INTEGER" property="goodsId"/>
+        <result column="goods_name" jdbcType="VARCHAR" property="goodsName"/>
+        <result column="goods_price" jdbcType="DECIMAL" property="goodsPrice"/>
+        <result column="goods_number" jdbcType="INTEGER" property="goodsNumber"/>
+        <result column="goods_weight" jdbcType="DECIMAL" property="goodsWeight"/>
+        <!--goods_introduce 无TEXT  用LONGVARCHAR代替-->
+        <result column="goods_introduce" jdbcType="LONGVARCHAR" property="goodsIntroduce"/>
+        <result column="goods_big_logo" jdbcType="VARCHAR" property="goodsBigLogo"/>
+        <result column="goods_small_logo" jdbcType="VARCHAR" property="goodsSmallLogo"/>
+        <result column="goods_state" jdbcType="INTEGER" property="goodsState"/>
+        <result column="goods_add_time" jdbcType="TIMESTAMP" property="goodsAddTime"/>
+        <result column="goods_upd_time" jdbcType="TIMESTAMP" property="goodsUpdateTime"/>
+        <result column="goods_delete_time" jdbcType="TIMESTAMP" property="goodsDeleteTime"/>
+        <result column="goods_delete_time" jdbcType="TIMESTAMP" property="goodsDeleteTime"/>
+        <result column="goods_hot_number" jdbcType="INTEGER" property="goodsHotNumber"/>
+        <result column="goods_is_promote" jdbcType="BIT" property="goodsIsPromote"/>
+        <result column="goods_cat_one_id" jdbcType="INTEGER" property="goodsCatOneId"/>
+        <result column="goods_cat_two_id" jdbcType="INTEGER" property="goodsCatTwoId"/>
+        <result column="goods_cat_three_id" jdbcType="INTEGER" property="goodsCatThreeId"/>
+
+
+
+
+    </resultMap>
+    <select id="getAllGoodsList" resultMap="BaseResultMap">
+        select * from tb_goods
+    </select>
+</mapper>

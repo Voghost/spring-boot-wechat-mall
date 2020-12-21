@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="edu.dgut.networkengin2018_2.wechat_mall.dao.UsersMapper">
+
     <resultMap id="BaseResultMap" type="edu.dgut.networkengin2018_2.wechat_mall.entity.Users">
         <id column="user_id" jdbcType="INTEGER" property="userId"/>
         <result column="user_name" jdbcType="VARCHAR" property="userName"/>
@@ -12,12 +13,13 @@
         <result column="user_xueli" jdbcType="VARCHAR" property="userXueli"/>
         <result column="user_hobby" jdbcType="VARCHAR" property="userHobby"/>
         <result column="user_introduce" jdbcType="VARCHAR" property="userIntroduce"/>
-        <result column="user_create_time" jdbcType="DATETIME" property="userCreateTime"/>
+        <result column="user_create_time" jdbcType="TIMESTAMP" property="userCreateTime"/>
         <result column="user_token" jdbcType="VARCHAR" property="userToken"/>
-
     </resultMap>
+
     <sql id="BaseColumnList">
-user_id,user_name,user_email_code,user_is_active,user_sex,user_qq,user_tel,user_xueli,user_hobby,user_introduce,user_create_time,user_token
+        user_id
+        ,user_name,user_email_code,user_is_active,user_sex,user_qq,user_tel,user_xueli,user_hobby,user_introduce,user_create_time,user_token
     </sql>
 
     <sql id="userColumns">
@@ -69,7 +71,7 @@ user_id,user_name,user_email_code,user_is_active,user_sex,user_qq,user_tel,user_
                 user_is_active = #{userIsActive},
             </if>
             <if test="userSex != null">
-               user_sex = #{userSex},
+                user_sex = #{userSex},
             </if>
             <if test="userQQ!= null">
                 user_qq = #{userQQ},
@@ -97,20 +99,20 @@ user_id,user_name,user_email_code,user_is_active,user_sex,user_qq,user_tel,user_
         where user_id = #{userId}
     </update>
 
-    <delete id="deleteByPrimaryKey"  parameterType="java.lang.Integer">
-                delete
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+        delete
         from tb_users
         where user_id = #{userId}
     </delete>
 
     <select id="getAllList" resultMap="BaseResultMap">
-                select *
+        select *
         from tb_users
         where user_id = #{userId}
     </select>
 
     <select id="selectByPrimaryKey" resultMap="BaseResultMap">
-                select *
+        select *
         from tb_users
     </select>
 

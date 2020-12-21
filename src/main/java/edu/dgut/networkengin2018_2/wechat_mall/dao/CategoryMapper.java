@@ -3,6 +3,7 @@ package edu.dgut.networkengin2018_2.wechat_mall.dao;
 import edu.dgut.networkengin2018_2.wechat_mall.entity.Category;
 import edu.dgut.networkengin2018_2.wechat_mall.util.PageQueryUtil;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -48,4 +49,18 @@ public interface CategoryMapper {
      */
     int updateByPrimaryKey(Category category);
 
+    /**
+     * 得到全部分类数量
+     * @return
+     */
+    int getTotalCateGories();
+
+    /**
+     * 通过名字和分类深度获取分类
+     * 用于判断是否有命名冲突
+     * @param categoryLevel
+     * @param categoryName
+     * @return
+     */
+    Category selectByLevelAndName(Integer categoryLevel,String categoryName);
 }

@@ -85,4 +85,12 @@ class CategoryMapperTest {
         assertEquals(num,7);
 
     }
+
+    @Test
+    void selectByLevelAndName() {
+        Integer level =1;
+        String catName = "asfasf";
+        Category category= categoryMapper.selectByLevelAndName(level,catName);
+        assertNotNull(category);
+    }
 }

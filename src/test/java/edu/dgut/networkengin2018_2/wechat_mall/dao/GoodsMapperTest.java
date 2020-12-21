@@ -63,7 +63,7 @@ class GoodsMapperTest {
 
         PageQueryUtil pageQueryUtil = new PageQueryUtil(list);
         List<Goods> goodsList = goodsMapper.findGoodsList(pageQueryUtil);
-        assertEquals(goodsList.size(),1);
+        assertEquals(goodsList.size(),3);
 
     }
 
@@ -83,5 +83,17 @@ class GoodsMapperTest {
         goods.setGoodsIsPromote(false);
         int num =goodsMapper.updateByPrimaryKey(goods);
         assertEquals(num,1);
+    }
+
+    @Test
+    void getTotalGoods() {
+        Map<String,Object> list = new HashMap<>();
+        list.put("page",2);
+        list.put("limit",3);
+
+        PageQueryUtil pageQueryUtil = new PageQueryUtil(list);
+        int num= goodsMapper.getTotalGoods(pageQueryUtil);
+        assertEquals(num,7);
+
     }
 }

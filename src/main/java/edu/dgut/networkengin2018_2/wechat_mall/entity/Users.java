@@ -1,6 +1,9 @@
 package edu.dgut.networkengin2018_2.wechat_mall.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
+
+import java.util.Date;
 
 @Data
 public class Users {
@@ -15,7 +18,9 @@ public class Users {
     private String userXueli;
     private String userHobby;
     private String userIntroduce;
-    private String userCreateTime;
-    private String userUpdateTime;
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+    private Date userCreateTime;
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+    private Date userUpdateTime;
     private String userToken;
 }

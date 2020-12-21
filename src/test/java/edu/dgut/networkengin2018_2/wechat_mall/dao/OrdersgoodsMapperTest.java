@@ -63,7 +63,7 @@ class OrdersgoodsMapperTest {
     void updateByPrimaryKey() {
         Ordersgoods ordersgoods = new Ordersgoods();
         ordersgoods.setOrderId(1);
-        ordersgoods.setOrderGoodsId(3);
+        ordersgoods.setOrderGoodsId(4);
         ordersgoods.setOrderPrice(6235.32);
         ordersgoods.setOrderGoodsNumber("fgasf");
         int num = ordersgoodsMapper.updateByPrimaryKey(ordersgoods);

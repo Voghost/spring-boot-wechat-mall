@@ -5,18 +5,18 @@ $(function () {
         colModel: [
             {label: '商品编号', name: 'goodsId', index: 'goodsId', width: 60, key: true},
             {label: '商品名', name: 'goodsName', index: 'goodsName', width: 120},
-            {label: '商品简介', name: 'goodsIntro', index: 'goodsIntro', width: 120},
-            {label: '商品图片', name: 'goodsCoverImg', index: 'goodsCoverImg', width: 120, formatter: coverImageFormatter},
-            {label: '商品库存', name: 'stockNum', index: 'stockNum', width: 60},
-            {label: '商品售价', name: 'sellingPrice', index: 'sellingPrice', width: 60},
+            // {label: '商品简介', name: 'goodsIntroduce', index: 'goodsIntroduce', width: 120},
+            {label: '商品图片', name: 'goodsSmallLogo', index: 'goodsSmallLogo', width: 120, formatter: coverImageFormatter},
+            {label: '商品库存', name: 'goodsNumber', index: 'goodsNumber', width: 60},
+            {label: '商品售价', name: 'goodsPrice', index: 'goodsPrice', width: 60},
             {
                 label: '上架状态',
-                name: 'goodsSellStatus',
-                index: 'goodsSellStatus',
+                name: 'goodsState',
+                index: 'goodsState',
                 width: 80,
                 formatter: goodsSellStatusFormatter
             },
-            {label: '创建时间', name: 'createTime', index: 'createTime', width: 60}
+            {label: '创建时间', name: 'goodsAddTime', index: 'goodsAddTime', width: 60}
         ],
         height: 760,
         rowNum: 20,
@@ -50,8 +50,8 @@ $(function () {
     });
 
     function goodsSellStatusFormatter(cellvalue) {
-        //商品上架状态 0-上架 1-下架
-        if (cellvalue == 0) {
+        //商品上架状态 2-上架 1-下架
+        if (cellvalue == 2) {
             return "<button type=\"button\" class=\"btn btn-block btn-success btn-sm\" style=\"width: 80%;\">销售中</button>";
         }
         if (cellvalue == 1) {

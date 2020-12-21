@@ -102,7 +102,7 @@
     </select>
 
     <select id="getTotalCategories" resultType="java.lang.Integer">
-        select count(*) form tb_category
+        select count(*) from tb_category
     </select>
     <select id="selectByLevelAndName" resultMap="BaseResultMap">
         select *

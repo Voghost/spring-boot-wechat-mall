@@ -6,10 +6,9 @@ $(function () {
         url: '/admin/categories/list?categoryLevel=' + categoryLevel + '&parentId=' + parentId,
         datatype: "json",
         colModel: [
-            {label: 'id', name: 'categoryId', index: 'categoryId', width: 50, key: true, hidden: true},
-            {label: '分类名称', name: 'categoryName', index: 'categoryName', width: 240},
-            {label: '排序值', name: 'categoryRank', index: 'categoryRank', width: 120},
-            {label: '添加时间', name: 'createTime', index: 'createTime', width: 120}
+            {label: 'id', name: 'catId', index: 'catId', width: 50, key: true, hidden: true},
+            {label: '分类名称', name: 'catName', index: 'catName', width: 240},
+            {label: '分类图片', name: 'catIcon', index: 'catIcon', width: 240, formatter: coverImageFormatter},
         ],
         height: 560,
         rowNum: 10,
@@ -42,6 +41,11 @@ $(function () {
         $("#jqGrid").setGridWidth($(".card-body").width());
     });
 });
+
+//图片加载函数
+function coverImageFormatter(cellvalue) {
+    return "<img src='" + cellvalue + "' height=\"80\" width=\"80\" alt='商品主图'/>";
+}
 
 /**
  * jqGrid重新加载
@@ -97,30 +101,30 @@ function categoryBack() {
 
 //绑定modal上的保存按钮
 $('#saveButton').click(function () {
-    var categoryName = $("#categoryName").val();
-    var categoryLevel = $("#categoryLevel").val();
-    var parentId = $("#parentId").val();
-    var categoryRank = $("#categoryRank").val();
+    var catName = $("#catName").val();
+    var catLevel = $("#catLevel").val();
+    var catPid = $("#parentId").val();
+    var catIcon = $("#catIcon").val();
     if (!validCN_ENString2_18(categoryName)) {
         $('#edit-error-msg').css("display", "block");
         $('#edit-error-msg').html("请输入符合规范的分类名称！");
     } else {
         var data = {
-            "categoryName": categoryName,
-            "categoryLevel": categoryLevel,
-            "parentId": parentId,
-            "categoryRank": categoryRank
+            "catName": catName,
+            "catLevel": catLevel,
+            "catPid": catPid,
+            "catIcon": catIcon
         };
         var url = '/admin/categories/save';
         var id = getSelectedRowWithoutAlert();
         if (id != null) {
             url = '/admin/categories/update';
             data = {
-                "categoryId": id,
-                "categoryName": categoryName,
-                "categoryLevel": categoryLevel,
-                "parentId": parentId,
-                "categoryRank": categoryRank
+                "catId": id,
+                "catName": catName,
+                "catLevel": catLevel,
+                "catPid": catPid,
+                "catIcon": catIcon
             };
         }
         $.ajax({
@@ -162,8 +166,9 @@ function categoryEdit() {
     $('.modal-title').html('分类编辑');
     $('#categoryModal').modal('show');
     $("#categoryId").val(id);
-    $("#categoryName").val(rowData.categoryName);
-    $("#categoryRank").val(rowData.categoryRank);
+    $("#categoryName").val(rowData.catName);
+    $("#categoryIcon image").attr("href");
+    // $("#categoryIcon image").val(rowData.catIcon);
 }
 
 /**
@@ -212,6 +217,6 @@ function deleteCagegory() {
 
 function reset() {
     $("#categoryName").val('');
-    $("#categoryRank").val(0);
+    $("#categoryIcon").val(0);
     $('#edit-error-msg').css("display", "none");
 }

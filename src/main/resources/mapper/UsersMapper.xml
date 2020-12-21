@@ -12,7 +12,7 @@
         <result column="user_xueli" jdbcType="VARCHAR" property="userXueli"/>
         <result column="user_hobby" jdbcType="VARCHAR" property="userHobby"/>
         <result column="user_introduce" jdbcType="VARCHAR" property="userIntroduce"/>
-        <result column="user_create_time" jdbcType="DATETIME" property="userCreateTime"/>
+        <result column="user_create_time" jdbcType="TIMESTAMP" property="userCreateTime"/>
         <result column="user_token" jdbcType="VARCHAR" property="userToken"/>
 
     </resultMap>

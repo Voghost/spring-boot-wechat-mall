@@ -14,5 +14,5 @@ public interface GoodsAttrMapper {
     Goodsattr selectByPrimaryKey(Integer attrId);
     List<Goodsattr> findUsersList(PageQueryUtil pageQueryUtil);
     int updateByPrimaryKey(Goodsattr goodsAttr);
-
+    int getTotalGoodsAttr();
 }

@@ -15,15 +15,15 @@ public class GoodsCategoryController {
     @Resource
     private GoodsCategoryService goodsCategoryService;
 
-    public String categoriesPage(
-            HttpServletRequest request,
-            @RequestParam("categoryLevel") Integer catLevel,
-            @RequestParam("parentId") Integer parentId,
-
-
-            ){
-
-    }
+//    public String categoriesPage(
+//            HttpServletRequest request,
+//            @RequestParam("categoryLevel") Integer catLevel,
+//            @RequestParam("parentId") Integer parentId,
+//
+//
+//            ){
+//
+//    }
 
 
 }

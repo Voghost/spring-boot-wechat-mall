@@ -3,13 +3,11 @@ package edu.dgut.networkengin2018_2.wechat_mall.service.impl;
 import edu.dgut.networkengin2018_2.wechat_mall.dao.CategoryMapper;
 import edu.dgut.networkengin2018_2.wechat_mall.entity.Category;
 import edu.dgut.networkengin2018_2.wechat_mall.service.GoodsCategoryService;
-import edu.dgut.networkengin2018_2.wechat_mall.service.GoodsService;
 import edu.dgut.networkengin2018_2.wechat_mall.util.PageQueryUtil;
 import edu.dgut.networkengin2018_2.wechat_mall.util.PageResultUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
 import java.util.List;
 
 @Service
@@ -21,7 +19,7 @@ public class GoodsCategoryServiceImpl implements GoodsCategoryService {
     @Override
     public PageResultUtil getCategoriesPage(PageQueryUtil pageQueryUtil) {
         List<Category> categories = categoryMapper.findCategoryList(pageQueryUtil);
-        int total = categoryMapper.getTotalCateGories();
+        int total = categoryMapper.getTotalCategories();
 
         // 将结果集存入包装类
         PageResultUtil pageResultUtil = new PageResultUtil(categories, total, pageQueryUtil.getLimit(), pageQueryUtil.getPage());

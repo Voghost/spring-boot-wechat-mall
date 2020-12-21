@@ -81,7 +81,7 @@ class CategoryMapperTest {
         list.put("limit",3);
 
         PageQueryUtil pageQueryUtil = new PageQueryUtil(list);
-        int num= goodsMapper.getTotalGoods(pageQueryUtil);
+        int num= categoryMapper.getTotalCategories();
         assertEquals(num,7);
 
     }

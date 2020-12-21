@@ -7,7 +7,7 @@ public class Category {
 
     private Integer catId;
     private String catName;
-    private Integer vatPid;
+    private Integer catPid;
     private Integer catLevel;
     private Boolean catDeleted;
     private String catIcon;

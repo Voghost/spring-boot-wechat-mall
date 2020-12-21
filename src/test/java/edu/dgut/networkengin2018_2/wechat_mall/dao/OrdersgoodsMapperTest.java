@@ -1,6 +1,6 @@
 package edu.dgut.networkengin2018_2.wechat_mall.dao;
 
-import edu.dgut.networkengin2018_2.wechat_mall.entity.Swiperdata;
+import edu.dgut.networkengin2018_2.wechat_mall.entity.Ordersgoods;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -12,10 +12,10 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-class SwiperdataMapperTest {
+class OrdersgoodsMapperTest {
 
     @Resource
-    SwiperdataMapper swiperdatamapper;
+    OrdersgoodsMapper ordersgoodsMapper;
 
     @Test
     void getAllList() {
@@ -23,10 +23,12 @@ class SwiperdataMapperTest {
 
     @Test
     void insert() {
-        Swiperdata swiperdata = new Swiperdata();
-        swiperdata.setImageSrc("asfasfdsyrtdyg");
-        swiperdata.setNavigatorUrl("safasfxzfa");
-        int num = swiperdatamapper.insert(swiperdata);
+        Ordersgoods ordersgoods = new Ordersgoods();
+        ordersgoods.setOrderId(1);
+        ordersgoods.setOrderGoodsId(1);
+        ordersgoods.setOrderGoodsNumber("afsasf");
+        ordersgoods.setOrderPrice(2345.123);
+        int num = ordersgoodsMapper.insert(ordersgoods);
         assertEquals(num,1);
     }
 
@@ -39,7 +41,7 @@ class SwiperdataMapperTest {
     }
 
     @Test
-    void findSwiperdataList() {
+    void findOrdersgoodsList() {
     }
 
     @Test

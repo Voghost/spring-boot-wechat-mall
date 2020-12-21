@@ -70,14 +70,14 @@
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
         delete
         from tb_category
-        where order_id = #{orderId}
+        where cat_id = #{catId}
     </delete>
 
     <!--获得所有列表-->
     <select id="selectByPrimaryKey" resultMap="BaseResultMap">
         select *
         from tb_category
-        where order_id = #{orderId}
+        where cat_id = #{catId}
     </select>
 
     <!--通过 主键查找商品-->

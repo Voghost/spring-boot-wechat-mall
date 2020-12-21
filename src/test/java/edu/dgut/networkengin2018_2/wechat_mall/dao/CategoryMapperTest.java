@@ -47,4 +47,12 @@ class CategoryMapperTest {
     @Test
     void updateByPrimaryKey() {
     }
+
+    @Test
+    void selectByLevelAndName() {
+        Integer level =1;
+        String catName = "asfasf";
+        Category category= categoryMapper.selectByLevelAndName(level,catName);
+        assertNotNull(category);
+    }
 }

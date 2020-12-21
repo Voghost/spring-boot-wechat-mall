@@ -82,7 +82,7 @@ class GoodsAttrMapperTest {
 
         PageQueryUtil pageQueryUtil = new PageQueryUtil(list);
         int num= goodsAttrMapper.getTotalGoodsAttr();
-        assertEquals(num,7);
+        assertEquals(num,1);
 
     }
 }

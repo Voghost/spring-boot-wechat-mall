@@ -30,7 +30,7 @@
 
     <sql id="goodsattrValues">
         <trim suffixOverrides=",">
-            <if test="goodsId != null">goods_id,</if>
+            <if test="goodsId != null">#{goods_id},</if>
             <if test="attrName != null">#{attrName},</if>
             <if test="attrPrice != null">#{attrPrice},</if>
             <if test="attrSel != null">#{attrSel},</if>
@@ -109,11 +109,11 @@
     </select>
 
     <select id="getTotalGoodsAttr" resultType="java.lang.Integer">
-        select count(*) form tb_goods_attr
+        select count(*) from tb_goods_attr
     </select>
 
     <select id="selectByPrimaryKey" resultMap="BaseResultMap">
-                select *
+        select *
         from tb_goods_attr
         where attr_id = #{attrId}
     </select>

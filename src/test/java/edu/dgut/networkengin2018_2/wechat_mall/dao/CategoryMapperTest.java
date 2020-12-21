@@ -1,6 +1,6 @@
 package edu.dgut.networkengin2018_2.wechat_mall.dao;
 
-import edu.dgut.networkengin2018_2.wechat_mall.entity.Swiperdata;
+import edu.dgut.networkengin2018_2.wechat_mall.entity.Category;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -12,10 +12,10 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-class SwiperdataMapperTest {
+class CategoryMapperTest {
 
     @Resource
-    SwiperdataMapper swiperdatamapper;
+    CategoryMapper categoryMapper;
 
     @Test
     void getAllList() {
@@ -23,10 +23,12 @@ class SwiperdataMapperTest {
 
     @Test
     void insert() {
-        Swiperdata swiperdata = new Swiperdata();
-        swiperdata.setImageSrc("asfasfdsyrtdyg");
-        swiperdata.setNavigatorUrl("safasfxzfa");
-        int num = swiperdatamapper.insert(swiperdata);
+        Category category = new Category();
+        category.setCatName("asfasf");
+        category.setCatPid(1);
+        category.setCatLevel(1);
+        category.setCatIcon("asfasf");
+        int num = categoryMapper.insert(category);
         assertEquals(num,1);
     }
 
@@ -39,7 +41,7 @@ class SwiperdataMapperTest {
     }
 
     @Test
-    void findSwiperdataList() {
+    void findCategoryList() {
     }
 
     @Test

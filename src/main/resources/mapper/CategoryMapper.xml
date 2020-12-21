@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="edu.dgut.networkengin2018_2.wechat_mall.dao.CategoryMapper">
+    <resultMap id="BaseResultMap" type="edu.dgut.networkengin2018_2.wechat_mall.entity.Category">
+        <id column="cat_id" jdbcType="INTEGER" property="catId"/>
+        <result column="cat_name" jdbcType="VARCHAR" property="catName"/>
+        <result column="cat_pid" jdbcType="INTEGER" property="catPid"/>
+        <result column="cat_level" jdbcType="INTEGER" property="catLevel"/>
+        <result column="cat_deleted" jdbcType="BIT" property="catDeleted"/>
+        <result column="cat_icon" jdbcType="VARCHAR" property="catIcon"/>
+    </resultMap>
+
+    <!--相当于一个常量，后面可以引用-->
+    <sql id="BaseColumnList">
+       cat_id,
+       cat_name,cat_pid,cat_level,cat_deleted,cat_icon
+    </sql>
+
+
+    <sql id="categoryColumns">
+        <trim suffixOverrides=",">
+            <if test="catId != null">cat_id,</if>
+            <if test="catName != null">cat_name,</if>
+            <if test="catPid != null">cat_pid,</if>
+            <if test="catLevel != null">cat_level,</if>
+            <if test="catDeleted != null">cat_deleted,</if>
+            <if test="catIcon != null">cat_icon,</if>
+        </trim>
+    </sql>
+
+    <sql id="categoryValues">
+        <trim suffixOverrides=",">
+            <if test="catId != null">#{catId},</if>
+            <if test="catName != null">#{catName},</if>
+            <if test="catPid != null">#{catPid},</if>
+            <if test="catLevel != null">#{catLevel},</if>
+            <if test="catDeleted != null">#{catDeleted},</if>
+            <if test="catIcon != null">#{catIcon},</if>
+        </trim>
+    </sql>
+
+    <insert id="insert" useGeneratedKeys="true" keyProperty="catId">
+        insert into tb_category (<include refid="categoryColumns"/>) values (<include refid="categoryValues"/>)
+    </insert>
+
+    <!--更新-->
+    <update id="updateByPrimaryKey" parameterType="edu.dgut.networkengin2018_2.wechat_mall.entity.Category">
+        update tb_category
+        <set>
+            <if test="catName != null">
+                cat_name = #{catName},
+            </if>
+            <if test="catPid != null">
+                cat_pid = #{catPid},
+            </if>
+            <if test="catLevel != null">
+                cat_level = #{catLevel},
+            </if>
+            <if test="catDeleted != null">
+                cat_deleted = #{catDeleted},
+            </if>
+            <if test="catIcon != null">
+                cat_icon = #{catIcon},
+            </if>
+        </set>
+        where cat_id = #{catId}
+    </update>
+
+    <!--删除 通过主键-->
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+        delete
+        from tb_category
+        where order_id = #{orderId}
+    </delete>
+
+    <!--获得所有列表-->
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap">
+        select *
+        from tb_category
+        where order_id = #{orderId}
+    </select>
+
+    <!--通过 主键查找商品-->
+    <select id="getAllList" resultMap="BaseResultMap">
+        select *
+        from tb_category
+    </select>
+
+    <!--通过参数(map)<分页>查询-->
+    <select id="findCategoryList" parameterType="java.util.Map" resultMap="BaseResultMap">
+        select
+        <include refid="BaseColumnList"/>
+        from tb_category
+        <where>
+        </where>
+        order by cat_id desc
+        /*分页查询*/
+        <if test="start != null and limit != null">
+            limit #{start},#{limit}
+        </if>
+    </select>
+
+
+</mapper>

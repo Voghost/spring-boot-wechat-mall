@@ -138,7 +138,7 @@
                 goods_cat_three_id = #{goodsCatThreeId},
             </if>
         </set>
-            where goods_id = #{goodsId}
+        where goods_id = #{goodsId}
     </update>
 
     <!--删除 通过主键-->
@@ -190,5 +190,26 @@
         </if>
     </select>
 
+    <!--获取查询到的总数-->
+    <select id="getTotalGoods" parameterType="Map" resultType="int">
+        select count(*) from tb_goods
+        <where>
+            <if test="goodsName != null and goodsName != ''">
+                and goods_name like CONCAT ('%','#{goodsName}')
+            </if>
+            <if test="keyword!=null and keyword!=''">
+                and (goods_name like CONCAT('%',#{keyword},'%') or goods_introduce like CONCAT('%',#{keyword},'%'))
+            </if>
+            <if test="goodsState !=null and goodsState!=''">
+                and goods_state #{goodsState}
+            </if>
+            <if test="startTime != null and startTime.trim() != ''">
+                and create_time &gt; #{startTime}
+            </if>
+            <if test="endTime != null and endTime.trim() != ''">
+                and create_time &lt; #{endTime}
+            </if>
+        </where>
+    </select>
 
 </mapper>

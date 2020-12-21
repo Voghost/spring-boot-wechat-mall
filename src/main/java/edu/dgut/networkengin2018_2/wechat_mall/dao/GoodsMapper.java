@@ -42,6 +42,13 @@ public interface GoodsMapper {
      */
     List<Goods> findGoodsList(PageQueryUtil pageQueryUtil);
 
+    /**
+     * 查询到商品的总数
+     * @param pageQueryUtil
+     * @return
+     */
+    int getTotalGoods(PageQueryUtil pageQueryUtil);
+
 
     /**
      * 更新

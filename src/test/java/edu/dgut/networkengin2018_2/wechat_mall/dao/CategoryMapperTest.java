@@ -96,7 +96,7 @@ class CategoryMapperTest {
 
     @Test
     void getTotalCateGories() {
-        int number = categoryMapper.getTotalCateGories();
+        int number = categoryMapper.getTotalCategories();
         assertEquals(number,6);
     }
 }

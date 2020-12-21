@@ -101,7 +101,7 @@
         </if>
     </select>
 
-    <select id="getTotalCateGories" resultType="java.lang.Integer">
+    <select id="getTotalCategories" resultType="java.lang.Integer">
         select count(*) from tb_category
     </select>
     <select id="selectByLevelAndName" resultMap="BaseResultMap">

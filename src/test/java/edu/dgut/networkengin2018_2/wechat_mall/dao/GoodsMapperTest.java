@@ -63,7 +63,7 @@ class GoodsMapperTest {
 
         PageQueryUtil pageQueryUtil = new PageQueryUtil(list);
         List<Goods> goodsList = goodsMapper.findGoodsList(pageQueryUtil);
-        assertEquals(goodsList.size(),1);
+        assertEquals(goodsList.size(),3);
 
     }
 

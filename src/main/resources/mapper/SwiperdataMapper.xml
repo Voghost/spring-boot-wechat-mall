@@ -94,5 +94,8 @@
         </if>
     </select>
 
+    <select id="getTotalSwiperdata" resultType="java.lang.Integer">
+        select count(*) from tb_swiperdata
+    </select>
 
 </mapper>

@@ -69,4 +69,16 @@ class OrdersgoodsMapperTest {
         int num = ordersgoodsMapper.updateByPrimaryKey(ordersgoods);
         assertEquals(num,1);
     }
+
+    @Test
+    void getTotalOthersGoods() {
+        Map<String,Object> list = new HashMap<>();
+        list.put("page",2);
+        list.put("limit",3);
+
+        PageQueryUtil pageQueryUtil = new PageQueryUtil(list);
+        int num= ordersgoodsMapper.getTotalOrdersGoods();
+        assertEquals(num,1);
+
+    }
 }

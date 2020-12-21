@@ -88,5 +88,8 @@
         </if>
     </select>
 
+    <select id="getTotalOrdersGoods" resultType="java.lang.Integer">
+        select count(*) from tb_orders_goods
+    </select>
 
 </mapper>

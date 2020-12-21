@@ -101,4 +101,7 @@
     </select>
 
 
+    <select id="getTotalOrders" resultType="java.lang.Integer">
+        select count(*) from tb_orders
+    </select>
 </mapper>

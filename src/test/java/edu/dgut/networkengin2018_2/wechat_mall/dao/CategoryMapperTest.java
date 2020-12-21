@@ -55,4 +55,10 @@ class CategoryMapperTest {
         Category category= categoryMapper.selectByLevelAndName(level,catName);
         assertNotNull(category);
     }
+
+    @Test
+    void getTotalCateGories() {
+        int number = categoryMapper.getTotalCateGories();
+        assertEquals(number,6);
+    }
 }

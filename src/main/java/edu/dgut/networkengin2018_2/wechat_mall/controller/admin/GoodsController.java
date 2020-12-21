@@ -42,7 +42,7 @@ public class GoodsController {
      */
     @GetMapping("/goods")
     public String goodsPage(HttpServletRequest request) {
-        request.setAttribute("path", "_goods");
+        request.setAttribute("path", "goods"); //用户前端sider显示
         return "admin/goods";
     }
 

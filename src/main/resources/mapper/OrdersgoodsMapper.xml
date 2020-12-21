@@ -45,7 +45,7 @@
                 order_goods_id = #{orderGoodsId},
             </if>
             <if test="orderGoodsNumber != null">
-                order_goods_number = #{openType},
+                order_goods_number = #{orderGoodsNumber},
             </if>
             <if test="orderPrice != null">
                 order_price = #{orderPrice},

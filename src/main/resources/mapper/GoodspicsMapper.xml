@@ -94,5 +94,8 @@
         </if>
     </select>
 
+    <select id="getTotalGoodspics" resultType="java.lang.Integer">
+        select count(*) from tb_goods_pics
+    </select>
 
 </mapper>

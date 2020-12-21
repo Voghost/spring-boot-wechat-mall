@@ -53,7 +53,7 @@ public interface CategoryMapper {
      * 得到全部分类数量
      * @return
      */
-    int getTotalCateGories();
+    int getTotalCategories();
 
     /**
      * 通过名字和分类深度获取分类

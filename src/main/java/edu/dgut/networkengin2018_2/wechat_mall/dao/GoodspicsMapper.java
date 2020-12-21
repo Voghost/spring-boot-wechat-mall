@@ -48,4 +48,5 @@ public interface GoodspicsMapper {
      */
     int updateByPrimaryKey(Goodspics goodspics);
 
+    int getTotalGoodspics();
 }

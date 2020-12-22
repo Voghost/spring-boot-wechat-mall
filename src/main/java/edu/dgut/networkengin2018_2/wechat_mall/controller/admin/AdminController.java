@@ -1,0 +1,4 @@
+package edu.dgut.networkengin2018_2.wechat_mall.controller.admin;
+
+public class AdminController {
+}

@@ -64,6 +64,7 @@ public class GoodsController {
             return ResultGenerator.genFailResult("参数异常！");
         }
         PageQueryUtil pageUtil = new PageQueryUtil(params);
+        Result result = ResultGenerator.genSuccessResult(goodsService.getGoodsPage(pageUtil));
         return ResultGenerator.genSuccessResult(goodsService.getGoodsPage(pageUtil));
     }
 

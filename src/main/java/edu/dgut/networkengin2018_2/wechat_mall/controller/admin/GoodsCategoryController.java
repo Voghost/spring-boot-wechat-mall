@@ -157,7 +157,8 @@ public class GoodsCategoryController {
 
 
     /**
-     * 批量删除 (待实现)
+     * 批量删除
      */
+
 
 }

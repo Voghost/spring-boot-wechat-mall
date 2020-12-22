@@ -67,6 +67,8 @@
         where cat_id = #{catId}
     </update>
 
+
+
     <!--删除 通过主键-->
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
         delete

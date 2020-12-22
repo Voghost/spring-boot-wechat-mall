@@ -212,4 +212,12 @@
         </where>
     </select>
 
+    <update id="batchUpdateSellStatus">
+        update tb_goods
+        set goods_state=#{sellStatus},goods_upd_time=now() where goods_id in
+        <foreach item="id" collection="goodsIds" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </update>
+
 </mapper>

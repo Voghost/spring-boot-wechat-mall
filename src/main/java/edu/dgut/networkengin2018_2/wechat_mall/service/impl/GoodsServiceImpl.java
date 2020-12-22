@@ -62,4 +62,9 @@ public class GoodsServiceImpl implements GoodsService {
     public Goods getGoodsById(Integer id) {
         return goodsMapper.selectByPrimaryKey(id);
     }
+
+    @Override
+    public Boolean batchUpdateSellStatus(Integer[] ids, int sellStatus) {
+        return goodsMapper.batchUpdateSellStatus(ids, sellStatus) > 0;
+    }
 }

@@ -46,6 +46,12 @@ public interface GoodsService {
     Goods getGoodsById(Integer id);
 
 
+    /**
+     * 批量修改销售状态(上架下架)
+     * @param ids
+     * @return
+     */
+    Boolean batchUpdateSellStatus(Integer[] ids,int sellStatus);
 
 
 }

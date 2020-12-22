@@ -112,7 +112,7 @@ function putUpGoods() {
             if (flag) {
                 $.ajax({
                     type: "PUT",
-                    url: "/admin/goods/status/0",
+                    url: "/admin/goods/status/2",
                     contentType: "application/json",
                     data: JSON.stringify(ids),
                     success: function (r) {

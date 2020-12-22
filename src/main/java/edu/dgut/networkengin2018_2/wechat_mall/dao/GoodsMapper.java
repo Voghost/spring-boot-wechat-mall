@@ -3,6 +3,7 @@ package edu.dgut.networkengin2018_2.wechat_mall.dao;
 import edu.dgut.networkengin2018_2.wechat_mall.entity.Goods;
 import edu.dgut.networkengin2018_2.wechat_mall.util.PageQueryUtil;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -55,4 +56,11 @@ public interface GoodsMapper {
      */
     int updateByPrimaryKey(Goods goods);
 
+    /**
+     * 批量修改上下架
+     * @param orderIds
+     * @param sellStatus
+     * @return
+     */
+    int batchUpdateSellStatus(@Param("goodsIds")Integer[] orderIds, @Param("sellStatus") int sellStatus);
 }

@@ -25,7 +25,7 @@ public class PageResultUtil {
         this.pageSize = pageSize;
         this.currPage = currPage;
         // Math.ceil()返回大于或者等于指定表达式的最小整数，即向上取整
-        this.totalCount = (int) Math.ceil((double) totalCount / pageSize); //总页数
+        this.totalPage= (int) Math.ceil((double) totalCount / pageSize); //总页数
     }
 
     public List<?> getList() {

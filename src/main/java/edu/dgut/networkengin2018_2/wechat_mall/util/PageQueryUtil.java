@@ -13,6 +13,7 @@ public class PageQueryUtil extends LinkedHashMap<String, Object> {
     //每条页数
     private int limit;
 
+
     public PageQueryUtil(Map<String, Object> params) {
         //传入的关键字不只含有 page和limit  还有其他关键字
         this.putAll(params);

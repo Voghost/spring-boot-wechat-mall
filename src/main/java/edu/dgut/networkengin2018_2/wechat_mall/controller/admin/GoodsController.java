@@ -1,6 +1,8 @@
 package edu.dgut.networkengin2018_2.wechat_mall.controller.admin;
 
+import edu.dgut.networkengin2018_2.wechat_mall.entity.Category;
 import edu.dgut.networkengin2018_2.wechat_mall.entity.Goods;
+import edu.dgut.networkengin2018_2.wechat_mall.service.GoodsCategoryService;
 import edu.dgut.networkengin2018_2.wechat_mall.service.GoodsService;
 import edu.dgut.networkengin2018_2.wechat_mall.util.PageQueryUtil;
 import edu.dgut.networkengin2018_2.wechat_mall.util.Result;
@@ -21,10 +23,13 @@ import java.util.*;
 public class GoodsController {
     @Resource
     private GoodsService goodsService;
+    @Resource
+    private GoodsCategoryService goodsCategoryService;
 
 
     /**
      * 后台主界面
+     *
      * @param request
      * @return
      */
@@ -48,6 +53,7 @@ public class GoodsController {
 
     /**
      * 得到商品列表
+     *
      * @param params
      * @return
      */
@@ -84,9 +90,10 @@ public class GoodsController {
 
             return ResultGenerator.genFailResult("参数异常！");
         }
-
+        goods.setGoodsAddTime(new Date());
+        goods.setGoodsUpdateTime(new Date());
         String result = goodsService.insertGoods(goods);
-        if (result.equals("添加成功")){
+        if (result.equals("添加成功")) {
             return ResultGenerator.genSuccessResult();
         } else {
             return ResultGenerator.genFailResult(result);
@@ -95,11 +102,42 @@ public class GoodsController {
     }
 
     /**
-     * 商品编辑
+     * 查询所有一级分类
+     * 查询一级分类列表中第一个实体的所有二级分类
+     * 查询二级分类列表中第一个实体的所有三级分类
+     * 用于前端缓存
+     *
+     * @param request
+     * @return
+     */
+    @GetMapping("/goods/edit")
+    public String edit(HttpServletRequest request) {
+        request.setAttribute("path", "edit");
+        //查询所有的一级分类
+        List<Category> firstLevelCategories = goodsCategoryService.selectByLevelAndParentIdsAndNumber(Collections.singletonList(0), 1);
+        if (!CollectionUtils.isEmpty(firstLevelCategories)) {
+            //查询一级分类列表中第一个实体的所有二级分类
+            List<Category> secondLevelCategories = goodsCategoryService.selectByLevelAndParentIdsAndNumber(Collections.singletonList(firstLevelCategories.get(0).getCatId()), 2);
+            if (!CollectionUtils.isEmpty(secondLevelCategories)) {
+                //查询二级分类列表中第一个实体的所有三级分类
+                List<Category> thirdLevelCategories = goodsCategoryService.selectByLevelAndParentIdsAndNumber(Collections.singletonList(secondLevelCategories.get(0).getCatId()), 3);
+                request.setAttribute("firstLevelCategories", firstLevelCategories);
+                request.setAttribute("secondLevelCategories", secondLevelCategories);
+                request.setAttribute("thirdLevelCategories", thirdLevelCategories);
+                request.setAttribute("path", "goods-edit");
+                return "admin/goods_edit";
+            }
+        }
+        return "error/error_5xx";
+    }
+
+
+    /**
      * @param request
      * @param goodsId
      * @return
      */
+
     @GetMapping("/goods/edit/{goodsId}")
     public String edit(HttpServletRequest request, @PathVariable("goodsId") Integer goodsId) {
         request.setAttribute("path", "edit");
@@ -108,57 +146,25 @@ public class GoodsController {
         if (goods == null) {
             return "error/error_400";
         }
-/*
-        if (newBeeMallGoods.getGoodsCategoryId() > 0) {
-            if (newBeeMallGoods.getGoodsCategoryId() != null || newBeeMallGoods.getGoodsCategoryId() > 0) {
-                //有分类字段则查询相关分类数据返回给前端以供分类的三级联动显示
-                GoodsCategory currentGoodsCategory = newBeeMallCategoryService.getGoodsCategoryById(newBeeMallGoods.getGoodsCategoryId());
-                //商品表中存储的分类id字段为三级分类的id，不为三级分类则是错误数据
-                if (currentGoodsCategory != null && currentGoodsCategory.getCategoryLevel() == NewBeeMallCategoryLevelEnum.LEVEL_THREE.getLevel()) {
-                    //查询所有的一级分类
-                    List<GoodsCategory> firstLevelCategories = newBeeMallCategoryService.selectByLevelAndParentIdsAndNumber(Collections.singletonList(0L), NewBeeMallCategoryLevelEnum.LEVEL_ONE.getLevel());
-                    //根据parentId查询当前parentId下所有的三级分类
-                    List<GoodsCategory> thirdLevelCategories = newBeeMallCategoryService.selectByLevelAndParentIdsAndNumber(Collections.singletonList(currentGoodsCategory.getParentId()), NewBeeMallCategoryLevelEnum.LEVEL_THREE.getLevel());
-                    //查询当前三级分类的父级二级分类
-                    GoodsCategory secondCategory = newBeeMallCategoryService.getGoodsCategoryById(currentGoodsCategory.getParentId());
-                    if (secondCategory != null) {
-                        //根据parentId查询当前parentId下所有的二级分类
-                        List<GoodsCategory> secondLevelCategories = newBeeMallCategoryService.selectByLevelAndParentIdsAndNumber(Collections.singletonList(secondCategory.getParentId()), NewBeeMallCategoryLevelEnum.LEVEL_TWO.getLevel());
-                        //查询当前二级分类的父级一级分类
-                        GoodsCategory firestCategory = newBeeMallCategoryService.getGoodsCategoryById(secondCategory.getParentId());
-                        if (firestCategory != null) {
-                            //所有分类数据都得到之后放到request对象中供前端读取
-                            request.setAttribute("firstLevelCategories", firstLevelCategories);
-                            request.setAttribute("secondLevelCategories", secondLevelCategories);
-                            request.setAttribute("thirdLevelCategories", thirdLevelCategories);
-                            request.setAttribute("firstLevelCategoryId", firestCategory.getCategoryId());
-                            request.setAttribute("secondLevelCategoryId", secondCategory.getCategoryId());
-                            request.setAttribute("thirdLevelCategoryId", currentGoodsCategory.getCategoryId());
-                        }
-                    }
-                }
-            }
-        }
-        if (newBeeMallGoods.getGoodsCategoryId() == 0) {
-            //查询所有的一级分类
-            List<GoodsCategory> firstLevelCategories = newBeeMallCategoryService.selectByLevelAndParentIdsAndNumber(Collections.singletonList(0L), NewBeeMallCategoryLevelEnum.LEVEL_ONE.getLevel());
-            if (!CollectionUtils.isEmpty(firstLevelCategories)) {
-                //查询一级分类列表中第一个实体的所有二级分类
-                List<GoodsCategory> secondLevelCategories = newBeeMallCategoryService.selectByLevelAndParentIdsAndNumber(Collections.singletonList(firstLevelCategories.get(0).getCategoryId()), NewBeeMallCategoryLevelEnum.LEVEL_TWO.getLevel());
-                if (!CollectionUtils.isEmpty(secondLevelCategories)) {
-                    //查询二级分类列表中第一个实体的所有三级分类
-                    List<GoodsCategory> thirdLevelCategories = newBeeMallCategoryService.selectByLevelAndParentIdsAndNumber(Collections.singletonList(secondLevelCategories.get(0).getCategoryId()), NewBeeMallCategoryLevelEnum.LEVEL_THREE.getLevel());
-                    request.setAttribute("firstLevelCategories", firstLevelCategories);
-                    request.setAttribute("secondLevelCategories", secondLevelCategories);
-                    request.setAttribute("thirdLevelCategories", thirdLevelCategories);
-                }
-            }
-        }
-        request.setAttribute("goods", newBeeMallGoods);
+
+            List<Category> thirdLevelCategories = goodsCategoryService.selectByLevelAndParentIdsAndNumber(Collections.singletonList(goods.getGoodsCatTwoId()), 3);
+            List<Category> secondLevelCategories = goodsCategoryService.selectByLevelAndParentIdsAndNumber(Collections.singletonList(goods.getGoodsCatOneId()), 2);
+            List<Category> firstLevelCategories = goodsCategoryService.selectByLevelAndParentIdsAndNumber(Collections.singletonList(0), 1);
+
+
+            //所有分类数据都得到之后放到request对象中供前端读取
+            request.setAttribute("firstLevelCategories", firstLevelCategories);
+            request.setAttribute("secondLevelCategories", secondLevelCategories);
+            request.setAttribute("thirdLevelCategories", thirdLevelCategories);
+            request.setAttribute("firstLevelCategoryId", goods.getGoodsCatOneId());
+            request.setAttribute("secondLevelCategoryId", goods.getGoodsCatTwoId());
+            request.setAttribute("thirdLevelCategoryId", goods.getGoodsCatThreeId());
+
+
+        request.setAttribute("goods", goods);
         request.setAttribute("path", "goods-edit");
 
- */
-        return "admin/edit";
+        return "admin/goods_edit";
     }
 
     /**
@@ -182,8 +188,10 @@ public class GoodsController {
                 || Objects.isNull(goods.getGoodsCatThreeId())) {
             return ResultGenerator.genFailResult("参数异常！");
         }
+        //设置更新时间
+        goods.setGoodsUpdateTime(new Date());
         String result = goodsService.updateGoods(goods);
-        if (result.equals("修改成功")) {
+        if (result.equals("更新成功")) {
             return ResultGenerator.genSuccessResult();
         } else {
             return ResultGenerator.genFailResult(result);
@@ -202,4 +210,26 @@ public class GoodsController {
         }
         return ResultGenerator.genSuccessResult(goods);
     }
+
+
+    /**
+     * 批量修改销售状态
+     */
+    @RequestMapping(value = "/goods/status/{sellStatus}", method = RequestMethod.PUT)
+    @ResponseBody
+    public Result delete(@RequestBody Integer[] ids, @PathVariable("sellStatus") int sellStatus) {
+        if (ids.length < 1) {
+            return ResultGenerator.genFailResult("参数异常！");
+        }
+        // 2 上架 1 下架 0删除
+        if (sellStatus != 2 && sellStatus != 1 && sellStatus !=0) {
+            return ResultGenerator.genFailResult("状态异常！");
+        }
+        if (goodsService.batchUpdateSellStatus(ids, sellStatus)) {
+            return ResultGenerator.genSuccessResult();
+        } else {
+            return ResultGenerator.genFailResult("修改失败");
+        }
+    }
+
 }

@@ -72,22 +72,34 @@ $(function () {
 
 $('#saveButton').click(function () {
     var goodsId = $('#goodsId').val();
-    var goodsCategoryId = $('#levelThree option:selected').val();
+    /*分类*/
+    var goodsThreeCategoryId = $('#levelThree option:selected').val();
+    var goodsTwoCategoryId = $('#levelTwo option:selected').val();
+    var goodsOneCategoryId = $('#levelOne option:selected').val();
     var goodsName = $('#goodsName').val();
     var tag = $('#tag').val();
+    /*售价*/
     var originalPrice = $('#originalPrice').val();
-    var sellingPrice = $('#sellingPrice').val();
+    // var sellingPrice = $('#sellingPrice').val();
     var goodsIntro = $('#goodsIntro').val();
     var stockNum = $('#stockNum').val();
     var goodsSellStatus = $("input[name='goodsSellStatus']:checked").val();
     var goodsDetailContent = editorD.txt.html();
-    var goodsCoverImg = $('#goodsCoverImg')[0].src;
+    // var goodsCoverImg = $('#goodsCoverImg')[0].src;
+    var goodsIsPromoteTmp =$("input[name='goodsIsPromote']:checked").val();
+    var goodsIsPromote = (goodsIsPromoteTmp==1)?true:false;
+    var goodsBigLogo =  $('#goodsBigLogo').val();
+    var goodsSmallLogo = goodsBigLogo;
+    var goodsWeight = $('#goodsWeight').val();
+
+    /*
     if (isNull(goodsCategoryId)) {
         swal("请选择分类", {
             icon: "error",
         });
         return;
     }
+     */
     if (isNull(goodsName)) {
         swal("请输入商品名称", {
             icon: "error",
@@ -100,6 +112,8 @@ $('#saveButton').click(function () {
         });
         return;
     }
+
+/*
     if (isNull(tag)) {
         swal("请输入商品小标签", {
             icon: "error",
@@ -124,19 +138,22 @@ $('#saveButton').click(function () {
         });
         return;
     }
+*/
     if (isNull(originalPrice) || originalPrice < 1) {
         swal("请输入商品价格", {
             icon: "error",
         });
         return;
     }
+/*
     if (isNull(sellingPrice) || sellingPrice < 1) {
         swal("请输入商品售卖价", {
             icon: "error",
         });
         return;
     }
-    if (isNull(stockNum) || sellingPrice < 0) {
+*/
+    if (isNull(stockNum)) {
         swal("请输入商品库存数", {
             icon: "error",
         });
@@ -160,34 +177,60 @@ $('#saveButton').click(function () {
         });
         return;
     }
-    if (isNull(goodsCoverImg) || goodsCoverImg.indexOf('img-upload') != -1) {
-        swal("封面图片不能为空", {
-            icon: "error",
-        });
-        return;
-    }
+
+    // if (isNull(goodsCoverImg) || goodsCoverImg.indexOf('img-upload') != -1) {
+    //     swal("封面图片不能为空", {
+    //         icon: "error",
+    //     });
+    //     return;
+    // }
+
     var url = '/admin/goods/save';
     var swlMessage = '保存成功';
     var data = {
         "goodsName": goodsName,
-        "goodsIntro": goodsIntro,
-        "goodsCategoryId": goodsCategoryId,
-        "tag": tag,
-        "originalPrice": originalPrice,
-        "sellingPrice": sellingPrice,
-        "stockNum": stockNum,
-        "goodsDetailContent": goodsDetailContent,
-        "goodsCoverImg": goodsCoverImg,
-        "goodsCarousel": goodsCoverImg,
-        "goodsSellStatus": goodsSellStatus
+        // "goodsIntro": goodsIntro,
+        "goodsCatOneId": goodsOneCategoryId,
+        "goodsCatTwoId": goodsTwoCategoryId,
+        "goodsCatThreeId": goodsThreeCategoryId,
+        // "tag": tag,
+        "goodsPrice": originalPrice, //售价
+        // "sellingPrice": sellingPrice,
+        "goodsNumber": stockNum,
+        "goodsWeight": goodsWeight, //重量
+        "goodsIntroduce": goodsDetailContent,
+        "goodsBigLogo": goodsBigLogo,
+        "goodsSmallLogo": goodsSmallLogo,
+        "goodsIsPromote": goodsIsPromote,
+        // "goodsCarousel": goodsCoverImg,
+        "goodsState": goodsSellStatus
     };
+
     if (goodsId > 0) {
         url = '/admin/goods/update';
         swlMessage = '修改成功';
         data = {
             "goodsId": goodsId,
             "goodsName": goodsName,
-            "goodsIntro": goodsIntro,
+            // "goodsIntro": goodsIntro,
+            "goodsCatOneId": goodsOneCategoryId,
+            "goodsCatTwoId": goodsTwoCategoryId,
+            "goodsCatThreeId": goodsThreeCategoryId,
+            // "tag": tag,
+            "goodsPrice": originalPrice,
+            // "sellingPrice": sellingPrice,
+            "goodsNumber": stockNum,
+            "goodsIntroduce": goodsDetailContent,
+            "goodsIsPromote": goodsIsPromote,
+            "goodsWeight": goodsWeight, //重量
+            // "goodsBigLogo": goodsCoverImg,
+            "goodsBigLogo": goodsBigLogo,
+            "goodsSmallLogo": goodsSmallLogo,
+            // "goodsCarousel": goodsCoverImg,
+            "goodsState": goodsSellStatus
+            /*
+            "goodsName": goodsName,
+            // "goodsIntro": goodsIntro,
             "goodsCategoryId": goodsCategoryId,
             "tag": tag,
             "originalPrice": originalPrice,
@@ -197,6 +240,7 @@ $('#saveButton').click(function () {
             "goodsCoverImg": goodsCoverImg,
             "goodsCarousel": goodsCoverImg,
             "goodsSellStatus": goodsSellStatus
+             */
         };
     }
     console.log(data);
@@ -249,14 +293,14 @@ $('#levelOne').on('change', function () {
                 var secondLevelCategories = result.data.secondLevelCategories;
                 var length2 = secondLevelCategories.length;
                 for (var i = 0; i < length2; i++) {
-                    levelTwoSelect += '<option value=\"' + secondLevelCategories[i].categoryId + '\">' + secondLevelCategories[i].categoryName + '</option>';
+                    levelTwoSelect += '<option value=\"' + secondLevelCategories[i].catId + '\">' + secondLevelCategories[i].catName + '</option>';
                 }
                 $('#levelTwo').html(levelTwoSelect);
                 var levelThreeSelect = '';
                 var thirdLevelCategories = result.data.thirdLevelCategories;
                 var length3 = thirdLevelCategories.length;
                 for (var i = 0; i < length3; i++) {
-                    levelThreeSelect += '<option value=\"' + thirdLevelCategories[i].categoryId + '\">' + thirdLevelCategories[i].categoryName + '</option>';
+                    levelThreeSelect += '<option value=\"' + thirdLevelCategories[i].catId + '\">' + thirdLevelCategories[i].catName + '</option>';
                 }
                 $('#levelThree').html(levelThreeSelect);
             } else {
@@ -284,7 +328,7 @@ $('#levelTwo').on('change', function () {
                 var thirdLevelCategories = result.data.thirdLevelCategories;
                 var length = thirdLevelCategories.length;
                 for (var i = 0; i < length; i++) {
-                    levelThreeSelect += '<option value=\"' + thirdLevelCategories[i].categoryId + '\">' + thirdLevelCategories[i].categoryName + '</option>';
+                    levelThreeSelect += '<option value=\"' + thirdLevelCategories[i].catId + '\">' + thirdLevelCategories[i].catName + '</option>';
                 }
                 $('#levelThree').html(levelThreeSelect);
             } else {

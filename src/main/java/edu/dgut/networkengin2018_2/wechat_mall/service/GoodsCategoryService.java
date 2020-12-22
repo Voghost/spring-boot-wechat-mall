@@ -42,5 +42,14 @@ public interface GoodsCategoryService {
      */
     Boolean deleteBatch(Integer[] ids);
 
+    /**
+     * 通过层级、父id和页查询搜索所有id
+     * @param parentIds
+     * @param categoryLevel
+     * @return
+     */
+    List<Category> selectByLevelAndParentIdsAndNumber(List<Integer> parentIds, int categoryLevel);
+
+
 
 }

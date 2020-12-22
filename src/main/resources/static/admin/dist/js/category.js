@@ -40,11 +40,36 @@ $(function () {
     $(window).resize(function () {
         $("#jqGrid").setGridWidth($(".card-body").width());
     });
+
+    /*
+    暂时不用ajax保存
+    new AjaxUpload('#uploadCategoryImage', {
+        action: '/admin/upload/file',
+        name: 'file',
+        autoSubmit: true,
+        responseType: "json",
+        onSubmit: function (file, extension) {
+            if (!(extension && /^(jpg|jpeg|png|gif)$/.test(extension.toLowerCase()))) {
+                alert('只支持jpg、png、gif格式的文件！');
+                return false;
+            }
+        },
+        onComplete: function (file, r) {
+            if (r != null && r.resultCode == 200) {
+                $("#carouselImg").attr("src", r.data);
+                $("#carouselImg").attr("style", "width: 128px;height: 128px;display:block;");
+                return false;
+            } else {
+                alert("error");
+            }
+        }
+    });
+     */
 });
 
 //图片加载函数
 function coverImageFormatter(cellvalue) {
-    return "<img src='" + cellvalue + "' height=\"80\" width=\"80\" alt='商品主图'/>";
+    return "<img src='" + cellvalue + "' height=\"80\" width=\"80\" alt='分类主图'/>";
 }
 
 /**
@@ -101,11 +126,11 @@ function categoryBack() {
 
 //绑定modal上的保存按钮
 $('#saveButton').click(function () {
-    var catName = $("#catName").val();
-    var catLevel = $("#catLevel").val();
+    var catName = $("#categoryName").val();
+    var catLevel = $("#categoryLevel").val();
     var catPid = $("#parentId").val();
-    var catIcon = $("#catIcon").val();
-    if (!validCN_ENString2_18(categoryName)) {
+    var catIcon = $("#categoryIcon").val();
+    if (!validCN_ENString2_18(catName)) {
         $('#edit-error-msg').css("display", "block");
         $('#edit-error-msg').html("请输入符合规范的分类名称！");
     } else {
@@ -162,13 +187,29 @@ function categoryEdit() {
     if (id == null) {
         return;
     }
+    console.log(id);
+
+    /*
+    传文件
+    $.get("/admin/categories/info/" + id, function (r) {
+        if (r.resultCode == 200 && r.data != null) {
+            $("#mycateName").valueOf(r.data.catName);
+            $("#mycateIcon").attr("src", r.data.catIcon);
+            $("#mycateIcon").attr("type", "height: 64px;width: 64px;display:block;");
+        }
+    });
+    $('.modal-title').html('分类编辑');
+    $('#categoryModal').modal('show');
+     */
+
+    /*暂时只传地址 url */
     var rowData = $("#jqGrid").jqGrid("getRowData", id);
     $('.modal-title').html('分类编辑');
     $('#categoryModal').modal('show');
     $("#categoryId").val(id);
     $("#categoryName").val(rowData.catName);
-    $("#categoryIcon image").attr("href");
-    // $("#categoryIcon image").val(rowData.catIcon);
+    //获取图片<img src= "url"> 标签src内容
+    $("#categoryIcon").val(rowData.catIcon.src/*.attr("src")*/);
 }
 
 /**
@@ -215,8 +256,12 @@ function deleteCagegory() {
 }
 
 
+//初始化样式
 function reset() {
     $("#categoryName").val('');
     $("#categoryIcon").val(0);
+    //上传文件用到
+    // $("#categoryIcon").attr("src", '/admin/dist/img/img-upload.png');
+    // $("#categoryIcon").attr("style", "height: 64px;width: 64px;display:block;");
     $('#edit-error-msg').css("display", "none");
 }

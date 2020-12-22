@@ -68,4 +68,9 @@ public class GoodsCategoryServiceImpl implements GoodsCategoryService {
     public Boolean deleteBatch(Integer[] ids) {
         return null;
     }
+
+    @Override
+    public List<Category> selectByLevelAndParentIdsAndNumber(List<Integer> parentIds, int categoryLevel) {
+        return categoryMapper.selectByLevelAndParentIdsAndNumber(parentIds, categoryLevel);
+    }
 }

@@ -6,13 +6,13 @@ import edu.dgut.networkengin2018_2.wechat_mall.util.PageQueryUtil;
 import edu.dgut.networkengin2018_2.wechat_mall.util.Result;
 import edu.dgut.networkengin2018_2.wechat_mall.util.ResultGenerator;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 
 @Controller
 @RequestMapping("/admin")
@@ -116,5 +116,48 @@ public class GoodsCategoryController {
         }
         return ResultGenerator.genSuccessResult(goodsCategory);
     }
+
+    /**
+     * 列表
+     */
+    @RequestMapping(value = "/categories/listForSelect", method = RequestMethod.GET)
+    @ResponseBody
+    public Result listForSelect(@RequestParam("categoryId") Integer categoryId) {
+        if (categoryId == null || categoryId < 1) {
+            return ResultGenerator.genFailResult("缺少参数！");
+        }
+        Category category = goodsCategoryService.getGoodsCategoryById(categoryId);
+        //既不是一级分类也不是二级分类则为不返回数据
+        if (category == null || category.getCatLevel() == 3) {
+            return ResultGenerator.genFailResult("参数异常！");
+        }
+
+
+        Map categoryResult = new HashMap(2);
+
+        //如果是一级分类则返回当前一级分类下的所有二级分类，以及二级分类列表中第一条数据下的所有三级分类列表
+        if (category.getCatLevel() == 1) {
+            //查询一级分类列表中第一个实体的所有二级分类
+            List<Category> secondLevelCategories = goodsCategoryService.selectByLevelAndParentIdsAndNumber(Collections.singletonList(categoryId), 2);
+            if (!CollectionUtils.isEmpty(secondLevelCategories)) {
+                //查询二级分类列表中第一个实体的所有三级分类
+                List<Category> thirdLevelCategories = goodsCategoryService.selectByLevelAndParentIdsAndNumber(Collections.singletonList(secondLevelCategories.get(0).getCatId()), 3);
+                categoryResult.put("secondLevelCategories", secondLevelCategories);
+                categoryResult.put("thirdLevelCategories", thirdLevelCategories);
+            }
+        }
+        if (category.getCatLevel() == 2) {
+            //如果是二级分类则返回当前分类下的所有三级分类列表
+            List<Category> thirdLevelCategories = goodsCategoryService.selectByLevelAndParentIdsAndNumber(Collections.singletonList(categoryId), 3);
+            categoryResult.put("thirdLevelCategories", thirdLevelCategories);
+        }
+        return ResultGenerator.genSuccessResult(categoryResult);
+    }
+
+
+
+    /**
+     * 批量删除 (待实现)
+     */
 
 }

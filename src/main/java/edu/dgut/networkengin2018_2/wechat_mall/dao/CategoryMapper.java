@@ -63,4 +63,8 @@ public interface CategoryMapper {
      * @return
      */
     Category selectByLevelAndName(Integer categoryLevel,String categoryName);
+
+
+    List<Category> selectByLevelAndParentIdsAndNumber(@Param("parentIds") List<Integer> parentIds,
+                                                      @Param("categoryLevel") int categoryLevel);
 }

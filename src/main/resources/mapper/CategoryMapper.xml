@@ -93,6 +93,12 @@
         <include refid="BaseColumnList"/>
         from tb_category
         <where>
+            <if test="categoryLevel!=null and categoryLevel!=''">
+                and cat_level = #{categoryLevel}
+            </if>
+            <if test="parentId!=null and parentId!=''">
+                and cat_pid = #{parentId}
+            </if>
         </where>
         order by cat_id desc
         /*分页查询*/
@@ -109,6 +115,18 @@
         from tb_category
         where cat_name = #{categoryName}
           and cat_level = #{categoryLevel}
+    </select>
+
+
+    <select id="selectByLevelAndParentIdsAndNumber" resultMap="BaseResultMap">
+        select *
+        from tb_category
+        where cat_pid in
+        <foreach item="parentId" collection="parentIds" open="(" separator="," close=")">
+            #{parentId,jdbcType=BIGINT}
+        </foreach>
+        and cat_level = #{categoryLevel,jdbcType=TINYINT}
+        and cat_deleted = 0
     </select>
 
 </mapper>

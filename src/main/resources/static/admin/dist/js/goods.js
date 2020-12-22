@@ -6,7 +6,13 @@ $(function () {
             {label: '商品编号', name: 'goodsId', index: 'goodsId', width: 60, key: true},
             {label: '商品名', name: 'goodsName', index: 'goodsName', width: 120},
             // {label: '商品简介', name: 'goodsIntroduce', index: 'goodsIntroduce', width: 120},
-            {label: '商品图片', name: 'goodsSmallLogo', index: 'goodsSmallLogo', width: 120, formatter: coverImageFormatter},
+            {
+                label: '商品图片',
+                name: 'goodsSmallLogo',
+                index: 'goodsSmallLogo',
+                width: 120,
+                formatter: coverImageFormatter
+            },
             {label: '商品库存', name: 'goodsNumber', index: 'goodsNumber', width: 60},
             {label: '商品售价', name: 'goodsPrice', index: 'goodsPrice', width: 60},
             {
@@ -19,8 +25,8 @@ $(function () {
             {label: '创建时间', name: 'goodsAddTime', index: 'goodsAddTime', width: 60}
         ],
         height: 760,
-        rowNum: 20,
-        rowList: [20, 50, 80],
+        rowNum: 15,
+        rowList: [15, 20, 50, 80],
         styleUI: 'Bootstrap',
         loadtext: '信息读取中...',
         rownumbers: false,

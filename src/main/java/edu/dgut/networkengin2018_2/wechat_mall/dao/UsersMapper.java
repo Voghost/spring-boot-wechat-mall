@@ -13,11 +13,13 @@ public interface UsersMapper {
 
     int insert(Users users);
 
-    int deleteByPrimaryKey(Integer usersId);
+    int deleteByPrimaryKey(Integer userId);
 
-    Users selectByPrimaryKey(Integer usersId);
+    Users selectByPrimaryKey(Integer userId);
 
     List<Users> findUsersList(PageQueryUtil pageQueryUtil);
 
     int updateByPrimaryKey(Users users);
+
+    int getTotalUser();
 }

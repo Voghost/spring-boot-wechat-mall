@@ -119,7 +119,7 @@
     <select id="findUsersList" resultMap="BaseResultMap" parameterType="java.util.Map">
         select
         <include refid="BaseColumnList"/>
-        from tb_goods
+        from tb_users
         <where>
             <if test="userName !=null and userName!=''">
                 and user_name like CONCAT ('%','#{userName}')
@@ -144,4 +144,7 @@
         </if>
     </select>
 
+    <select id="getTotalUser" resultType="java.lang.Integer">
+        select count(*) from tb_users
+    </select>
 </mapper>

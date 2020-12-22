@@ -48,4 +48,5 @@ public interface OrdersgoodsMapper {
      */
     int updateByPrimaryKey(Ordersgoods ordersgoods);
 
+    int getTotalOrdersGoods();
 }

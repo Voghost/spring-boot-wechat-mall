@@ -1,6 +1,8 @@
 package edu.dgut.networkengin2018_2.wechat_mall.dao;
 
+import edu.dgut.networkengin2018_2.wechat_mall.entity.Category;
 import edu.dgut.networkengin2018_2.wechat_mall.entity.Users;
+import edu.dgut.networkengin2018_2.wechat_mall.util.PageQueryUtil;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -40,6 +42,8 @@ class UsersMapperTest {
 
     @Test
     void deleteByPrimaryKey() {
+        int num = usersMapper.deleteByPrimaryKey(3);
+        assertEquals(1,num);
     }
 
     @Test
@@ -48,9 +52,33 @@ class UsersMapperTest {
 
     @Test
     void findUsersList() {
+        Map<String,Object> list = new HashMap<>();
+        list.put("page",2);
+        list.put("limit",3);
+
+        PageQueryUtil pageQueryUtil = new PageQueryUtil(list);
+        List<Users> goodsList = usersMapper.findUsersList(pageQueryUtil);
+        assertEquals(goodsList.size(),1);
     }
 
     @Test
     void updateByPrimaryKey() {
+        Users users = new Users();
+        users.setUserId(1);
+        users.setUserIntroduce("修改");
+        int num = usersMapper.updateByPrimaryKey(users);
+        assertEquals(num,1);
+    }
+
+    @Test
+    void getTotalUsers() {
+        Map<String,Object> list = new HashMap<>();
+        list.put("page",2);
+        list.put("limit",3);
+
+        PageQueryUtil pageQueryUtil = new PageQueryUtil(list);
+        int num= usersMapper.getTotalUser();
+        assertEquals(num,7);
+
     }
 }

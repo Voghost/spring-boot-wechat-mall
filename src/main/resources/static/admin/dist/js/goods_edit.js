@@ -60,8 +60,8 @@ $(function () {
         },
         onComplete: function (file, r) {
             if (r != null && r.resultCode == 200) {
-                $("#goodsCoverImg").attr("src", r.data);
-                $("#goodsCoverImg").attr("style", "width: 128px;height: 128px;display:block;");
+                $("#goodsBigLogo").attr("src", r.data);
+                $("#goodsBigLogo").attr("style", "width: 128px;height: 128px;display:block;");
                 return false;
             } else {
                 alert("error");
@@ -88,7 +88,8 @@ $('#saveButton').click(function () {
     // var goodsCoverImg = $('#goodsCoverImg')[0].src;
     var goodsIsPromoteTmp =$("input[name='goodsIsPromote']:checked").val();
     var goodsIsPromote = (goodsIsPromoteTmp==1)?true:false;
-    var goodsBigLogo =  $('#goodsBigLogo').val();
+    // var goodsBigLogo =  $('#goodsBigLogo').val();
+    var goodsBigLogo =  $('#goodsBigLogo')[0].src;
     var goodsSmallLogo = goodsBigLogo;
     var goodsWeight = $('#goodsWeight').val();
 

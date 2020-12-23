@@ -33,6 +33,13 @@ public class AliyunAccessKey {
             this.accessKeyId = record.get(0);
             this.accessKeySecret = record.get(1);
         }
+
+        //关闭函数
+        try {
+            reader.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public String getAccessKeyId() {

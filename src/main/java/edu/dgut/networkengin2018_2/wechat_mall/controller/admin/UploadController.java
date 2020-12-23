@@ -3,6 +3,7 @@ package edu.dgut.networkengin2018_2.wechat_mall.controller.admin;
 import com.aliyun.oss.OSS;
 import com.aliyun.oss.OSSClientBuilder;
 import com.aliyun.oss.model.ObjectMetadata;
+import edu.dgut.networkengin2018_2.wechat_mall.util.AliyunAccessKey;
 import edu.dgut.networkengin2018_2.wechat_mall.util.Result;
 import edu.dgut.networkengin2018_2.wechat_mall.util.ResultGenerator;
 import org.springframework.stereotype.Controller;
@@ -32,8 +33,12 @@ public class UploadController {
      * 阿里云数据
      */
     private final String url = "https://oss-cn-shenzhen.aliyuncs.com";
+/*
+    密码泄露已作废
     private final String accessKeyId = "LTAI4GDY5UcnXz1zHQqZn1v2";
     private final String accessKeySecret = "UycrSwfN8YaAkH6Zi0CBd51qHZno5h";
+*/
+    private final AliyunAccessKey aliyunAccessKey = new AliyunAccessKey();
     private final String bucketName = "my-blog-vog";
     private final String objectName = "wechat-mini/upload/";
 
@@ -54,7 +59,7 @@ public class UploadController {
         String newFileName = tempName.toString();
         String path = objectName + newFileName;
 
-        OSS ossClient = new OSSClientBuilder().build(url, accessKeyId, accessKeySecret); //阿里云实例
+        OSS ossClient = new OSSClientBuilder().build(url,aliyunAccessKey.getAccessKeyId(),aliyunAccessKey.getAccessKeySecret()); //阿里云实例
         ObjectMetadata metadata = new ObjectMetadata();
         metadata.setContentType(contentType);
 //        ossClient.putObject(bucketName, objectName, new ByteArrayInputStream(content.getBytes()));
@@ -112,7 +117,7 @@ public class UploadController {
 
             String path = objectName + newFileName;
 
-            OSS ossClient = new OSSClientBuilder().build(url, accessKeyId, accessKeySecret); //阿里云实例
+            OSS ossClient = new OSSClientBuilder().build(url, aliyunAccessKey.getAccessKeyId(),aliyunAccessKey.getAccessKeySecret()); //阿里云实例
             ObjectMetadata metadata = new ObjectMetadata();
             metadata.setContentType(contentType);
 //        ossClient.putObject(bucketName, objectName, new ByteArrayInputStream(content.getBytes()));

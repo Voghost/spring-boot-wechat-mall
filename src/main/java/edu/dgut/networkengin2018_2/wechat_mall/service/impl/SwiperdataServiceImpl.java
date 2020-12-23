@@ -58,8 +58,12 @@ public class SwiperdataServiceImpl implements SwiperdataService {
 
 
     @Override
-    public Boolean deletePicture(Integer id) {
-        return swiperdataMapper.deleteByPrimaryKey(id) > 0;
+    public Boolean deleteBatch(Integer[] ids) {
+        if (ids.length < 1) {
+            return false;
+        }
+
+        return swiperdataMapper.deleteBatch(ids) > 0;
     }
 
 }

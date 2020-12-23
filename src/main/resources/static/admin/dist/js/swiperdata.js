@@ -84,10 +84,10 @@ function swiperAdd() {
 //绑定modal上的保存按钮
 $('#saveButton').click(function () {
     var redirectUrl = $("#redirectUrl").val();
-    var navigatorUrl = $('#swiperImg')[0].src;
+    var imageSrc = $('#swiperImg')[0].src;
     var data = {
-        "navigatorUrl": navigatorUrl,
-        "redirectUrl": redirectUrl
+        "navigatorUrl": redirectUrl,
+        "imageSrc": imageSrc
     };
     var url = '/admin/swiperdatas/save';
     var id = getSelectedRowWithoutAlert();
@@ -95,8 +95,8 @@ $('#saveButton').click(function () {
         url = '/admin/swiperdatas/update';
         data = {
             "swiperId": id,
-            "navigatorUrl": navigatorUrl,
-            "redirectUrl": redirectUrl
+            "navigatorUrl": redirectUrl,
+            "imageSrc": imageSrc
         };
     }
     $.ajax({
@@ -147,8 +147,8 @@ function swiperEdit() {
 }
 
 function deleteSwiper() {
-    var ids = getSelectedRows();
-    if (ids == null) {
+    var id = getSelectedRows();
+    if (id == null) {
         return;
     }
     swal({
@@ -163,7 +163,7 @@ function deleteSwiper() {
                     type: "POST",
                     url: "/admin/swiperdatas/delete",
                     contentType: "application/json",
-                    data: JSON.stringify(ids),
+                    data: JSON.stringify(id),
                     success: function (r) {
                         if (r.resultCode == 200) {
                             swal("删除成功", {

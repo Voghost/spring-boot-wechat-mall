@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
+import java.util.Map;
 
 @Mapper
 public interface GoodsMapper {
@@ -31,7 +32,7 @@ public interface GoodsMapper {
     int deleteByPrimaryKey(Integer goodsId);
 
     /**
-     *
+     * 通过id获取商品具体信息
      * @param goodsId
      * @return
      */
@@ -63,4 +64,11 @@ public interface GoodsMapper {
      * @return
      */
     int batchUpdateSellStatus(@Param("goodsIds")Integer[] orderIds, @Param("sellStatus") int sellStatus);
+
+    /**
+     * 用于微信api的页查询
+     * @return
+     */
+    List<Goods> getGoodsPageForWechat(Map<String,Object> map);
+
 }

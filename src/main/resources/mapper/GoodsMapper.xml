@@ -212,6 +212,22 @@
         </where>
     </select>
 
+    <select id="getGoodsPageForWechat" parameterType="Map" resultMap="BaseResultMap">
+        select *
+        from tb_goods
+        <where>
+            <if test="keyword != null and keyword != ''">
+                and (goods_name like CONCAT('%',#{keyword},'%') or goods_introduce like CONCAT('%',#{keyword},'%'))
+            </if>
+            <if test="goodsCate != null">
+                and goods_cate_three_id = #{cid}
+            </if>
+        </where>
+        <if test="start != null and limit != null">
+            limit #{start},#{limit}
+        </if>
+    </select>
+
     <update id="batchUpdateSellStatus">
         update tb_goods
         set goods_state=#{sellStatus},goods_upd_time=now() where goods_id in

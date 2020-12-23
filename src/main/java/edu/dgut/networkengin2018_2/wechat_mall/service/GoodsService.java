@@ -5,6 +5,7 @@ import edu.dgut.networkengin2018_2.wechat_mall.util.PageQueryUtil;
 import edu.dgut.networkengin2018_2.wechat_mall.util.PageResultUtil;
 
 import java.util.List;
+import java.util.Map;
 
 public interface GoodsService {
     /**
@@ -52,6 +53,17 @@ public interface GoodsService {
      * @return
      */
     Boolean batchUpdateSellStatus(Integer[] ids,int sellStatus);
+
+    /**
+     * 通过商品id 返回商品具体信息 （给微信api用）
+     * @param goodsId
+     * @return
+     */
+    Map<String,Object> getGoodsByIdForWechat(Integer goodsId);
+
+
+    Map<String,Object> getGoodsPageForWechat(String keyword, Integer cid, Integer pageNum, Integer pageSize);
+
 
 
 }

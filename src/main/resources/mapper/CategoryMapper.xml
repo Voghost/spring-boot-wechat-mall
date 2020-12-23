@@ -131,4 +131,10 @@
         and cat_deleted = 0
     </select>
 
+    <select id="selectByLevel" resultMap="BaseResultMap">
+        select *
+        from tb_category
+        where cat_level = #{categoryLevel}
+    </select>
+
 </mapper>

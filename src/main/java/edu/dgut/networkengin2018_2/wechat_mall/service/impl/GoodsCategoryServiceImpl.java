@@ -8,7 +8,7 @@ import edu.dgut.networkengin2018_2.wechat_mall.util.PageResultUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+import java.util.*;
 
 @Service
 public class GoodsCategoryServiceImpl implements GoodsCategoryService {
@@ -72,5 +72,65 @@ public class GoodsCategoryServiceImpl implements GoodsCategoryService {
     @Override
     public List<Category> selectByLevelAndParentIdsAndNumber(List<Integer> parentIds, int categoryLevel) {
         return categoryMapper.selectByLevelAndParentIdsAndNumber(parentIds, categoryLevel);
+    }
+
+    @Override
+    public Map<String, Object> getCategoryTree() {
+
+        List<Map<String, Object>> mapList1 = new ArrayList<>();
+
+
+        List<Category> firstCategories = categoryMapper.selectByLevel(1);
+
+        //第一层
+        for (int i = 0; i < firstCategories.size(); i++) {
+            Map<String, Object> map = new HashMap<>();
+            map.put("cat_id", firstCategories.get(i).getCatId());
+            map.put("cat_name", firstCategories.get(i).getCatName());
+            map.put("cat_pid", firstCategories.get(i).getCatPid());
+            map.put("cat_level", firstCategories.get(i).getCatLevel());
+            map.put("cat_deleted", firstCategories.get(i).getCatDeleted());
+            map.put("cat_icon", firstCategories.get(i).getCatIcon());
+
+            //第二层
+            List<Map<String, Object>> mapList2 = new ArrayList<>();
+            List<Category> secondCategories = categoryMapper
+                    .selectByLevelAndParentIdsAndNumber(Collections
+                            .singletonList(firstCategories.get(i).getCatId()), 2);
+            for (int n = 0; n < secondCategories.size(); n++) {
+                Map<String, Object> map2 = new HashMap<>();
+                map2.put("cat_id", secondCategories.get(n).getCatId());
+                map2.put("cat_name", secondCategories.get(n).getCatName());
+                map2.put("cat_pid", secondCategories.get(n).getCatPid());
+                map2.put("cat_level", secondCategories.get(n).getCatLevel());
+                map2.put("cat_deleted", secondCategories.get(n).getCatDeleted());
+                map2.put("cat_icon", secondCategories.get(n).getCatIcon());
+
+                //第三层
+                List<Map<String, Object>> mapList3 = new ArrayList<>();
+                List<Category> thirdCategories = categoryMapper
+                        .selectByLevelAndParentIdsAndNumber(Collections
+                                .singletonList(secondCategories.get(n).getCatId()), 3);
+                for (int m = 0; m <thirdCategories.size(); m++) {
+                    Map<String, Object> map3 = new HashMap<>();
+                    map3.put("cat_id",thirdCategories.get(m).getCatId());
+                    map3.put("cat_name",thirdCategories.get(m).getCatName());
+                    map3.put("cat_pid",thirdCategories.get(m).getCatPid());
+                    map3.put("cat_level",thirdCategories.get(m).getCatLevel());
+                    map3.put("cat_deleted",thirdCategories.get(m).getCatDeleted());
+                    map3.put("cat_icon",thirdCategories.get(m).getCatIcon());
+                    mapList3.add(map3);
+                }
+                map2.put("children",mapList3);
+                mapList2.add(map2);
+
+            }
+            map.put("children",mapList2) ;
+            mapList1.add(map);
+        }
+
+        Map<String, Object> result = new HashMap<>();
+        result.put("message", mapList1);
+        return result;
     }
 }

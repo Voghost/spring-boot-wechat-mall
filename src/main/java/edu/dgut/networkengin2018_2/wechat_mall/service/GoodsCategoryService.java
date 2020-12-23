@@ -5,6 +5,7 @@ import edu.dgut.networkengin2018_2.wechat_mall.util.PageQueryUtil;
 import edu.dgut.networkengin2018_2.wechat_mall.util.PageResultUtil;
 
 import java.util.List;
+import java.util.Map;
 
 public interface GoodsCategoryService {
 
@@ -49,6 +50,8 @@ public interface GoodsCategoryService {
      * @return
      */
     List<Category> selectByLevelAndParentIdsAndNumber(List<Integer> parentIds, int categoryLevel);
+
+    Map<String,Object> getCategoryTree();
 
 
 

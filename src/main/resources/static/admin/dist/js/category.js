@@ -41,8 +41,6 @@ $(function () {
         $("#jqGrid").setGridWidth($(".card-body").width());
     });
 
-    /*
-    暂时不用ajax保存
     new AjaxUpload('#uploadCategoryImage', {
         action: '/admin/upload/file',
         name: 'file',
@@ -56,15 +54,14 @@ $(function () {
         },
         onComplete: function (file, r) {
             if (r != null && r.resultCode == 200) {
-                $("#carouselImg").attr("src", r.data);
-                $("#carouselImg").attr("style", "width: 128px;height: 128px;display:block;");
+                $("#categoryImg").attr("src", r.data);
+                $("#categoryImg").attr("style", "width: 128px;height: 128px;display:block;");
                 return false;
             } else {
                 alert("error");
             }
         }
     });
-     */
 });
 
 //图片加载函数
@@ -129,7 +126,8 @@ $('#saveButton').click(function () {
     var catName = $("#categoryName").val();
     var catLevel = $("#categoryLevel").val();
     var catPid = $("#parentId").val();
-    var catIcon = $("#categoryIcon").val();
+    // var catIcon = $("#categoryIcon").val();
+    var catIcon = $("#categoryImg")[0].src;
     if (!validCN_ENString2_18(catName)) {
         $('#edit-error-msg').css("display", "block");
         $('#edit-error-msg').html("请输入符合规范的分类名称！");
@@ -189,27 +187,25 @@ function categoryEdit() {
     }
     console.log(id);
 
-    /*
-    传文件
     $.get("/admin/categories/info/" + id, function (r) {
         if (r.resultCode == 200 && r.data != null) {
-            $("#mycateName").valueOf(r.data.catName);
-            $("#mycateIcon").attr("src", r.data.catIcon);
-            $("#mycateIcon").attr("type", "height: 64px;width: 64px;display:block;");
+            $("#categoryName").val(r.data.catName);
+            $("#categoryImg").attr("src", r.data.catIcon);
+            $("#categoryImg").attr("type", "height: 64px;width: 64px;display:block;");
         }
     });
     $('.modal-title').html('分类编辑');
     $('#categoryModal').modal('show');
-     */
 
-    /*暂时只传地址 url */
+    /*
     var rowData = $("#jqGrid").jqGrid("getRowData", id);
     $('.modal-title').html('分类编辑');
     $('#categoryModal').modal('show');
     $("#categoryId").val(id);
     $("#categoryName").val(rowData.catName);
     //获取图片<img src= "url"> 标签src内容
-    $("#categoryIcon").val(rowData.catIcon.src/*.attr("src")*/);
+    $("#categoryIcon").val(rowData.catIcon.src);
+    */
 }
 
 /**

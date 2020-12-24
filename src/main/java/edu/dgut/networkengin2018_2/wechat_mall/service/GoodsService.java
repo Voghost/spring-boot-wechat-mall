@@ -62,7 +62,23 @@ public interface GoodsService {
     Map<String,Object> getGoodsByIdForWechat(Integer goodsId);
 
 
+    /**
+     * 获取商品页查询
+     * @param keyword
+     * @param cid
+     * @param pageNum
+     * @param pageSize
+     * @return
+     */
     Map<String,Object> getGoodsPageForWechat(String keyword, Integer cid, Integer pageNum, Integer pageSize);
+
+
+    /**
+     * 查询某个关键字
+     * @param keyword
+     * @return
+     */
+    Map<String,Object> getGoodsForWechat(String keyword);
 
 
 

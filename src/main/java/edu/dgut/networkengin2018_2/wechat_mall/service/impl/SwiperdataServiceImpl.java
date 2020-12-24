@@ -10,7 +10,10 @@ import edu.dgut.networkengin2018_2.wechat_mall.util.PageResultUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class SwiperdataServiceImpl implements SwiperdataService {
@@ -19,7 +22,7 @@ public class SwiperdataServiceImpl implements SwiperdataService {
     private SwiperdataMapper swiperdataMapper;
 
     @Override
-    public PageResultUtil getSwiperdataPage(PageQueryUtil pageQueryUtil){
+    public PageResultUtil getSwiperdataPage(PageQueryUtil pageQueryUtil) {
         List<Swiperdata> swiperdatas = swiperdataMapper.findSwiperdataList(pageQueryUtil);
         int total = swiperdataMapper.getTotalSwiperdata();
 
@@ -39,10 +42,10 @@ public class SwiperdataServiceImpl implements SwiperdataService {
     }
 
     @Override
-    public String updateSwiperdata(Swiperdata swiperdata){
+    public String updateSwiperdata(Swiperdata swiperdata) {
         Swiperdata temp = swiperdataMapper.selectByPrimaryKey(swiperdata.getSwiperId());
 
-        if(temp == null){
+        if (temp == null) {
             return "没有这个图片";
         }
 
@@ -50,14 +53,16 @@ public class SwiperdataServiceImpl implements SwiperdataService {
         temp.setGoodsId(swiperdata.getGoodsId());
         temp.setOpenType(swiperdata.getOpenType());
         temp.setImageSrc(swiperdata.getImageSrc());
-        if(swiperdataMapper.updateByPrimaryKey(swiperdata)>0){
+        if (swiperdataMapper.updateByPrimaryKey(swiperdata) > 0) {
             return "修改成功";
         }
         return "修改错误";
     }
 
     @Override
-    public Swiperdata getSwiperdataById(Integer id) { return swiperdataMapper.selectByPrimaryKey(id); }
+    public Swiperdata getSwiperdataById(Integer id) {
+        return swiperdataMapper.selectByPrimaryKey(id);
+    }
 
 
     @Override
@@ -66,8 +71,39 @@ public class SwiperdataServiceImpl implements SwiperdataService {
             return false;
         }
 
-        int temp = swiperdataMapper.deleteBatch(ids);
-        return temp>0;
+        return swiperdataMapper.deleteBatch(ids) > 0;
     }
+
+    @Override
+    public Map<String, Object> getAllSwiperDataForWechat() {
+        Map<String, Object> result = new HashMap<>(); //用于存放结果的map
+        List<Map<String, Object>> swiperList = new ArrayList<>(); //用于存放轮播图的list
+        Map<String, Object> meta = new HashMap<>(); //用于存放结果的状态
+
+        List<Swiperdata> swiperdata = swiperdataMapper.getAllList();
+        if (swiperdata == null) {
+            meta.put("msg", "获取失败");
+            meta.put("status", "400");
+            result.put("message", null);
+            result.put("meta", meta);
+            return  result;
+        }
+
+        for (int i = 0; i < swiperdata.size(); i++) {
+            Map<String, Object> tmp = new HashMap<>();
+            tmp.put("image_src", swiperdata.get(i).getImageSrc());
+            tmp.put("open_type", swiperdata.get(i).getOpenType());
+            tmp.put("goods_id", swiperdata.get(i).getGoodsId());
+            tmp.put("navigator_url", swiperdata.get(i).getNavigatorUrl());
+            swiperList.add(tmp);
+        }
+        meta.put("msg", "获取成功");
+        meta.put("status", "200");
+
+        result.put("message",swiperList);
+        result.put("meta",meta);
+        return result;
+    }
+
 
 }

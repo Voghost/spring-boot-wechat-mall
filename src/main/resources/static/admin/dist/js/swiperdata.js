@@ -149,8 +149,8 @@ function swiperEdit() {
 }
 
 function deleteSwiper() {
-    var id = getSelectedRows();
-    if (id == null) {
+    var ids = getSelectedRows();
+    if (ids == null) {
         return;
     }
     swal({
@@ -165,7 +165,7 @@ function deleteSwiper() {
                     type: "POST",
                     url: "/admin/swiperdatas/delete",
                     contentType: "application/json",
-                    data: JSON.stringify(id),
+                    data: JSON.stringify(ids),
                     success: function (r) {
                         if (r.resultCode == 200) {
                             swal("删除成功", {

@@ -137,9 +137,9 @@ function swiperEdit() {
     $.get("/admin/swiperdatas/info/" + id, function (r) {
         if (r.resultCode == 200 && r.data != null) {
             //填充数据至modal
-            $("#swiperImg").attr("src", r.data.navigatorUrl);
+            $("#swiperImg").attr("src", r.data.imageSrc);
             $("#swiperImg").attr("style", "height: 64px;width: 64px;display:block;");
-            $("#redirectUrl").val(r.data.redirectUrl);
+            $("#redirectUrl").val(r.data.navigatorUrl);
         }
     });
     $('.modal-title').html('轮播图编辑');

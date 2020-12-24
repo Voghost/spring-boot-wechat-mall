@@ -156,4 +156,30 @@ public class GoodsServiceImpl implements GoodsService {
         return result;
     }
 
+    @Override
+    public Map<String, Object> getGoodsForWechat(String keyword) {
+        Map<String, Object> query = new HashMap<>(); //查询
+        Map<String, Object> result = new HashMap<>(); //结果
+        Map<String, Object> message = new HashMap<>(); //message
+        Map<String, Object> meta = new HashMap<>(); //message
+        query.put("keyword", keyword);
+
+        List<Goods> goodsPageForWechat = goodsMapper.getGoodsPageForWechat(query);
+
+        List<Map<String, Object>> goodsMapList = new ArrayList<>();
+        for (int i = 0; i < goodsPageForWechat.size(); i++) {
+            Map<String, Object> goodsTmp = new HashMap<>();
+            goodsTmp.put("goods_id", goodsPageForWechat.get(i).getGoodsId());
+            goodsTmp.put("goods_name", goodsPageForWechat.get(i).getGoodsName());
+            goodsMapList.add(goodsTmp);
+        }
+        meta.put("msg", "获取成功");
+        meta.put("status", 200);
+        result.put("message", goodsMapList);
+        result.put("meta", meta);
+
+        return result;
+
+    }
+
 }

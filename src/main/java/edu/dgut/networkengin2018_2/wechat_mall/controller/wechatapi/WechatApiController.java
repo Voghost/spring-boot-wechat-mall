@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
+import javax.print.attribute.standard.PresentationDirection;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -55,27 +57,156 @@ public class WechatApiController {
 
     @GetMapping("/goods/search")
     @ResponseBody
-    public Map<String, Object> goodsSearch(@RequestParam(value = "query",required = false) String query, /*query 查询商品名字*/
-                                           @RequestParam(value = "cid",required = false) Integer cid,
-                                           @RequestParam(value = "pagenum",required = false) Integer pageNum,
-                                           @RequestParam(value = "pagesize",required = false) Integer pageSize) {
-        if(query==null){
-            query=null;
+    public Map<String, Object> goodsSearch(@RequestParam(value = "query", required = false) String query, /*query 查询商品名字*/
+                                           @RequestParam(value = "cid", required = false) Integer cid,
+                                           @RequestParam(value = "pagenum", required = false) Integer pageNum,
+                                           @RequestParam(value = "pagesize", required = false) Integer pageSize) {
+        if (query == null) {
+            query = null;
         }
-        return goodsService.getGoodsPageForWechat(query,cid,pageNum,pageSize);
+        return goodsService.getGoodsPageForWechat(query, cid, pageNum, pageSize);
     }
 
+    @GetMapping("goods/qsearch")
+    @ResponseBody
+    public Map<String,Object> goodsQSerach(@RequestParam(value = "query") String query){
+        return goodsService.getGoodsForWechat(query);
+    }
 
     /**
      * 用于返回主页轮播图信息
+     *
      * @return
      */
     @GetMapping("/home/swiperdata")
     @ResponseBody
-    public Map<String,Object> swiper(){
-        return  swiperdataService.getAllSwiperDataForWechat();
+    public Map<String, Object> swiper() {
+        return swiperdataService.getAllSwiperDataForWechat();
     }
 
+
+    /**
+     * 返回主界面导航
+     */
+    @GetMapping("/home/catitems")
+    @ResponseBody
+    public Map<String, Object> catimes() {
+        List<Map<String, Object>> messageList = new ArrayList<>();
+        Map<String, Object> map1 = new HashMap<>();
+        Map<String, Object> map2 = new HashMap<>();
+        Map<String, Object> map3 = new HashMap<>();
+        Map<String, Object> map4 = new HashMap<>();
+        Map<String, Object> meta = new HashMap<>();
+
+        Map<String, Object> result = new HashMap<>();
+
+
+        map1.put("name", "分类");
+        map1.put("image_src", "https://oss.ghovos.top/wechat-mini/public/icon_index_nav_4%402x.png");
+        map1.put("open_type", "switchTab");
+        map1.put("navigator_url", "/pages/category/index");
+
+        map2.put("name", "秒拍杀");
+        map2.put("image_src", "https://oss.ghovos.top/wechat-mini/public/icon_index_nav_3%402x.png");
+
+        map3.put("name", "");
+        map3.put("image_src", "https://oss.ghovos.top/wechat-mini/public/icon_index_nav_2%402x.png");
+
+        map4.put("name", "秒拍杀");
+        map4.put("image_src", "https://oss.ghovos.top/wechat-mini/public/icon_index_nav_1%402x.png");
+
+        messageList.add(map1);
+        messageList.add(map2);
+        messageList.add(map3);
+        messageList.add(map4);
+
+        meta.put("msg", "获取成功");
+        meta.put("status", 200);
+
+        result.put("message", messageList);
+        result.put("meta", meta);
+
+        return result;
+    }
+
+    /**
+     * 返回商品楼层
+     */
+    @GetMapping("/home/floordata")
+    @ResponseBody
+    public Map<String, Object> floordata() {
+        List<Map<String, Object>> messageList = new ArrayList<>();
+        List<Map<String, Object>> productList = new ArrayList<>();
+        Map<String,Object> floorTitle = new HashMap<>();
+
+        floorTitle.put("name","时尚女装");
+        floorTitle.put("image_src","https://oss.ghovos.top/wechat-mini/public/pic_floor01_title.png");
+
+
+
+        Map<String,Object>  map1= new HashMap<>();
+        map1.put("name","优质服饰");
+        map1.put("image_src","https://api-hmugo-web.itheima.net/pyg/pic_floor01_2@2x.png");
+        map1.put("image_width","232");
+        map1.put("open_type","navigate");
+        map1.put("navigator_url","/pages/goods_list?query=服饰");
+
+        Map<String,Object>  map2= new HashMap<>();
+        map2.put("name","春季热门");
+        map2.put("image_src","https://api-hmugo-web.itheima.net/pyg/pic_floor01_3@2x.png");
+        map2.put("image_width","233");
+        map1.put("open_type","navigate");
+        map2.put("navigator_url","/pages/goods_list?query=热");
+
+        Map<String,Object>  map3= new HashMap<>();
+        map3.put("name","爆款清仓");
+        map3.put("image_src","https://api-hmugo-web.itheima.net/pyg/pic_floor01_4@2x.png");
+        map3.put("image_width","233");
+        map1.put("open_type","navigate");
+        map3.put("navigator_url","/pages/goods_list?query=热");
+
+        Map<String,Object>  map4= new HashMap<>();
+        map4.put("name","爆款清仓");
+        map4.put("image_src","https://api-hmugo-web.itheima.net/pyg/pic_floor01_5@2x.png");
+        map4.put("image_width","233");
+        map1.put("open_type","navigate");
+        map4.put("navigator_url","/pages/goods_list?query=爆款");
+
+
+        Map<String,Object>  map5= new HashMap<>();
+        map5.put("name","怦然心动");
+        map5.put("image_src","https://api-hmugo-web.itheima.net/pyg/pic_floor01_6@2x.png");
+        map5.put("image_width","233");
+        map1.put("open_type","navigate");
+        map5.put("navigator_url","/pages/goods_list?query=心动");
+
+        productList.add(map1);
+        productList.add(map2);
+        productList.add(map3);
+        productList.add(map4);
+        productList.add(map5);
+
+        Map<String,Object> pMap = new HashMap<>();
+        pMap.put("product_list",productList);
+
+        pMap.put("floor_title",floorTitle);
+
+
+
+        messageList.add(pMap);
+
+        Map<String,Object> result= new HashMap<>();
+
+        Map<String,Object> meta = new HashMap<>();
+        meta.put("msg","获取成功");
+        meta.put("status","200");
+
+
+        result.put("message",messageList);
+        result.put("meta",meta);
+        return  result;
+
+    }
 
 
 }

@@ -22,4 +22,7 @@ public interface UsersMapper {
     int updateByPrimaryKey(Users users);
 
     int getTotalUser();
+
+    Users getUserByOpenId(String userOpenId);
+
 }

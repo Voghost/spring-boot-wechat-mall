@@ -33,11 +33,11 @@ public class UploadController {
      * 阿里云数据
      */
     private final String url = "https://oss-cn-shenzhen.aliyuncs.com";
-/*
-    密码泄露已作废
-    private final String accessKeyId = "LTAI4GDY5UcnXz1zHQqZn1v2";
-    private final String accessKeySecret = "UycrSwfN8YaAkH6Zi0CBd51qHZno5h";
-*/
+    /*
+        密码泄露已作废
+        private final String accessKeyId = "LTAI4GDY5UcnXz1zHQqZn1v2";
+        private final String accessKeySecret = "UycrSwfN8YaAkH6Zi0CBd51qHZno5h";
+    */
     private final AliyunAccessKey aliyunAccessKey = new AliyunAccessKey();
     private final String bucketName = "my-blog-vog";
     private final String objectName = "wechat-mini/upload/";
@@ -45,7 +45,7 @@ public class UploadController {
 
     @PostMapping({"/upload/file"})
     @ResponseBody
-    public Result upload(HttpServletRequest httpServletRequest, @RequestParam("file") MultipartFile file){
+    public Result upload(HttpServletRequest httpServletRequest, @RequestParam("file") MultipartFile file) {
         String fileName = file.getOriginalFilename(); //文件名
         String suffixName = fileName.substring(fileName.lastIndexOf(".")); //获取后缀名
         String fileType = suffixName.substring(1);  //文件类型，暂时后缀名代替
@@ -59,7 +59,7 @@ public class UploadController {
         String newFileName = tempName.toString();
         String path = objectName + newFileName;
 
-        OSS ossClient = new OSSClientBuilder().build(url,aliyunAccessKey.getAccessKeyId(),aliyunAccessKey.getAccessKeySecret()); //阿里云实例
+        OSS ossClient = new OSSClientBuilder().build(url, aliyunAccessKey.getAccessKeyId(), aliyunAccessKey.getAccessKeySecret()); //阿里云实例
         ObjectMetadata metadata = new ObjectMetadata();
         metadata.setContentType(contentType);
 //        ossClient.putObject(bucketName, objectName, new ByteArrayInputStream(content.getBytes()));
@@ -117,14 +117,14 @@ public class UploadController {
 
             String path = objectName + newFileName;
 
-            OSS ossClient = new OSSClientBuilder().build(url, aliyunAccessKey.getAccessKeyId(),aliyunAccessKey.getAccessKeySecret()); //阿里云实例
+            OSS ossClient = new OSSClientBuilder().build(url, aliyunAccessKey.getAccessKeyId(), aliyunAccessKey.getAccessKeySecret()); //阿里云实例
             ObjectMetadata metadata = new ObjectMetadata();
             metadata.setContentType(contentType);
 //        ossClient.putObject(bucketName, objectName, new ByteArrayInputStream(content.getBytes()));
             try {
                 ossClient.putObject(bucketName, path, new ByteArrayInputStream(multipartFiles.get(i).getBytes()), metadata);
                 Result resultSuccess = ResultGenerator.genSuccessResult();
-                fileNames.add("https://oss.ghovos.top/wechat-mini/upload/"+newFileName);
+                fileNames.add("https://oss.ghovos.top/wechat-mini/upload/" + newFileName);
             } catch (IOException e) {
                 e.printStackTrace();
                 ossClient.shutdown();

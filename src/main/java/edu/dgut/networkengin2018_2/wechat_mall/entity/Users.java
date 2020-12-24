@@ -9,18 +9,17 @@ import java.util.Date;
 public class Users {
 
     private Integer userId;
-    private String userName;
-    private String userEmailCode;
-    private String userIsActive;
-    private String userSex;
-    private String userQQ;
-    private String userTel;
-    private String userXueli;
-    private String userHobby;
-    private String userIntroduce;
+
+    private String userOpenId;
+
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
-    private Date userCreateTime;
+    private Date userCreateTime;     //用户创建时间
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
-    private Date userUpdateTime;
+    private Date userUpdateTime;     //用户修改时间
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+    private Date userLastLoginTime; //用户最后登录时间
+
+    private Boolean userIsActive; //用户是否激活
+
     private String userToken;
 }

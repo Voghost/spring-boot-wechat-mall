@@ -49,11 +49,13 @@ public class SwiperdataServiceImpl implements SwiperdataService {
             return "没有这个图片";
         }
 
-        temp.setNavigatorUrl(swiperdata.getNavigatorUrl());
+        Integer id = swiperdata.getGoodsId();
+        String url = "/pages/goods_detail/index?goods_id=" + id.toString() ;
+        temp.setNavigatorUrl(url);
         temp.setGoodsId(swiperdata.getGoodsId());
         temp.setOpenType(swiperdata.getOpenType());
         temp.setImageSrc(swiperdata.getImageSrc());
-        if (swiperdataMapper.updateByPrimaryKey(swiperdata) > 0) {
+        if (swiperdataMapper.updateByPrimaryKey(temp) > 0) {
             return "修改成功";
         }
         return "修改错误";

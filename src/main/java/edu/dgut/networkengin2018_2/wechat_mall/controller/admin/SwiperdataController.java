@@ -56,7 +56,7 @@ public class SwiperdataController {
     @ResponseBody
     public Result update(@RequestBody Swiperdata swiperdata) {
         if (Objects.isNull(swiperdata.getSwiperId())
-                || StringUtils.isEmpty(swiperdata.getNavigatorUrl())
+                || StringUtils.isEmpty(swiperdata.getGoodsId())
                 || Objects.isNull(swiperdata.getImageSrc())) {
             return ResultGenerator.genFailResult("参数异常！");
         }

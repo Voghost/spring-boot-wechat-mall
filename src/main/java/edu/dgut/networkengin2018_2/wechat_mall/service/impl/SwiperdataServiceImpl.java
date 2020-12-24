@@ -29,6 +29,9 @@ public class SwiperdataServiceImpl implements SwiperdataService {
 
     @Override
     public String insertSwiperdata(Swiperdata swiperdata){
+        Integer id = swiperdata.getGoodsId();
+        String url = "/pages/goods_detail/index?goods_id=" + id.toString() ;
+        swiperdata.setNavigatorUrl(url);
         if(swiperdataMapper.insert(swiperdata)>0){
             return "插入成功";
         }
@@ -63,7 +66,8 @@ public class SwiperdataServiceImpl implements SwiperdataService {
             return false;
         }
 
-        return swiperdataMapper.deleteBatch(ids) > 0;
+        int temp = swiperdataMapper.deleteBatch(ids);
+        return temp>0;
     }
 
 }

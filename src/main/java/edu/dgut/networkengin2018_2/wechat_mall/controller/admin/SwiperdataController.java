@@ -40,8 +40,8 @@ public class SwiperdataController {
     @RequestMapping(value = "/swiperdatas/save", method = RequestMethod.POST)
     @ResponseBody
     public Result save(@RequestBody Swiperdata swiperdata) {
-        if (StringUtils.isEmpty(swiperdata.getNavigatorUrl())
-                || Objects.isNull(swiperdata.getImageSrc())) {
+        if (StringUtils.isEmpty(swiperdata.getImageSrc())
+                || Objects.isNull(swiperdata.getGoodsId())) {
             return ResultGenerator.genFailResult("参数异常！");
         }
         String result = swiperdataService.insertSwiperdata(swiperdata);

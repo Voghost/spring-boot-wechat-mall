@@ -5,7 +5,8 @@ $(function () {
         colModel: [
             {label: 'id', name: 'swiperId', index: 'swiperId', width: 50, key: true, hidden: true},
             {label: '轮播图', name: 'imageSrc', index: 'imageSrc', width: 180, formatter: coverImageFormatter},
-            {label: '跳转链接', name: 'navigatorUrl', index: 'navigatorUrl', width: 120},
+            {label: '商品Id', name: 'goodsId', index: 'goodsId', width: 120},
+            {label: '跳转链接', name: 'navigatorUrl', index: 'gnavigatorUrl', width: 120},
         ],
         height: 560,
         rowNum: 10,
@@ -83,11 +84,12 @@ function swiperAdd() {
 
 //绑定modal上的保存按钮
 $('#saveButton').click(function () {
-    var redirectUrl = $("#redirectUrl").val();
+    // var redirectUrl = $("#redirectUrl").val();
     var imageSrc = $('#swiperImg')[0].src;
+    var goodsId = $('#goodsId').val();
     var data = {
-        "navigatorUrl": redirectUrl,
-        "imageSrc": imageSrc
+        "imageSrc": imageSrc,
+        "goodsId": goodsId
     };
     var url = '/admin/swiperdatas/save';
     var id = getSelectedRowWithoutAlert();
@@ -95,7 +97,7 @@ $('#saveButton').click(function () {
         url = '/admin/swiperdatas/update';
         data = {
             "swiperId": id,
-            "navigatorUrl": redirectUrl,
+            "goodsId": goodsId,
             "imageSrc": imageSrc
         };
     }
@@ -137,9 +139,9 @@ function swiperEdit() {
     $.get("/admin/swiperdatas/info/" + id, function (r) {
         if (r.resultCode == 200 && r.data != null) {
             //填充数据至modal
-            $("#swiperImg").attr("src", r.data.navigatorUrl);
+            $("#swiperImg").attr("src", r.data.imageSrc);
             $("#swiperImg").attr("style", "height: 64px;width: 64px;display:block;");
-            $("#redirectUrl").val(r.data.redirectUrl);
+            $("#goodsId").val(r.data.goodsId);
         }
     });
     $('.modal-title').html('轮播图编辑');

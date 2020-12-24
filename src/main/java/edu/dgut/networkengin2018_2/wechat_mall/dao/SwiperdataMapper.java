@@ -49,4 +49,6 @@ public interface SwiperdataMapper {
     int updateByPrimaryKey(Swiperdata swiperdata);
 
     int getTotalSwiperdata();
+
+    int deleteBatch(Integer[] ids);
 }

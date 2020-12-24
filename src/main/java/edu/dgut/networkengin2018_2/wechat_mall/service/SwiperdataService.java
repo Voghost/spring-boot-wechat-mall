@@ -16,7 +16,7 @@ public interface SwiperdataService {
 
     Swiperdata getSwiperdataById(Integer id);
 
-    Boolean deletePicture(Integer id);
+    Boolean deleteBatch(Integer[] ids);
 
     Map<String,Object> getAllSwiperDataForWechat();
 

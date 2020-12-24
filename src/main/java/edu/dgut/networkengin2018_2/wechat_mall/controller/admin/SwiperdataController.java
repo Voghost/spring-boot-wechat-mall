@@ -80,8 +80,11 @@ public class SwiperdataController {
 
     @RequestMapping(value = "/swiperdatas/delete", method = RequestMethod.POST)
     @ResponseBody
-    public Result delete(@RequestBody Integer id) {
-        if (swiperdataService.deletePicture(id)) {
+    public Result delete(@RequestBody Integer[] ids) {
+        if (ids.length < 1) {
+            return ResultGenerator.genFailResult("参数异常！");
+        }
+        if (swiperdataService.deleteBatch(ids)) {
             return ResultGenerator.genSuccessResult();
         } else {
             return ResultGenerator.genFailResult("删除失败");

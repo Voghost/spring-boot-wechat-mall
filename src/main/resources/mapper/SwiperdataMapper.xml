@@ -98,4 +98,11 @@
         select count(*) from tb_swiperdata
     </select>
 
+    <select id="deleteBatch">
+        delete from tb_swiperdata
+        where swiper_id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </select>
 </mapper>

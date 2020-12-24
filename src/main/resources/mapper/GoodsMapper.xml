@@ -219,8 +219,8 @@
             <if test="keyword != null and keyword != ''">
                 and (goods_name like CONCAT('%',#{keyword},'%') or goods_introduce like CONCAT('%',#{keyword},'%'))
             </if>
-            <if test="goodsCate != null">
-                and goods_cate_three_id = #{cid}
+            <if test="cid != null">
+                and goods_cat_three_id = #{cid}
             </if>
         </where>
         <if test="start != null and limit != null">

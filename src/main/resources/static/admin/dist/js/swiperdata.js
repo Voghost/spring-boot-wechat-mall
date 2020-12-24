@@ -84,10 +84,10 @@ function swiperAdd() {
 //绑定modal上的保存按钮
 $('#saveButton').click(function () {
     var redirectUrl = $("#redirectUrl").val();
-    var navigatorUrl = $('#swiperImg')[0].src;
+    var imageSrc = $('#swiperImg')[0].src;
     var data = {
-        "navigatorUrl": navigatorUrl,
-        "redirectUrl": redirectUrl
+        "navigatorUrl": redirectUrl, //跳转链接
+        "imageSrc": imageSrc //图片链接
     };
     var url = '/admin/swiperdatas/save';
     var id = getSelectedRowWithoutAlert();
@@ -95,8 +95,8 @@ $('#saveButton').click(function () {
         url = '/admin/swiperdatas/update';
         data = {
             "swiperId": id,
-            "navigatorUrl": navigatorUrl,
-            "redirectUrl": redirectUrl
+            "navigatorUrl": redirectUrl, //跳转链接
+            "imageSrc": imageSrc //图片链接
         };
     }
     $.ajax({

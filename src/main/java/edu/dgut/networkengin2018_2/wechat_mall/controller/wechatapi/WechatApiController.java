@@ -1,8 +1,10 @@
 package edu.dgut.networkengin2018_2.wechat_mall.controller.wechatapi;
 
 import edu.dgut.networkengin2018_2.wechat_mall.entity.Goods;
+import edu.dgut.networkengin2018_2.wechat_mall.entity.Swiperdata;
 import edu.dgut.networkengin2018_2.wechat_mall.service.GoodsCategoryService;
 import edu.dgut.networkengin2018_2.wechat_mall.service.GoodsService;
+import edu.dgut.networkengin2018_2.wechat_mall.service.SwiperdataService;
 import edu.dgut.networkengin2018_2.wechat_mall.util.PageQueryUtil;
 import edu.dgut.networkengin2018_2.wechat_mall.util.PageResultUtil;
 import org.springframework.stereotype.Controller;
@@ -25,6 +27,9 @@ public class WechatApiController {
 
     @Resource
     private GoodsService goodsService;
+
+    @Resource
+    private SwiperdataService swiperdataService;
 
     @GetMapping("/categories")
     @ResponseBody
@@ -61,6 +66,15 @@ public class WechatApiController {
     }
 
 
+    /**
+     * 用于返回主页轮播图信息
+     * @return
+     */
+    @GetMapping("/home/swiperdata")
+    @ResponseBody
+    public Map<String,Object> swiper(){
+        return  swiperdataService.getAllSwiperDataForWechat();
+    }
 
 
 

@@ -135,6 +135,9 @@ public class GoodsServiceImpl implements GoodsService {
             goodsTmp.put("goods_small_logo", goodsPageForWechat.get(i).getGoodsSmallLogo());
             goodsTmp.put("add_time", goodsPageForWechat.get(i).getGoodsAddTime());
             goodsTmp.put("upd_time", goodsPageForWechat.get(i).getGoodsUpdateTime());
+            goodsTmp.put("goods_cat_one_id", goodsPageForWechat.get(i).getGoodsCatOneId());
+            goodsTmp.put("goods_cat_two_id", goodsPageForWechat.get(i).getGoodsCatTwoId());
+            goodsTmp.put("goods_cat_three_id", goodsPageForWechat.get(i).getGoodsCatThreeId());
             goodsMapList.add(goodsTmp);
         }
 

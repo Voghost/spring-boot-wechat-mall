@@ -58,7 +58,8 @@ public class OrderApiController {
         }
 
 
-        if (map.get("consignee_addr") != null) {
+        String tmp = (String)map.get("consignee_addr");
+        if (map.get("consignee_addr") != null && (String)map.get("consignee_addr") !="") {
             String userName = (String) ((Map<String, Object>) map.get("consignee_addr")).get("userName"); //名字
             String telNumber = (String) ((Map<String, Object>) map.get("consignee_addr")).get("telNumber"); //电话
             String postalCode = (String) ((Map<String, Object>) map.get("consignee_addr")).get("postalCode"); //邮政编码

@@ -58,8 +58,8 @@ public class OrderApiController {
         }
 
 
-        String tmp = (String)map.get("consignee_addr");
-        if (map.get("consignee_addr") != null && (String)map.get("consignee_addr") !="") {
+//        String tmp = (String)map.get("consignee_addr");
+        if (map.get("consignee_addr") != null /*&& (String)map.get("consignee_addr") !=""*/) {
             String userName = (String) ((Map<String, Object>) map.get("consignee_addr")).get("userName"); //名字
             String telNumber = (String) ((Map<String, Object>) map.get("consignee_addr")).get("telNumber"); //电话
             String postalCode = (String) ((Map<String, Object>) map.get("consignee_addr")).get("postalCode"); //邮政编码
@@ -141,9 +141,9 @@ public class OrderApiController {
         if (type == 1) {
             type = null; //全部
         } else if (type == 2) {
-            type = 1; //未支付
+            type = 0; //未支付
         } else if (type == 3) {
-            type = 2; //支付为发货
+            type = 1; //支付为发货
         }
 
         List<Orders> ordersList = orderService.getOrderByUserId(userTemp.getUserId(), type); //订单id
@@ -179,7 +179,7 @@ public class OrderApiController {
             Double totalPrice = 0.0;
             for (int j = 0; j < goods.size(); j++) {
                 Map<String, Object> goodsTemp = new HashMap<>();
-                Goods mygoods = goodsService.getGoodsById(goods.get(j).getOrderId());
+                Goods mygoods = goodsService.getGoodsById(goods.get(j).getOrderGoodsId());
 
 
                 goodsTemp.put("goods_id", mygoods.getGoodsId());

@@ -77,6 +77,7 @@ public class GoodsServiceImpl implements GoodsService {
         if (goods != null) {
             map.put("goods_id", goods.getGoodsId());
             map.put("cat_id", goods.getGoodsCatThreeId());
+            map.put("goods_name",goods.getGoodsName());
             map.put("goods_price", goods.getGoodsPrice());
             map.put("goods_number", goods.getGoodsNumber());
             map.put("goods_weight", goods.getGoodsWeight());

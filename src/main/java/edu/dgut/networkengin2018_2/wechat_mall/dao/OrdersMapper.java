@@ -49,4 +49,15 @@ public interface OrdersMapper {
     int updateByPrimaryKey(Orders orders);
 
     int getTotalOrders();
+
+    /**
+     * 寻找用户id和订单状态的orders
+     * @param userId
+     * @return
+     */
+    List<Orders> getOrderByUserIdAndOrderStatus(Integer userId,Integer orderStatus);
+
+    Orders getOrderByNumber(String orderNumber);
+
+    int updateOrderStatusByNumber(String orderNumber, Integer status);
 }

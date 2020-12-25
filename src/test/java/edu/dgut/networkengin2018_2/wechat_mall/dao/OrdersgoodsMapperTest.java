@@ -32,7 +32,7 @@ class OrdersgoodsMapperTest {
         Ordersgoods ordersgoods = new Ordersgoods();
         ordersgoods.setOrderId(1);
         ordersgoods.setOrderGoodsId(1);
-        ordersgoods.setOrderGoodsNumber("afsasf");
+        ordersgoods.setOrderGoodsNumber(1);
         ordersgoods.setOrderPrice(2345.123);
         int num = ordersgoodsMapper.insert(ordersgoods);
         assertEquals(num,1);
@@ -65,7 +65,7 @@ class OrdersgoodsMapperTest {
         ordersgoods.setOrderId(1);
         ordersgoods.setOrderGoodsId(4);
         ordersgoods.setOrderPrice(6235.32);
-        ordersgoods.setOrderGoodsNumber("fgasf");
+        ordersgoods.setOrderGoodsNumber(2);
         int num = ordersgoodsMapper.updateByPrimaryKey(ordersgoods);
         assertEquals(num,1);
     }

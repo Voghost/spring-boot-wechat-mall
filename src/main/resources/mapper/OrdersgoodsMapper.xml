@@ -10,7 +10,8 @@
 
     <!--相当于一个常量，后面可以引用-->
     <sql id="BaseColumnList">
-        order_id,order_goods_id,
+        order_id
+        ,order_goods_id,
         order_goods_number,order_price
     </sql>
 
@@ -34,7 +35,8 @@
     </sql>
 
     <insert id="insert" useGeneratedKeys="true" keyProperty="orderId">
-        insert into tb_orders_goods (<include refid="ordersgoodsColumns"/>) values (<include refid="ordersgoodsValues"/>)
+        insert into tb_orders_goods (<include refid="ordersgoodsColumns"/>) values (<include refid="ordersgoodsValues"/>
+        )
     </insert>
 
     <!--更新-->
@@ -89,7 +91,14 @@
     </select>
 
     <select id="getTotalOrdersGoods" resultType="java.lang.Integer">
-        select count(*) from tb_orders_goods
+        select count(*)
+        from tb_orders_goods
+    </select>
+
+    <select id="getOrdersGoodsById" resultMap="BaseResultMap">
+        select *
+        from tb_orders_goods
+        where order_id = #{orderId}
     </select>
 
 </mapper>

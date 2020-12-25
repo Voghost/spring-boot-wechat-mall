@@ -89,4 +89,9 @@ public class UserServiceImpl implements UsersService {
 
         return pageResult;
     }
+
+    @Override
+    public Users getUserByToken(String token) {
+        return usersMapper.getUserByToken(token);
+    }
 }

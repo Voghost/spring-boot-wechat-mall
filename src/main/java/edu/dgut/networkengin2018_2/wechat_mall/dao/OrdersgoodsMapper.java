@@ -48,5 +48,17 @@ public interface OrdersgoodsMapper {
      */
     int updateByPrimaryKey(Ordersgoods ordersgoods);
 
+    /**
+     * 获取总数
+     * @return
+     */
     int getTotalOrdersGoods();
+
+    /**
+     * 通过id获取商品列表
+     * @param orderId
+     * @return
+     */
+    List<Ordersgoods> getOrdersGoodsById(Integer orderId);
+
 }

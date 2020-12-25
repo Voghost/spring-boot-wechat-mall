@@ -25,4 +25,6 @@ public interface UsersMapper {
 
     Users getUserByOpenId(String userOpenId);
 
+    Users getUserByToken(String token);
+
 }

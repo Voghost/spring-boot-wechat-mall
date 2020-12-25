@@ -22,7 +22,7 @@ import java.util.Map;
 
 @RequestMapping("/wechatapi")
 @Controller
-public class WechatApiController {
+public class MainApiController {
 
     @Resource
     private GoodsCategoryService goodsCategoryService;

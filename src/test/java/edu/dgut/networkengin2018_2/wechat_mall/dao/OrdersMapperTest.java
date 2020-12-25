@@ -36,10 +36,9 @@ class OrdersMapperTest {
         Orders orders = new Orders();
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         Date date = dateFormat.parse("2020-12-21");
-        orders.setOrderTime(date);
+        orders.setOrderCreateTime(date);
         orders.setOrderPrice(124312.124);
         orders.setOrderAddress("asfasfdas");
-        orders.setAuthorization("fdasf");
         orders.setOrderUserId(1);
         int num = ordersMapper.insert(orders);
         assertEquals(num,1);
@@ -72,10 +71,9 @@ class OrdersMapperTest {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         Date date = dateFormat.parse("2020-12-22");
         orders.setOrderId(2);
-        orders.setOrderTime(date);
+        orders.setOrderCreateTime(date);
         orders.setOrderPrice(1252.53);
         orders.setOrderAddress("修改");
-        orders.setAuthorization("修改");
         int num = ordersMapper.updateByPrimaryKey(orders);
         assertEquals(num,1);
     }

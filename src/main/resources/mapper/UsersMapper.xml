@@ -113,4 +113,9 @@
         from tb_users
         where user_openid = #{userOpenId}
     </select>
+    <select id="getUserByToken" resultMap="BaseResultMap">
+        select *
+        from tb_users
+        where user_token = #{token}
+    </select>
 </mapper>

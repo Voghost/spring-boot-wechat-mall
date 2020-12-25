@@ -32,3 +32,4 @@ build/
 ### VS Code ###
 .vscode/
 /src/main/resources/other/AccessKey.csv
+/src/main/resources/other/Wechat.csv

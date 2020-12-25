@@ -59,7 +59,7 @@ public class OrderApiController {
 
 
 //        String tmp = (String)map.get("consignee_addr");
-        if (map.get("consignee_addr") != null /*&& (String)map.get("consignee_addr") !=""*/) {
+        /* if (map.get("consignee_addr") != null *//*&& (String)map.get("consignee_addr") !=""*//*) {
             String userName = (String) ((Map<String, Object>) map.get("consignee_addr")).get("userName"); //名字
             String telNumber = (String) ((Map<String, Object>) map.get("consignee_addr")).get("telNumber"); //电话
             String postalCode = (String) ((Map<String, Object>) map.get("consignee_addr")).get("postalCode"); //邮政编码
@@ -70,13 +70,14 @@ public class OrderApiController {
             String address = provinceName + cityName + countyName + detailInfo + userName + "电话:" + telNumber + " 邮政编码:" + postalCode; //完整地址
             orders.setOrderAddress(address); //不为空设置地址
         }
-
+*/
         ArrayList<Map<String, Object>> goods = (ArrayList<Map<String, Object>>) map.get("goods");
 
         double totalPrice = 0;
         for (int i = 0; i < goods.size(); i++) {
             Ordersgoods ordersGoodsTmp = new Ordersgoods();
-            ordersGoodsTmp.setOrderGoodsId(Integer.parseInt((String) goods.get(i).get("goods_id")));
+//            ordersGoodsTmp.setOrderGoodsId(Integer.parseInt((String) goods.get(i).get("goods_id")));
+            ordersGoodsTmp.setOrderGoodsId((Integer) goods.get(i).get("goods_id")); // 修改后
             ordersGoodsTmp.setOrderGoodsNumber((Integer) goods.get(i).get("goods_number"));
             ordersGoodsTmp.setOrderPrice(((Integer) goods.get(i).get("goods_price")).doubleValue());
             ordersGoodsList.add(ordersGoodsTmp);
@@ -218,13 +219,15 @@ public class OrderApiController {
     /**
      * 查询用户的订单状态
      *
-     * @param orderNumber
+     * @param map
      * @return
      */
     @PostMapping("/my/orders/chkOrder")
     @ResponseBody
     public Map<String, Object> checkOrder(@RequestHeader(value = "Authorization") String authorization,
-                                          @RequestParam("order_number") String orderNumber) {
+                                          @RequestBody Map<String, Object> map) {
+
+        String orderNumber = (String) map.get("order_number");
 
         Users userTemp = usersService.getUserByToken(authorization);
         List<Ordersgoods> ordersGoodsList = new ArrayList<>();
@@ -274,7 +277,9 @@ public class OrderApiController {
     @PostMapping("/my/orders/pay")
     @ResponseBody
     public Map<String, Object> pay(@RequestHeader(value = "Authorization") String authorization,
-                                   @RequestParam("order_number") String orderNumber) {
+                                   @RequestBody Map<String, Object> map) {
+
+        String orderNumber = (String) map.get("order_number");
         Users userTemp = usersService.getUserByToken(authorization);
         List<Ordersgoods> ordersGoodsList = new ArrayList<>();
 
@@ -289,6 +294,7 @@ public class OrderApiController {
         }
 
 
+//        int num = orderService.updateOrderStatusByNumber("1", 1); //1 为已支付状态
         int num = orderService.updateOrderStatusByNumber(orderNumber, 1); //1 为已支付状态
         //如果受影响行数大于０　支付成功
         if (num > 0) {

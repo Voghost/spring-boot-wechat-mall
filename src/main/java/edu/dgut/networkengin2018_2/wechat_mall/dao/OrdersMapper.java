@@ -3,6 +3,7 @@ package edu.dgut.networkengin2018_2.wechat_mall.dao;
 import edu.dgut.networkengin2018_2.wechat_mall.entity.Orders;
 import edu.dgut.networkengin2018_2.wechat_mall.util.PageQueryUtil;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -60,4 +61,15 @@ public interface OrdersMapper {
     Orders getOrderByNumber(String orderNumber);
 
     int updateOrderStatusByNumber(String orderNumber, Integer status);
+
+    List<Orders> selectByPrimaryKeys(@Param("orderIds") List<Integer> orderIds);
+
+    int checkDone(@Param("orderIds") List<Integer> asList);
+
+    /**
+     * 批量关闭
+     * @param orderIds
+     * @return
+     */
+    int closeDone(@Param("orderIds") List<Integer> orderIds );
 }

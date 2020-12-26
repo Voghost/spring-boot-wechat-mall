@@ -71,13 +71,13 @@ public class GoodsServiceImpl implements GoodsService {
     public Map<String, Object> getGoodsByIdForWechat(Integer goodsId) {
         Map<String, Object> map = new HashMap<>();
         Map<String, Object> meta = new HashMap<>();
-        Map<String, Object>  result= new HashMap<>();
+        Map<String, Object> result = new HashMap<>();
         Goods goods = goodsMapper.selectByPrimaryKey(goodsId);
 
         if (goods != null) {
             map.put("goods_id", goods.getGoodsId());
             map.put("cat_id", goods.getGoodsCatThreeId());
-            map.put("goods_name",goods.getGoodsName());
+            map.put("goods_name", goods.getGoodsName());
             map.put("goods_price", goods.getGoodsPrice());
             map.put("goods_number", goods.getGoodsNumber());
             map.put("goods_weight", goods.getGoodsWeight());
@@ -86,12 +86,30 @@ public class GoodsServiceImpl implements GoodsService {
             map.put("cat_one_id", goods.getGoodsCatOneId());
             map.put("cat_two_id", goods.getGoodsCatTwoId());
             map.put("cat_three_id", goods.getGoodsCatThreeId());
+            List<Map<String, Object>> pics = new ArrayList<>();
+
+            String[] url = new String[3];
+            url[0] = goods.getGoodsPicOne();
+            url[1] = goods.getGoodsPicTwo();
+            url[2] = goods.getGoodsPicThree();
+
+            for (int i = 0; i < 3; i++) {
+                Map<String, Object> pic = new HashMap<>();
+                pic.put("pics_big",url[i]);
+                pic.put("pics_mid",url[i]);
+                pic.put("pics_sma",url[i]);
+                pic.put("pics_big_url",url[i]);
+                pic.put("pics_mid_url",url[i]);
+                pic.put("pics_sma_url",url[i]);
+                pics.add(pic);
+            }
+            map.put("pics",pics);
 
             meta.put("msg", "获取成功");
             meta.put("status", 200);
 
-            result.put("message",map);
-            result.put("meta",meta);
+            result.put("message", map);
+            result.put("meta", meta);
             return result;
         }
 

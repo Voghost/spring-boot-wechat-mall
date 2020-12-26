@@ -43,5 +43,8 @@ public class Goods {
     private Integer goodsCatOneId;      //商品第一级id
     private Integer goodsCatTwoId;      //商品第二级id
     private Integer goodsCatThreeId;    //商品第三级id
-}
 
+    private String goodsPicOne; //商品第一张附图
+    private String goodsPicTwo; //商品第二张附图
+    private String goodsPicThree;
+}

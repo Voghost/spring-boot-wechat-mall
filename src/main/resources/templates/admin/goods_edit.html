@@ -143,7 +143,7 @@
                                        th:checked="${null==goods||(null !=goods and null !=goods.goodsIsPromote and !goods.goodsIsPromote)} ?true:false"/> 不促销&nbsp;
                             </div>
 
-                            <div class="form-group">
+                            <div class="form-group" style="width: 160px; float: left">
                                 <div class="form-group">
                                     <div class="col-sm-4">
                                         <th:block th:if="${null == goods}">
@@ -166,7 +166,77 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="form-group" id="wangEditor" th:utext="${goods!=null and goods.goodsIntroduce !=null}?${goods.goodsIntroduce}: ''">
+                            <div class="form-group" style="width: 160px; float: left; margin-left: 100px;">
+                                <div class="form-group">
+                                    <div class="col-sm-4">
+                                        <th:block th:if="${null == goods}">
+                                            <img id="goodsPicOne" src="/admin/dist/img/img-upload.png"
+                                                 style="height: 64px;width: 64px;">
+                                        </th:block>
+                                        <th:block th:unless="${null ==goods}">
+                                            <img id="goodsPicOne" th:src="${goods.goodsPicOne}"
+                                                 style="width:160px ;height: 160px;display:block;">
+                                        </th:block>
+                                    </div>
+                                </div>
+                                <br>
+                                <div class="form-group">
+                                    <div class="col-sm-4">
+                                        <button class="btn btn-info" style="margin-bottom: 5px;"
+                                                id="uploadGoodsCoverImg1">
+                                            <i class="fa fa-picture-o"></i>&nbsp;上传商品副图1
+                                        </button>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="form-group" style="width: 160px; float: left; margin-left: 20px;">
+                                <div class="form-group">
+                                    <div class="col-sm-4">
+                                        <th:block th:if="${null == goods}">
+                                            <img id="goodsPicTwo" src="/admin/dist/img/img-upload.png"
+                                                 style="height: 64px;width: 64px;">
+                                        </th:block>
+                                        <th:block th:unless="${null == goods}">
+                                            <img id="goodsPicTwo" th:src="${goods.goodsPicTwo}"
+                                                 style="width:160px ;height: 160px;display:block;">
+                                        </th:block>
+                                    </div>
+                                </div>
+                                <br>
+                                <div class="form-group">
+                                    <div class="col-sm-4">
+                                        <button class="btn btn-info" style="margin-bottom: 5px;"
+                                                id="uploadGoodsCoverImg2">
+                                            <i class="fa fa-picture-o"></i>&nbsp;上传商品副图2
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group" style="width: 160px; float: left; margin-left: 20px;">
+                                <div class="form-group">
+                                    <div class="col-sm-4">
+                                        <th:block th:if="${null == goods}">
+                                            <img id="goodsPicThree" src="/admin/dist/img/img-upload.png"
+                                                 style="height: 64px;width: 64px;">
+                                        </th:block>
+                                        <th:block th:unless="${null == goods}">
+                                            <img id="goodsPicThree" th:src="${goods.goodsPicThree}"
+                                                 style="width:160px ;height: 160px;display:block;">
+                                        </th:block>
+                                    </div>
+                                </div>
+                                <br>
+                                <div class="form-group">
+                                    <div class="col-sm-4">
+                                        <button class="btn btn-info" style="margin-bottom: 5px;"
+                                                id="uploadGoodsCoverImg3">
+                                            <i class="fa fa-picture-o"></i>&nbsp;上传商品副图3
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group" id="wangEditor" style="clear:both" th:utext="${goods!=null and goods.goodsIntroduce !=null}?${goods.goodsIntroduce}: ''">
                             </div>
                             <div class="form-group">
                                 <!-- 按钮 -->

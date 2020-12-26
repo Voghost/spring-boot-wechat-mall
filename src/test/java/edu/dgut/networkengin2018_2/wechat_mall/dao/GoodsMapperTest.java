@@ -41,6 +41,9 @@ class GoodsMapperTest {
         goods.setGoodsBigLogo("url");
         goods.setGoodsSmallLogo("url");
         goods.setGoodsIsPromote(false);
+        goods.setGoodsPicOne("url");
+        goods.setGoodsPicTwo("url");
+        goods.setGoodsPicThree("url");
         int num =goodsMapper.insert(goods);
         assertEquals(num,1);
     }

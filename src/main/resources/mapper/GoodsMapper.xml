@@ -21,6 +21,9 @@
         <result column="goods_cat_one_id" jdbcType="INTEGER" property="goodsCatOneId"/>
         <result column="goods_cat_two_id" jdbcType="INTEGER" property="goodsCatTwoId"/>
         <result column="goods_cat_three_id" jdbcType="INTEGER" property="goodsCatThreeId"/>
+        <result column="goods_pic_one" jdbcType="VARCHAR" property="goodsPicOne"/>
+        <result column="goods_pic_two" jdbcType="VARCHAR" property="goodsPicTwo"/>
+        <result column="goods_pic_three" jdbcType="VARCHAR" property="goodsPicThree"/>
     </resultMap>
 
     <!--相当于一个常量，后面可以引用-->
@@ -28,7 +31,7 @@
         goods_id
         ,goods_name, goods_price, goods_number, goods_weight, goods_introduce, goods_big_logo,goods_small_logo, goods_state,
         goods_add_time, goods_add_time, goods_upd_time,goods_delete_time, goods_hot_number, goods_is_promote,
-        goods_cat_one_id, goods_cat_two_id,goods_cat_three_id
+        goods_cat_one_id, goods_cat_two_id,goods_cat_three_id,goods_pic_one,goods_pic_two,goods_pic_three
     </sql>
 
 
@@ -49,7 +52,10 @@
             <if test="goodsIsPromote != null">goods_is_promote,</if>
             <if test="goodsCatOneId != null">goods_cat_one_id,</if>
             <if test="goodsCatTwoId != null">goods_cat_two_id,</if>
-            <if test="goodsCatThreeId != null">goods_cat_three_id</if>
+            <if test="goodsCatThreeId != null">goods_cat_three_id,</if>
+            <if test="goodsPicOne != null">goods_pic_one,</if>
+            <if test="goodsPicTwo != null">goods_pic_two,</if>
+            <if test="goodsPicThree != null">goods_pic_three,</if>
         </trim>
     </sql>
 
@@ -70,7 +76,10 @@
             <if test="goodsIsPromote != null">#{goodsIsPromote},</if>
             <if test="goodsCatOneId != null">#{goodsCatOneId},</if>
             <if test="goodsCatTwoId != null">#{goodsCatTwoId},</if>
-            <if test="goodsCatThreeId != null">#{goodsCatThreeId}</if>
+            <if test="goodsCatThreeId != null">#{goodsCatThreeId},</if>
+            <if test="goodsPicOne != null">#{goodsPicOne},</if>
+            <if test="goodsPicTwo != null">#{goodsPicTwo},</if>
+            <if test="goodsPicThree != null">#{goodsPicThree},</if>
         </trim>
     </sql>
 
@@ -136,6 +145,15 @@
             </if>
             <if test="goodsCatThreeId != null">
                 goods_cat_three_id = #{goodsCatThreeId},
+            </if>
+            <if test="goodsPicOne != null">
+                goods_pic_one = #{goodsPicOne},
+            </if>
+            <if test="goodsPicTwo != null">
+                goods_pic_two = #{goodsPicTwo},
+            </if>
+            <if test="goodsPicThree != null">
+                goods_pic_three = #{goodsPicThree},
             </if>
         </set>
         where goods_id = #{goodsId}

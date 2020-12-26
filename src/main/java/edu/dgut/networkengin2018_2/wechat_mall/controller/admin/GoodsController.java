@@ -2,7 +2,9 @@ package edu.dgut.networkengin2018_2.wechat_mall.controller.admin;
 
 import edu.dgut.networkengin2018_2.wechat_mall.entity.Category;
 import edu.dgut.networkengin2018_2.wechat_mall.entity.Goods;
+import edu.dgut.networkengin2018_2.wechat_mall.entity.Goodspics;
 import edu.dgut.networkengin2018_2.wechat_mall.service.GoodsCategoryService;
+import edu.dgut.networkengin2018_2.wechat_mall.service.GoodsPicsService;
 import edu.dgut.networkengin2018_2.wechat_mall.service.GoodsService;
 import edu.dgut.networkengin2018_2.wechat_mall.util.PageQueryUtil;
 import edu.dgut.networkengin2018_2.wechat_mall.util.Result;
@@ -23,8 +25,10 @@ import java.util.*;
 public class GoodsController {
     @Resource
     private GoodsService goodsService;
+
     @Resource
     private GoodsCategoryService goodsCategoryService;
+
 
 
     /**
@@ -87,7 +91,10 @@ public class GoodsController {
                 || Objects.isNull(goods.getGoodsIsPromote())
                 || Objects.isNull(goods.getGoodsCatOneId())
                 || Objects.isNull(goods.getGoodsCatTwoId())
-                || Objects.isNull(goods.getGoodsCatThreeId())) {
+                || Objects.isNull(goods.getGoodsCatThreeId())
+                || Objects.isNull(goods.getGoodsPicOne())
+                || Objects.isNull(goods.getGoodsPicTwo())
+                || Objects.isNull(goods.getGoodsPicThree())) {
 
             return ResultGenerator.genFailResult("参数异常！");
         }
@@ -186,7 +193,10 @@ public class GoodsController {
                 || Objects.isNull(goods.getGoodsIsPromote())
                 || Objects.isNull(goods.getGoodsCatOneId())
                 || Objects.isNull(goods.getGoodsCatTwoId())
-                || Objects.isNull(goods.getGoodsCatThreeId())) {
+                || Objects.isNull(goods.getGoodsCatThreeId())
+                || Objects.isNull(goods.getGoodsPicOne())
+                || Objects.isNull(goods.getGoodsPicTwo())
+                || Objects.isNull(goods.getGoodsPicThree())) {
             return ResultGenerator.genFailResult("参数异常！");
         }
         //设置更新时间

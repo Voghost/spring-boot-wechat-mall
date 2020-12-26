@@ -4,13 +4,13 @@ $(function () {
         datatype: "json",
         colModel: [
             {label: 'id', name: 'orderId', index: 'orderId', width: 50, key: true, hidden: true},
-            {label: '订单号', name: 'orderNo', index: 'orderNo', width: 120},
-            {label: '订单总价', name: 'totalPrice', index: 'totalPrice', width: 60},
-            {label: '订单状态', name: 'orderStatus', index: 'orderStatus', width: 80, formatter: orderStatusFormatter},
-            {label: '支付方式', name: 'payType', index: 'payType', width: 80,formatter:payTypeFormatter},
-            {label: '收件人地址', name: 'userAddress', index: 'userAddress', width: 10, hidden: true},
-            {label: '创建时间', name: 'createTime', index: 'createTime', width: 120},
-            {label: '操作', name: 'createTime', index: 'createTime', width: 120, formatter: operateFormatter}
+            {label: '订单号', name: 'orderNumber', index: 'orderNumber', width: 120},
+            {label: '订单总价', name: 'orderPrice', index: 'orderPrice', width: 60},
+            {label: '订单状态', name: 'orderState', index: 'orderState', width: 80, formatter: orderStatusFormatter},
+            // {label: '支付方式', name: 'payType', index: 'payType', width: 80,formatter:payTypeFormatter},
+            {label: '收件人地址', name: 'orderAddress', index: 'orderAddress', width: 10, hidden: true},
+            {label: '创建时间', name: 'orderCreateTime', index: 'orderCreateTime', width: 120},
+            {label: '操作', name: 'orderCreateTime', index: 'orderCreateTime', width: 120, formatter: operateFormatter}
         ],
         height: 760,
         rowNum: 20,
@@ -44,6 +44,7 @@ $(function () {
     });
 
     function operateFormatter(cellvalue, rowObject) {
+        console.log("rowid"+rowObject);
         return "<a href=\'##\' onclick=openOrderItems(" + rowObject.rowId + ")>查看订单信息</a>" +
             "<br>" +
             "<a href=\'##\' onclick=openExpressInfo(" + rowObject.rowId + ")>查看收件人信息</a>";
@@ -58,11 +59,12 @@ $(function () {
             return "已支付";
         }
         if (cellvalue == 2) {
-            return "配货完成";
+            return "已发货";
         }
         if (cellvalue == 3) {
-            return "出库成功";
+            return "已到货,关闭";
         }
+/*
         if (cellvalue == 4) {
             return "交易成功";
         }
@@ -75,6 +77,7 @@ $(function () {
         if (cellvalue == -3) {
             return "商家关闭";
         }
+*/
     }
 
     function payTypeFormatter(cellvalue) {
@@ -113,6 +116,7 @@ function reload() {
  */
 function openOrderItems(orderId) {
     $('.modal-title').html('订单详情');
+    console.log("orderid"+orderId) // 测试
     $.ajax({
         type: 'GET',//方法类型
         url: '/admin/order-items/' + orderId,
@@ -122,7 +126,8 @@ function openOrderItems(orderId) {
                 $('#orderItemModal').modal('show');
                 var itemString = '';
                 for (i = 0; i < result.data.length; i++) {
-                    itemString += result.data[i].goodsName + ' x ' + result.data[i].goodsCount + ' 商品编号 ' + result.data[i].goodsId + ";<br>";
+                    // itemString += result.data[i].goodsName + ' x ' + result.data[i].goodsCount + ' 商品编号 ' + result.data[i].goodsId + ";<br>";
+                    itemString += '商品编号' + result.data[i].orderGoodsId + ' x ' + result.data[i].orderGoodsNumber + ";<br>";
                 }
                 $("#orderItemString").html(itemString);
             } else {
@@ -148,7 +153,7 @@ function openExpressInfo(orderId) {
     var rowData = $("#jqGrid").jqGrid("getRowData", orderId);
     $('.modal-title').html('收件信息');
     $('#expressInfoModal').modal('show');
-    $("#userAddressInfo").html(rowData.userAddress);
+    $("#userAddressInfo").html(rowData.orderAddress);
 }
 
 /**
@@ -164,8 +169,8 @@ function orderEdit() {
     $('.modal-title').html('订单编辑');
     $('#orderInfoModal').modal('show');
     $("#orderId").val(id);
-    $("#userAddress").val(rowData.userAddress);
-    $("#totalPrice").val(rowData.totalPrice);
+    $("#userAddress").val(rowData.orderAddress);
+    $("#totalPrice").val(rowData.orderPrice);
 }
 
 
@@ -179,10 +184,10 @@ $('#saveButton').click(function () {
     var url = '/admin/orders/update';
     var data = {
         "orderId": id,
-        "totalPrice": totalPrice,
-        "userName": userName,
-        "userPhone": userPhone,
-        "userAddress": userAddress
+        "orderPrice": totalPrice,
+        // "userName": userName,
+        // "userPhone": userPhone,
+        "orderAddress": userAddress
     };
     $.ajax({
         type: 'POST',//方法类型
@@ -213,7 +218,7 @@ $('#saveButton').click(function () {
 });
 
 /**
- * 订单拣货完成
+ * 订单配送
  */
 function orderCheckDone() {
     var ids = getSelectedRows();
@@ -223,8 +228,8 @@ function orderCheckDone() {
     var orderNos = '';
     for (i = 0; i < ids.length; i++) {
         var rowData = $("#jqGrid").jqGrid("getRowData", ids[i]);
-        if (rowData.orderStatus != '已支付') {
-            orderNos += rowData.orderNo + " ";
+        if (rowData.orderState != '已支付') {
+            orderNos += rowData.orderNumber + " ";
         }
     }
     if (orderNos.length > 0 & orderNos.length < 100) {

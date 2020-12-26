@@ -14,7 +14,7 @@
 
     <!--相当于一个常量，后面可以引用-->
     <sql id="BaseColumnList">
-        order_id
+        order_id,
         order_user_id,order_number,order_price,order_state,order_create_time,order_update_time,order_address
     </sql>
 
@@ -61,9 +61,6 @@
     <update id="updateByPrimaryKey" parameterType="edu.dgut.networkengin2018_2.wechat_mall.entity.Orders">
         update tb_orders
         <set>
-            <if test="orderTime != null">
-                order_time = #{orderTime},
-            </if>
             <if test="orderUserId != null">
                 order_user_id = #{orderUserId },
             </if>
@@ -93,6 +90,24 @@
         update tb_orders
         set order_state = #{status}
         where order_number = #{orderNumber}
+    </update>
+
+    <update id="checkDone">
+        update tb_orders
+        set order_state = 2,  order_update_time = now()
+        where order_id in
+        <foreach collection="orderIds" item="item" index="index"
+                 open="(" separator="," close=")">#{item}
+        </foreach>
+    </update>
+
+    <update id="closeDone">
+        update tb_orders
+        set order_state = 3, order_update_time = now()
+        where order_id in
+        <foreach collection="orderIds" item="item" index="index"
+                 open="(" separator="," close=")">#{item}
+        </foreach>
     </update>
 
     <!--删除 通过主键-->
@@ -152,6 +167,16 @@
         select *
         from tb_orders
         where order_number = #{orderNumber}
+    </select>
+
+
+    <select id="selectByPrimaryKeys" resultMap="BaseResultMap">
+        select *
+        from tb_orders
+        where order_id in
+        <foreach collection="orderIds" item="item" index="index" open="(" separator="," close=")">
+              #{item}
+        </foreach>
     </select>
 
 </mapper>

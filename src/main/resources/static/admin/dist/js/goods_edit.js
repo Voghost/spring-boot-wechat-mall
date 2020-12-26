@@ -68,6 +68,72 @@ $(function () {
             }
         }
     });
+
+    new AjaxUpload('#uploadGoodsCoverImg1', {
+        action: '/admin/upload/file',
+        name: 'file',
+        autoSubmit: true,
+        responseType: "json",
+        onSubmit: function (file, extension) {
+            if (!(extension && /^(jpg|jpeg|png|gif)$/.test(extension.toLowerCase()))) {
+                alert('只支持jpg、png、gif格式的文件！');
+                return false;
+            }
+        },
+        onComplete: function (file, r) {
+            if (r != null && r.resultCode == 200) {
+                $("#goodsPicOne").attr("src", r.data);
+                $("#goodsPicOne").attr("style", "width: 128px;height: 128px;display:block;");
+                return false;
+            } else {
+                alert("error");
+            }
+        }
+    });
+
+    new AjaxUpload('#uploadGoodsCoverImg2', {
+        action: '/admin/upload/file',
+        name: 'file',
+        autoSubmit: true,
+        responseType: "json",
+        onSubmit: function (file, extension) {
+            if (!(extension && /^(jpg|jpeg|png|gif)$/.test(extension.toLowerCase()))) {
+                alert('只支持jpg、png、gif格式的文件！');
+                return false;
+            }
+        },
+        onComplete: function (file, r) {
+            if (r != null && r.resultCode == 200) {
+                $("#goodsPicTwo").attr("src", r.data);
+                $("#goodsPicTwo").attr("style", "width: 128px;height: 128px;display:block;");
+                return false;
+            } else {
+                alert("error");
+            }
+        }
+    });
+
+    new AjaxUpload('#uploadGoodsCoverImg3', {
+        action: '/admin/upload/file',
+        name: 'file',
+        autoSubmit: true,
+        responseType: "json",
+        onSubmit: function (file, extension) {
+            if (!(extension && /^(jpg|jpeg|png|gif)$/.test(extension.toLowerCase()))) {
+                alert('只支持jpg、png、gif格式的文件！');
+                return false;
+            }
+        },
+        onComplete: function (file, r) {
+            if (r != null && r.resultCode == 200) {
+                $("#goodsPicThree").attr("src", r.data);
+                $("#goodsPicThree").attr("style", "width: 128px;height: 128px;display:block;");
+                return false;
+            } else {
+                alert("error");
+            }
+        }
+    });
 });
 
 $('#saveButton').click(function () {
@@ -91,6 +157,9 @@ $('#saveButton').click(function () {
     // var goodsBigLogo =  $('#goodsBigLogo').val();
     var goodsBigLogo =  $('#goodsBigLogo')[0].src;
     var goodsSmallLogo = goodsBigLogo;
+    var goodsPicOne = $('#goodsPicOne')[0].src;
+    var goodsPicTwo = $('#goodsPicTwo')[0].src;
+    var goodsPicThree = $('#goodsPicThree')[0].src;
     var goodsWeight = $('#goodsWeight').val();
 
     /*
@@ -202,6 +271,9 @@ $('#saveButton').click(function () {
         "goodsIntroduce": goodsDetailContent,
         "goodsBigLogo": goodsBigLogo,
         "goodsSmallLogo": goodsSmallLogo,
+        "goodsPicOne":goodsPicOne,
+        "goodsPicTwo":goodsPicTwo,
+        "goodsPicThree":goodsPicThree,
         "goodsIsPromote": goodsIsPromote,
         // "goodsCarousel": goodsCoverImg,
         "goodsState": goodsSellStatus
@@ -227,6 +299,9 @@ $('#saveButton').click(function () {
             // "goodsBigLogo": goodsCoverImg,
             "goodsBigLogo": goodsBigLogo,
             "goodsSmallLogo": goodsSmallLogo,
+            "goodsPicOne":goodsPicOne,
+            "goodsPicTwo":goodsPicTwo,
+            "goodsPicThree":goodsPicThree,
             // "goodsCarousel": goodsCoverImg,
             "goodsState": goodsSellStatus
             /*
@@ -251,6 +326,7 @@ $('#saveButton').click(function () {
         contentType: 'application/json',
         data: JSON.stringify(data),
         success: function (result) {
+            console.log(result);
             if (result.resultCode == 200) {
                 $('#goodsModal').modal('hide');
                 swal({
@@ -272,7 +348,8 @@ $('#saveButton').click(function () {
             }
             ;
         },
-        error: function () {
+        error: function (result) {
+            console.log(result);
             swal("操作失败", {
                 icon: "error",
             });

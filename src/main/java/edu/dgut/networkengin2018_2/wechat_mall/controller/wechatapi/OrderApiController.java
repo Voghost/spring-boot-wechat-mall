@@ -76,8 +76,8 @@ public class OrderApiController {
         double totalPrice = 0;
         for (int i = 0; i < goods.size(); i++) {
             Ordersgoods ordersGoodsTmp = new Ordersgoods();
-//            ordersGoodsTmp.setOrderGoodsId(Integer.parseInt((String) goods.get(i).get("goods_id")));
-            ordersGoodsTmp.setOrderGoodsId((Integer) goods.get(i).get("goods_id")); // 修改后
+            ordersGoodsTmp.setOrderGoodsId(Integer.parseInt((String) goods.get(i).get("goods_id")));
+//            ordersGoodsTmp.setOrderGoodsId((Integer) goods.get(i).get("goods_id")); // 修改后
             ordersGoodsTmp.setOrderGoodsNumber((Integer) goods.get(i).get("goods_number"));
             ordersGoodsTmp.setOrderPrice(((Integer) goods.get(i).get("goods_price")).doubleValue());
             ordersGoodsList.add(ordersGoodsTmp);

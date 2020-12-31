@@ -129,6 +129,10 @@ public class MainApiController {
         return result;
     }
 
+
+
+
+
     /**
      * 返回商品楼层
      */
@@ -155,36 +159,55 @@ public class MainApiController {
         map2.put("name","春季热门");
         map2.put("image_src","https://api-hmugo-web.itheima.net/pyg/pic_floor01_3@2x.png");
         map2.put("image_width","233");
-        map1.put("open_type","navigate");
+        map2.put("open_type","navigate");
         map2.put("navigator_url","/pages/goods_list?query=热");
 
         Map<String,Object>  map3= new HashMap<>();
         map3.put("name","爆款清仓");
         map3.put("image_src","https://api-hmugo-web.itheima.net/pyg/pic_floor01_4@2x.png");
         map3.put("image_width","233");
-        map1.put("open_type","navigate");
+        map3.put("open_type","navigate");
         map3.put("navigator_url","/pages/goods_list?query=热");
 
         Map<String,Object>  map4= new HashMap<>();
         map4.put("name","爆款清仓");
-        map4.put("image_src","https://api-hmugo-web.itheima.net/pyg/pic_floor01_5@2x.png");
+        map4.put("image_src","https://oss.ghovos.top/wechat-mini/upload/20201223_19214897.png");
         map4.put("image_width","233");
-        map1.put("open_type","navigate");
+        map4.put("open_type","navigate");
         map4.put("navigator_url","/pages/goods_list?query=爆款");
 
 
         Map<String,Object>  map5= new HashMap<>();
         map5.put("name","怦然心动");
-        map5.put("image_src","https://api-hmugo-web.itheima.net/pyg/pic_floor01_6@2x.png");
+//        map5.put("image_src","https://api-hmugo-web.itheima.net/pyg/pic_floor01_2@2x.png");
+        map5.put("image_src","https://oss.ghovos.top/wechat-mini/upload/20201223_13130640.png");
         map5.put("image_width","233");
-        map1.put("open_type","navigate");
+        map5.put("open_type","navigate");
         map5.put("navigator_url","/pages/goods_list?query=心动");
+
+        Map<String,Object>  map6= new HashMap<>();
+        map6.put("name","怦然心动");
+        map6.put("image_src","https://api-hmugo-web.itheima.net/pyg/pic_floor01_2@2x.png");
+        map5.put("image_width","233");
+        map6.put("open_type","navigate");
+        map6.put("navigator_url","/pages/goods_list?query=心动");
+
+        Map<String,Object>  map7= new HashMap<>();
+        map7.put("name","怦然心动");
+        map7.put("image_src","https://api-hmugo-web.itheima.net/pyg/pic_floor01_2@2x.png");
+        map5.put("image_width","233");
+        map7.put("open_type","navigate");
+        map7.put("navigator_url","/pages/goods_list?query=心动");
 
         productList.add(map1);
         productList.add(map2);
         productList.add(map3);
-        productList.add(map4);
-        productList.add(map5);
+//        productList.add(map4);
+//        productList.add(map5);
+        productList.add(map6);
+        productList.add(map6);
+        productList.add(map7);
+        productList.add(map7);
 
         Map<String,Object> pMap = new HashMap<>();
         pMap.put("product_list",productList);

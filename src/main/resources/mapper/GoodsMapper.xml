@@ -201,7 +201,33 @@
                 and create_time &lt; #{endTime}
             </if>
         </where>
-        order by goods_id desc
+        <choose>
+            <when test="sidx== 'goodsPrice' and order != null and order != ''">
+                order by goods_price ${order}
+            </when>
+            <when test="sidx== 'goodsNumber' and order != null and order != ''">
+                order by goods_number ${order}
+            </when>
+            <when test="sidx== 'goodsName' and order != null and order != ''">
+                order by goods_name ${order}
+            </when>
+            <when test="sidx== 'goodsAddTime' and order != null and order != ''">
+                order by goods_add_time ${order}
+            </when>
+            <when test="sidx== 'goodsUpdateTime' and order != null and order != ''">
+                order by goods_upd_time ${order}
+            </when>
+            <when test="sidx== 'goodsId' and order != null and order != ''">
+                order by goods_id ${order}
+            </when>
+            <when test="sidx== 'goodsState' and order != null and order != ''">
+                order by goods_state ${order}
+            </when>
+            <otherwise>
+                order by goods_id desc
+            </otherwise>
+        </choose>
+
         /*分页查询*/
         <if test="start != null and limit != null">
             limit #{start},#{limit}

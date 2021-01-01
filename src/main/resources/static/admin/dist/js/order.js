@@ -10,6 +10,7 @@ $(function () {
             // {label: '支付方式', name: 'payType', index: 'payType', width: 80,formatter:payTypeFormatter},
             {label: '收件人地址', name: 'orderAddress', index: 'orderAddress', width: 10, hidden: true},
             {label: '创建时间', name: 'orderCreateTime', index: 'orderCreateTime', width: 120},
+            {label: '最后修改时间', name: 'orderUpdateTime', index: 'orderUpdateTime', width: 120},
             {label: '操作', name: 'orderCreateTime', index: 'orderCreateTime', width: 120, formatter: operateFormatter}
         ],
         height: 760,

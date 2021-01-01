@@ -3,8 +3,8 @@ $(function () {
         url: '/admin/goods/list',
         datatype: "json",
         colModel: [
-            {label: '商品编号', name: 'goodsId', index: 'goodsId', width: 60, key: true},
-            {label: '商品名', name: 'goodsName', index: 'goodsName', width: 120},
+            {label: '商品编号', name: 'goodsId', index: 'goodsId', width: 40, key: true},
+            {label: '商品名', name: 'goodsName', index: 'goodsName', width: 90},
             // {label: '商品简介', name: 'goodsIntroduce', index: 'goodsIntroduce', width: 120},
             {
                 label: '商品图片',
@@ -22,7 +22,8 @@ $(function () {
                 width: 80,
                 formatter: goodsSellStatusFormatter
             },
-            {label: '创建时间', name: 'goodsAddTime', index: 'goodsAddTime', width: 60}
+            {label: '创建时间', name: 'goodsAddTime', index: 'goodsAddTime', width: 60},
+            {label: '修改时间', name: 'goodsUpdateTime', index: 'goodsUpdateTime', width: 60}
         ],
         height: 760,
         rowNum: 15,

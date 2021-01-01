@@ -148,6 +148,7 @@ public class MainApiController {
 
 
 
+/*
         Map<String,Object>  map1= new HashMap<>();
         map1.put("name","优质服饰");
         map1.put("image_src","https://api-hmugo-web.itheima.net/pyg/pic_floor01_2@2x.png");
@@ -208,6 +209,7 @@ public class MainApiController {
         productList.add(map6);
         productList.add(map7);
         productList.add(map7);
+*/
 
         Map<String,Object> pMap = new HashMap<>();
         pMap.put("product_list",productList);

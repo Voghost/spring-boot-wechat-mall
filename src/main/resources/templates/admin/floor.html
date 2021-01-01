@@ -1,28 +1,7 @@
-<!-- Copyright (c) 2019-2020 十三 all rights reserved. -->
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <header th:replace="admin/header::header-fragment">
 </header>
-<style>
-    .ui-jqgrid tr.jqgrow td {
-        white-space: normal !important;
-        height: auto;
-        vertical-align: text-top;
-        padding-top: 2px;
-    }
-
-    a {
-        color: #1baeae;
-        text-decoration: none;
-        background-color: transparent;
-        -webkit-text-decoration-skip: objects;
-    }
-
-    a:hover {
-        color: white;
-        background-color: #1baeae;
-    }
-</style>
 <body class="hold-transition sidebar-mini">
 <div class="wrapper">
     <!-- 引入页面头header-fragment -->
@@ -41,22 +20,19 @@
             <div class="container-fluid">
                 <div class="card card-primary card-outline">
                     <div class="card-header">
-                        <h3 class="card-title">商品管理</h3>
+                        <h3 class="card-title">楼层管理</h3>
                     </div> <!-- /.card-body -->
 
                     <div class="card-body">
                         <div class="grid-btn">
-                            <button class="btn btn-info" onclick="addGoods()"><i
-                                    class="fa fa-plus"></i>&nbsp;添加商品
+                            <button class="btn btn-info" onclick="addFloor()"><i
+                                    class="fa fa-plus"></i>&nbsp;添加楼层
                             </button>
-                            <button class="btn btn-info" onclick="editGoods()"><i
-                                    class="fa fa-pencil-square-o"></i>&nbsp;修改商品
+                            <button class="btn btn-info" onclick="editFloor()"><i
+                                    class="fa fa-pencil-square-o"></i>&nbsp;修改楼层
                             </button>
-                            <button class="btn btn-success" onclick="putUpGoods()"><i
-                                    class="fa fa-arrow-up"></i>&nbsp;上架商品
-                            </button>
-                            <button class="btn btn-danger" onclick="putDownGoods()"><i
-                                    class="fa fa-arrow-down"></i>&nbsp;下架商品
+                            <button class="btn btn-danger" onclick="deleteFloor()"><i
+                                    class="fa fa-trash-o"></i>&nbsp;删除
                             </button>
                         </div>
                         <table id="jqGrid" class="table table-bordered">
@@ -86,6 +62,6 @@
 <!-- sweetalert -->
 <script th:src="@{/admin/plugins/sweetalert/sweetalert.min.js}"></script>
 <script th:src="@{/admin/dist/js/public.js}"></script>
-<script th:src="@{/admin/dist/js/goods.js}"></script>
+<script th:src="@{/admin/dist/js/floor.js}"></script>
 </body>
 </html>

@@ -137,7 +137,30 @@
         from tb_orders
         <where>
         </where>
-        order by order_id desc
+
+        <choose>
+            <when test="sidx== 'orderUserId' and order != null and order != ''">
+                order by order_user_id ${order}
+            </when>
+            <when test="sidx== 'orderNumber' and order != null and order != ''">
+                order by order_number ${order}
+            </when>
+            <when test="sidx== 'orderPrice' and order != null and order != ''">
+                order by order_price ${order}
+            </when>
+            <when test="sidx== 'orderState' and order != null and order != ''">
+                order by order_state ${order}
+            </when>
+            <when test="sidx== 'orderCreateTime' and order != null and order != ''">
+                order by order_create_time ${order}
+            </when>
+            <when test="sidx== 'orderUpdateTime' and order != null and order != ''">
+                order by order_update_time ${order}
+            </when>
+            <otherwise>
+                order by order_id desc
+            </otherwise>
+        </choose>
         /*分页查询*/
         <if test="start != null and limit != null">
             limit #{start},#{limit}

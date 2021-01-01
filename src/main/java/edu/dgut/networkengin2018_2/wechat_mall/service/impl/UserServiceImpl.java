@@ -7,6 +7,7 @@ import edu.dgut.networkengin2018_2.wechat_mall.entity.Users;
 import edu.dgut.networkengin2018_2.wechat_mall.entity.WechatLogin;
 import edu.dgut.networkengin2018_2.wechat_mall.service.UsersService;
 import edu.dgut.networkengin2018_2.wechat_mall.util.PageQueryUtil;
+import edu.dgut.networkengin2018_2.wechat_mall.util.PageResultUtil;
 import edu.dgut.networkengin2018_2.wechat_mall.util.WechatInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.security.oauth2.resource.OAuth2ResourceServerProperties;
@@ -18,6 +19,7 @@ import org.springframework.web.client.RestTemplate;
 
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Service
@@ -26,6 +28,14 @@ public class UserServiceImpl implements UsersService {
     @Autowired
     private UsersMapper usersMapper;
 
+    @Override
+    public PageResultUtil getUsersPage(PageQueryUtil pageQueryUtil) {
+        List<Users> users = usersMapper.findUsersList(pageQueryUtil);
+        int total = usersMapper.getTotalUser();
+
+        PageResultUtil pageResultUtil = new PageResultUtil(users, total, pageQueryUtil.getLimit(), pageQueryUtil.getPage());
+        return pageResultUtil;
+    }
 
     /**
      * 微信登录
@@ -94,4 +104,14 @@ public class UserServiceImpl implements UsersService {
     public Users getUserByToken(String token) {
         return usersMapper.getUserByToken(token);
     }
+
+
+    @Override
+    public Boolean lockUsers(Integer[] ids, int lockStatus) {
+        if (ids.length < 1) {
+            return false;
+        }
+        return usersMapper.lockUserBatch(ids, lockStatus) > 0;
+    }
+
 }

@@ -32,10 +32,24 @@
         where floor_id = #{floorId}
     </delete>
 
-    <select id="findGoodsList" resultMap="BaseResultMap">
-        select *
-        from
-    </select>
+    <delete id="deleteBatch">
+        delete from tb_floor
+        where floor_id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
 
+    <select id="findFloorList" resultMap="BaseResultMap">
+        select *
+        from tb_floor
+        <if test="start != null and limit != null">
+            limit #{start},#{limit}
+        </if>
+    </select>
+    <select id="getTotalFloors" resultType="java.lang.Integer">
+        select count(*)
+        from tb_floor
+    </select>
 
 </mapper>

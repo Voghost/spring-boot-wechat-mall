@@ -29,6 +29,10 @@ public interface FloorMapper {
     * 分页查询(包括关键字)
     * @return
     */
-   List<Floor> findGoodsList(PageQueryUtil pageQueryUtil);
+   List<Floor> findFloorList(PageQueryUtil pageQueryUtil);
+
+   int getTotalFloors();
+
+   int deleteBatch(Integer[] ids);
 
 }

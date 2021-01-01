@@ -3,7 +3,7 @@ $(function () {
         url: '/admin/goods/list',
         datatype: "json",
         colModel: [
-            {label: '商品编号', name: 'goodsId', index: 'goodsId', width: 40, key: true},
+            {label: '商品编号', name: 'goodsId', index: 'goodsId', width: 50, key: true},
             {label: '商品名', name: 'goodsName', index: 'goodsName', width: 90},
             // {label: '商品简介', name: 'goodsIntroduce', index: 'goodsIntroduce', width: 120},
             {

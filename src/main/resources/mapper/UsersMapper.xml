@@ -68,6 +68,11 @@
         where user_id = #{userId}
     </update>
 
+    <update id="lockUserBatch" parameterType="edu.dgut.networkengin2018_2.wechat_mall.entity.Users">
+        update tb_users set user_is_active=#{lockStatus} where user_id in
+        <foreach item="id" collection="ids" open="(" separator="," close=")"> #{id} </foreach>
+    </update>
+
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
         delete
         from tb_users

@@ -5,6 +5,7 @@ import edu.dgut.networkengin2018_2.wechat_mall.entity.Goods;
 import edu.dgut.networkengin2018_2.wechat_mall.entity.Users;
 import edu.dgut.networkengin2018_2.wechat_mall.util.PageQueryUtil;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 @Mapper
@@ -26,5 +27,8 @@ public interface UsersMapper {
     Users getUserByOpenId(String userOpenId);
 
     Users getUserByToken(String token);
+
+    int lockUserBatch(@Param("ids") Integer[] ids, @Param("lockStatus") int lockStatus);
+
 
 }

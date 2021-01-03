@@ -115,9 +115,17 @@
         </if>
     </select>
 
-    <select id="getTotalCategories" resultType="java.lang.Integer">
+    <select id="getTotalCategories" parameterType="Map" resultType="java.lang.Integer">
         select count(*)
         from tb_category
+        <where>
+            <if test="categoryLevel!=null and categoryLevel!=''">
+                and cat_level = #{categoryLevel}
+            </if>
+            <if test="parentId!=null and parentId!=''">
+                and cat_pid = #{parentId}
+            </if>
+        </where>
     </select>
     <select id="selectByLevelAndName" resultMap="BaseResultMap">
         select *

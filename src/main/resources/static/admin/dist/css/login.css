@@ -1,0 +1,132 @@
+html {
+    height: 100%;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    -ms-background-size: cover;
+}
+
+
+.main {
+    position: relative;
+    width: 50%;
+    height: auto;
+    margin: 100px auto;
+    /*background-color: #bfa;*/
+}
+
+/*自动变大*/
+.main:after, .main:before {
+    content: "";
+    display: table;
+}
+
+.main:after {
+    clear: both;
+}
+
+
+.content {
+    float: right;
+    width: 100%;
+    height: 700px;
+    /*background-color: orange;*/
+    margin: auto;
+    overflow: hidden;
+    box-shadow: 0 0 0 rgba(0, 0, 0, 0.3);
+
+}
+
+
+.login{
+    width: 100%;
+    height: 100%;
+}
+
+.login:after, .login:before{
+    content: "";
+    display: table;
+}
+
+.login {
+    position: relative;
+    transition: margin-top 0.5s;
+}
+
+#Input1:checked ~ .content > .login {
+    margin-top: 0px;
+}
+
+#Input2:checked ~ .content > .login {
+    margin-top: -700px;
+}
+
+td {
+    padding: 0 30px;
+}
+
+.input-box {
+    position: relative;
+    width: 70%;
+    height: auto;
+    margin: 20px auto;
+    /*background-color: pink;*/
+}
+
+.input {
+    width: 98%;
+    font-size: 20px;
+    height: 30px;
+    margin-top: 30px;
+    background-color: #dbdbdb;
+    border: 0;
+}
+
+.input:focus {
+}
+
+.back {
+    position: absolute;
+    width: 100%;
+    height: auto;
+    top: 0px;
+    background-color: white;
+    /*background-color: gray;*/
+}
+
+.back:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+.submit {
+    border: 0;
+    width: 100%;
+    height: 40px;
+    margin-top: 40px;
+    margin-bottom: 20px;
+    background-color: #319102;
+    color: #343434;
+    font-size: 23px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.4);
+    transition: all 0.3s;
+}
+
+.submit:focus {
+    outline: 0;
+}
+
+.submit:hover {
+    background-color: #267200;
+}
+
+.submit:active {
+    width: 104%;
+    height: 44px;
+    margin-left: -2%;
+    margin-bottom: 16px;
+}

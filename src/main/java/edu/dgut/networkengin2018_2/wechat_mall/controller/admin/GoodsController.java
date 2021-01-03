@@ -27,17 +27,6 @@ public class GoodsController {
 
 
 
-    /**
-     * 后台主界面
-     *
-     * @param request
-     * @return
-     */
-    @GetMapping({"", "/", "/index", "/index.html"})
-    public String index(HttpServletRequest request) {
-        request.setAttribute("path", "index");
-        return "admin/index";
-    }
 
     /**
      * 商品主界面

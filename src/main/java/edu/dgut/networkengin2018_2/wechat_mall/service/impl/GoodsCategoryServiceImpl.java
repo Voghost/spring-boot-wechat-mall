@@ -19,7 +19,7 @@ public class GoodsCategoryServiceImpl implements GoodsCategoryService {
     @Override
     public PageResultUtil getCategoriesPage(PageQueryUtil pageQueryUtil) {
         List<Category> categories = categoryMapper.findCategoryList(pageQueryUtil);
-        int total = categoryMapper.getTotalCategories();
+        int total = categoryMapper.getTotalCategories(pageQueryUtil);
 
         // 将结果集存入包装类
         PageResultUtil pageResultUtil = new PageResultUtil(categories, total, pageQueryUtil.getLimit(), pageQueryUtil.getPage());

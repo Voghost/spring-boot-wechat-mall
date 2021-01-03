@@ -133,6 +133,7 @@ $('#saveButton').click(function () {
         $('#edit-error-msg').html("请输入符合规范的分类名称！");
     } else {
         var data = {
+            "[[${_csrf.parameterName}]]": "[[${_csrf.token}]]",
             "catName": catName,
             "catLevel": catLevel,
             "catPid": catPid,
@@ -143,6 +144,7 @@ $('#saveButton').click(function () {
         if (id != null) {
             url = '/admin/categories/update';
             data = {
+                "[[${_csrf.parameterName}]]": "[[${_csrf.token}]]",
                 "catId": id,
                 "catName": catName,
                 "catLevel": catLevel,

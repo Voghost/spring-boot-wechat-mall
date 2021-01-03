@@ -11,7 +11,8 @@
 
     <!--相当于一个常量，后面可以引用-->
     <sql id="BaseColumnList">
-        user_id,
+        user_id
+        ,
         user_name,user_password,user_authority
     </sql>
 
@@ -90,7 +91,14 @@
     </select>
 
     <select id="getTotalMyUsers" resultType="java.lang.Integer">
-        select count(*) from tb_my_user
+        select count(*)
+        from tb_my_user
+    </select>
+
+    <select id="findByUserName" resultMap="BaseResultMap">
+        select *
+        from tb_my_user
+        where user_name = #{userName}
     </select>
 
     <delete id="deleteBatch">

@@ -1,91 +1,46 @@
-<!-- Copyright (c) 2019-2020 十三 all rights reserved. -->
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>newbee-mall管理系统 | Log in</title>
-    <!-- Tell the browser to be responsive to screen width -->
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="shortcut icon" th:href="@{/admin/dist/img/favicon.png}"/>
-    <!-- Font Awesome -->
-    <link rel="stylesheet" th:href="@{/admin/dist/css/font-awesome.min.css}">
-    <!-- Ionicons -->
-    <link rel="stylesheet" th:href="@{/admin/dist/css/ionicons.min.css}">
-    <!-- Theme style -->
-    <link rel="stylesheet" th:href="@{/admin/dist/css/adminlte.min.css}">
-    <style>
-        canvas {
-            display: block;
-            vertical-align: bottom;
+    <meta charset="UTF-8">
+    <title>login</title>
+    <link rel="stylesheet" th:href="@{/admin/dist/css/login.css}">
+    <script src="https://ssl.captcha.qq.com/TCaptcha.js"></script>
+    <script>
+        let result ;
+
+        window.callback = function (res) {
+            console.log(res)
+            // res（用户主动关闭验证码）= {ret: 2, ticket: null}
+            // res（验证成功） = {ret: 0, ticket: "String", randstr: "String"}
+            if (res.ret === 0) {
+                // alert(res.ticket)   // 票据
+                document.myForm.submit();
+            }
         }
-        #particles {
-            background-color: #F7FAFC;
-            position: absolute;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-        }
-    </style>
+
+    </script>
 </head>
-<body class="hold-transition login-page">
-<div id="particles">
-</div>
-<div class="login-box">
-    <div class="login-logo" style="color: #1baeae;">
-        <img th:src="@{/mall/image/new-bee-logo-3.png}" style="    height: 58px;float: left;margin-left: 10px;">
-        <h1>管理系统登陆</h1>
-    </div>
-    <!-- /.login-logo -->
-    <div class="card">
-        <div class="card-body login-card-body">
-            <p class="login-box-msg"> NewBee MALL , Let's Go !</p>
-            <form th:action="@{/admin/login}" method="post">
-                <div th:if="${not #strings.isEmpty(session.errorMsg)}" class="form-group">
-                    <div class="alert alert-danger" th:text="${session.errorMsg}"></div>
-                </div>
-                <div class="form-group has-feedback">
-                    <span class="fa fa-user form-control-feedback"></span>
-                    <input type="text" id="userName" name="userName" class="form-control" placeholder="请输入账号"
-                           required="true">
-                </div>
-                <div class="form-group has-feedback">
-                    <span class="fa fa-lock form-control-feedback"></span>
-                    <input type="password" id="password" name="password" class="form-control" placeholder="请输入密码"
-                           required="true">
-                </div>
-                <div class="row">
-                    <div class="col-6">
-                        <input type="text" class="form-control" name="verifyCode" placeholder="请输入验证码" required="true">
-                    </div>
-                    <div class="col-6">
-                        <img alt="单击图片刷新！" class="pointer" th:src="@{/common/kaptcha}"
-                             onclick="this.src='/common/kaptcha?d='+new Date()*1">
-                    </div>
-                </div>
-                <div class="form-group has-feedback"></div>
-                <div class="row">
-                    <div class="col-8">
-                    </div>
-                    <div class="col-4">
-                        <button type="submit" class="btn btn-primary btn-block btn-flat">登录
+<body>
+<h1 align="center" style="margin: 100px auto;  font-size: 40px; color:black">欢迎登录并夕夕后台</h1>
+<div class="main">
+    <div class="content">
+        <div class="login">
+            <div class="back">
+                <!--                <div align="center" style="font-size: 30px; margin-top: 40px;">登录</div>-->
+                <div class="input-box">
+                    <form action="/admin/login" method="post" name="myForm">
+                        <!--                        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>-->
+                        <input class="input" type="text" placeholder="用户名" name="username" required><br/>
+                        <input class="input" type="password" placeholder="密码" name="password" required>
+                        <button id="TencentCaptcha" data-appid="2000719962" data-cbfn="callback" class="submit" type="button">
+                            提交
                         </button>
-                    </div>
+                    </form>
                 </div>
-            </form>
-
+            </div>
         </div>
-        <!-- /.login-card-body -->
     </div>
 </div>
-<!-- /.login-box -->
-
-<!-- jQuery -->
-<script th:src="@{/admin/plugins/jquery/jquery.min.js}"></script>
-<!-- Bootstrap 4 -->
-<script th:src="@{/admin/plugins/bootstrap/js/bootstrap.bundle.min.js}"></script>
-<script th:src="@{/admin/dist/js/plugins/particles.js}"></script>
-<script th:src="@{/admin/dist/js/plugins/login-bg-particles.js}"></script>
+</div>
 </body>
 </html>

@@ -1,7 +1,9 @@
 package edu.dgut.networkengin2018_2.wechat_mall.controller.wechatapi;
 
+import edu.dgut.networkengin2018_2.wechat_mall.entity.Floor;
 import edu.dgut.networkengin2018_2.wechat_mall.entity.Goods;
 import edu.dgut.networkengin2018_2.wechat_mall.entity.Swiperdata;
+import edu.dgut.networkengin2018_2.wechat_mall.service.FloorService;
 import edu.dgut.networkengin2018_2.wechat_mall.service.GoodsCategoryService;
 import edu.dgut.networkengin2018_2.wechat_mall.service.GoodsService;
 import edu.dgut.networkengin2018_2.wechat_mall.service.SwiperdataService;
@@ -32,6 +34,9 @@ public class MainApiController {
 
     @Resource
     private SwiperdataService swiperdataService;
+
+    @Resource
+    private FloorService floorService;
 
     @GetMapping("/categories")
     @ResponseBody
@@ -69,7 +74,7 @@ public class MainApiController {
 
     @GetMapping("goods/qsearch")
     @ResponseBody
-    public Map<String,Object> goodsQSerach(@RequestParam(value = "query") String query){
+    public Map<String, Object> goodsQSerach(@RequestParam(value = "query") String query) {
         return goodsService.getGoodsForWechat(query);
     }
 
@@ -130,12 +135,50 @@ public class MainApiController {
     }
 
 
-
-
-
     /**
      * 返回商品楼层
      */
+
+    @GetMapping("/home/floordata")
+    @ResponseBody
+    public Map<String, Object> floordata() {
+        List<Floor> floorList = floorService.getAllFloorForWechat();
+        if (floorList == null) {
+            Map<String, Object> meta = new HashMap<>();
+            meta.put("msg", "获取失败");
+            meta.put("status", "400");
+
+            Map<String, Object> result = new HashMap<>();
+            result.put("meta", meta);
+            result.put("message", null);
+            return result;
+        }
+
+        List<Map<String, Object>> message = new ArrayList<>();
+
+        for (int i = 0; i < floorList.size(); i++) {
+            Map<String, Object> floor_title = new HashMap<>();
+            Map<String, Object> temp = new HashMap<>();
+            temp.put("name", floorList.get(i).getFloorName());
+            temp.put("image_src", floorList.get(i).getFloorTitleImage());
+            temp.put("open_type", "navigate");
+            temp.put("navigator_url", "/pages/goods_list?query=" + floorList.get(i).getFloorKeyword());
+            floor_title.put("floor_title", temp);
+            message.add(floor_title);
+        }
+        Map<String, Object> meta = new HashMap<>();
+        meta.put("msg", "获取成功");
+        meta.put("status", "200");
+
+        Map<String, Object> result = new HashMap<>();
+        result.put("meta", meta);
+        result.put("message", message);
+
+        return result;
+    }
+
+
+/*
     @GetMapping("/home/floordata")
     @ResponseBody
     public Map<String, Object> floordata() {
@@ -148,7 +191,6 @@ public class MainApiController {
 
 
 
-/*
         Map<String,Object>  map1= new HashMap<>();
         map1.put("name","优质服饰");
         map1.put("image_src","https://api-hmugo-web.itheima.net/pyg/pic_floor01_2@2x.png");
@@ -209,9 +251,8 @@ public class MainApiController {
         productList.add(map6);
         productList.add(map7);
         productList.add(map7);
-*/
 
-        Map<String,Object> pMap = new HashMap<>();
+    Map<String, Object> pMap = new HashMap<>();
         pMap.put("product_list",productList);
 
         pMap.put("floor_title",floorTitle);
@@ -220,18 +261,19 @@ public class MainApiController {
 
         messageList.add(pMap);
 
-        Map<String,Object> result= new HashMap<>();
+    Map<String, Object> result = new HashMap<>();
 
-        Map<String,Object> meta = new HashMap<>();
+    Map<String, Object> meta = new HashMap<>();
         meta.put("msg","获取成功");
         meta.put("status","200");
 
 
         result.put("message",messageList);
         result.put("meta",meta);
-        return  result;
+        return result;
 
-    }
+}
+*/
 
 
 }

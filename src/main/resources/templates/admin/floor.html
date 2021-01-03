@@ -42,6 +42,63 @@
                 </div>
             </div><!-- /.container-fluid -->
         </div>
+
+        <!-- /.content -->
+        <div class="content">
+            <!-- 模态框（Modal） -->
+            <div class="modal fade" id="floorModal" tabindex="-1" role="dialog"
+                 aria-labelledby="swiperModalLabel">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                    aria-hidden="true">&times;</span></button>
+                            <h6 class="modal-title" id="swiperModalLabel">Modal</h6>
+                        </div>
+                        <div class="modal-body">
+                            <form id="indexConfigForm">
+                                <div class="form-group">
+                                    <div class="alert alert-danger" id="edit-error-msg" style="display: none;">
+                                        错误信息展示栏。
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-sm-4">
+                                        <img id="floorImage" src="/admin/dist/img/img-upload.png"
+                                             style="height: 64px;width: 64px;">
+                                    </div>
+                                </div>
+                                <br>
+                                <div class="form-group">
+                                    <div class="col-sm-4">
+                                        <button class="btn btn-info" style="margin-bottom: 5px;"
+                                                id="uploadFloorImage">
+                                            <i class="fa fa-picture-o"></i>&nbsp;上传楼层图
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="floorName" class="control-label">楼层名字</label>
+                                    <input type="text" class="form-control" id="floorName" name="floorName"
+                                           placeholder="请输入楼层名字" value="">
+                                </div>
+                                <div class="form-group">
+                                    <label for="floorKeyword" class="control-label">楼层关键字(用于跳转)</label>
+                                    <input type="text" class="form-control" id="floorKeyword" name="floorKeyword"
+                                           placeholder="请输入楼层关键字" value="">
+                                </div>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                            <button type="button" class="btn btn-primary" id="saveButton">确认</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- /.modal -->
+        </div>
+
     </div>
     <!-- /.content-wrapper -->
     <!-- 引入页脚footer-fragment -->
@@ -63,5 +120,9 @@
 <script th:src="@{/admin/plugins/sweetalert/sweetalert.min.js}"></script>
 <script th:src="@{/admin/dist/js/public.js}"></script>
 <script th:src="@{/admin/dist/js/floor.js}"></script>
+
+<!-- ajaxupload -->
+<script th:src="@{/admin/plugins/ajaxupload/ajaxupload.js}"></script>
+<script th:src="@{/admin/dist/js/public.js}"></script>
 </body>
 </html>

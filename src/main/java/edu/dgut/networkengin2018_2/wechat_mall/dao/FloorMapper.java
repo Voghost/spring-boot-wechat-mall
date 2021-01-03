@@ -1,5 +1,6 @@
 package edu.dgut.networkengin2018_2.wechat_mall.dao;
 
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import edu.dgut.networkengin2018_2.wechat_mall.entity.Floor;
 import edu.dgut.networkengin2018_2.wechat_mall.util.PageQueryUtil;
 import org.apache.ibatis.annotations.Mapper;
@@ -34,5 +35,9 @@ public interface FloorMapper {
    int getTotalFloors();
 
    int deleteBatch(Integer[] ids);
+
+   Floor selectByPrimaryKey(Integer floorId);
+
+   List<Floor> getAllFloorList();
 
 }

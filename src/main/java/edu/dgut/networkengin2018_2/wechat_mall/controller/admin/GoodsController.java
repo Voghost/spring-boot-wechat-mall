@@ -2,14 +2,11 @@ package edu.dgut.networkengin2018_2.wechat_mall.controller.admin;
 
 import edu.dgut.networkengin2018_2.wechat_mall.entity.Category;
 import edu.dgut.networkengin2018_2.wechat_mall.entity.Goods;
-import edu.dgut.networkengin2018_2.wechat_mall.entity.Goodspics;
 import edu.dgut.networkengin2018_2.wechat_mall.service.GoodsCategoryService;
-import edu.dgut.networkengin2018_2.wechat_mall.service.GoodsPicsService;
 import edu.dgut.networkengin2018_2.wechat_mall.service.GoodsService;
 import edu.dgut.networkengin2018_2.wechat_mall.util.PageQueryUtil;
 import edu.dgut.networkengin2018_2.wechat_mall.util.Result;
 import edu.dgut.networkengin2018_2.wechat_mall.util.ResultGenerator;
-import org.springframework.boot.web.server.Http2;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
@@ -17,7 +14,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
-import java.net.http.HttpRequest;
 import java.util.*;
 
 @Controller

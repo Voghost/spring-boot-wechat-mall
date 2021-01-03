@@ -5,12 +5,14 @@
         <id column="floor_id" jdbcType="INTEGER" property="floorId"/>
         <result column="floor_name" jdbcType="VARCHAR" property="floorName"/>
         <result column="floor_image" jdbcType="VARCHAR" property="floorTitleImage"/>
+        <result column="floor_keyword" jdbcType="VARCHAR" property="floorKeyword"/>
     </resultMap>
 
 
-    <insert id="insertFloor" parameterType="edu.dgut.networkengin2018_2.wechat_mall.entity.Floor">
-        insert into tb_floor (floor_id, floor_name, floor_image)
-        values (#{floorId}, #{floorName}, #{floorTitleImage})
+    <insert id="insertFloor" parameterType="edu.dgut.networkengin2018_2.wechat_mall.entity.Floor"
+            useGeneratedKeys="true" keyProperty="floorId">
+        insert into tb_floor (floor_id, floor_name, floor_image, floor_keyword)
+        values (#{floorId}, #{floorName}, #{floorTitleImage}, #{floorKeyword})
     </insert>
 
     <update id="updateFloor">
@@ -21,6 +23,9 @@
             </if>
             <if test="floorTitleImage != null">
                 floor_image = #{floorTitleImage},
+            </if>
+            <if test="floorKeyword != null">
+                floor_keyword = #{floorKeyword},
             </if>
         </set>
         where floor_id = #{floorId}
@@ -47,8 +52,20 @@
             limit #{start},#{limit}
         </if>
     </select>
+
     <select id="getTotalFloors" resultType="java.lang.Integer">
         select count(*)
+        from tb_floor
+    </select>
+
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap">
+        select *
+        from tb_floor
+        where floor_id = #{floorId}
+    </select>
+
+    <select id="getAllFloorList" resultMap="BaseResultMap">
+        select *
         from tb_floor
     </select>
 

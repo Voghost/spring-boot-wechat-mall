@@ -78,6 +78,7 @@
 -->
                             </div>
                             <div class="form-group" style="display:flex;">
+                                <label for="originalPrice" class="control-label">商品价格</label>
                                 <input type="number" class="form-control col-sm-6" id="originalPrice"
                                        name="originalPrice"
                                        placeholder="*请输入商品价格"
@@ -95,6 +96,7 @@
 
                             </div>
                             <div class="form-group" style="display:flex;">
+                                <label for="stockNum" class="control-label">商品库存数量</label>
                                 <input type="number" class="form-control col-sm-6" id="stockNum" name="stockNum"
                                        placeholder="*请输入商品库存数"
                                        th:value="${goods!=null and goods.goodsNumber!=null }?${goods.goodsNumber}: 0"
@@ -109,6 +111,7 @@
                             </div>
 
                             <div class="form-group" style="display:flex;">
+                                <label for="goodsWeight" class="control-label">商品重量</label>
                                 <input type="number" class="form-control col-sm-6" id="goodsWeight" name="goodsWeight"
                                        placeholder="*请输入商品重量"
                                        th:value="${goods!=null and goods.goodsWeight!=null }?${goods.goodsWeight}: 0"

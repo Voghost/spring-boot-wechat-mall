@@ -47,6 +47,28 @@ $(function () {
     function coverImageFormatter(cellvalue) {
         return "<img src='" + cellvalue + "' height=\"80\" width=\"80\" alt='商品主图'/>";
     }
+
+    new AjaxUpload('#uploadFloorImage', {
+        action: '/admin/upload/file',
+        name: 'file',
+        autoSubmit: true,
+        responseType: "json",
+        onSubmit: function (file, extension) {
+            if (!(extension && /^(jpg|jpeg|png|gif)$/.test(extension.toLowerCase()))) {
+                alert('只支持jpg、png、gif格式的文件！');
+                return false;
+            }
+        },
+        onComplete: function (file, r) {
+            if (r != null && r.resultCode == 200) {
+                $("#floorImage").attr("src", r.data);
+                $("#floorImage").attr("style", "width: 128px;height: 128px;display:block;");
+                return false;
+            } else {
+                alert("error");
+            }
+        }
+    });
 });
 
 /**
@@ -61,23 +83,96 @@ function reload() {
 }
 
 
+
 /**
  * 添加楼层
  */
 function addFloor() {
-    window.location.href = "/admin/floor/edit";
+    reset();
+    $('.modal-title').html('楼层添加');
+    $('#floorModal').modal('show')
 }
 
+
 /**
- * 修改楼层
+ * 编辑楼层
  */
 function editFloor() {
-    var id = getSelectdRow();
-    if (id = null) {
+    reset();
+    var id = getSelectedRow();
+    if (id == null) {
         return;
     }
-    window.location.href = "/admin/floor/edit/" + id;
+    //请求数据
+    $.get("/admin/floor/info/" + id, function (r) {
+        if (r.resultCode == 200 && r.data != null) {
+            //填充数据至modal
+            $("#floorImage").attr("src", r.data.floorTitleImage);
+            $("#floorImage").attr("style", "height: 64px;width: 64px;display:block;");
+            $("#floorName").val(r.data.floorName);
+            $("#floorKeyword").val(r.data.floorKeyword);
+        }
+    });
+    $('.modal-title').html('轮播图编辑');
+    $('#floorModal').modal('show');
 }
+
+
+
+
+
+
+
+//绑定modal上的保存按钮
+$('#saveButton').click(function () {
+    // var redirectUrl = $("#redirectUrl").val();
+    var imageSrc = $('#floorImage')[0].src;
+    var floorName = $('#floorName').val();
+    var floorKeyword = $('#floorKeyword').val();
+    var data = {
+        "floorTitleImage": imageSrc,
+        "floorName": floorName,
+        "floorKeyword": floorKeyword
+    };
+    var url = '/admin/floor/save';
+    var id = getSelectedRowWithoutAlert();
+    if (id != null) {
+        url = '/admin/floor/update';
+        data = {
+            "floorId": id,
+            "floorTitleImage": imageSrc,
+            "floorName": floorName,
+            "floorKeyword": floorKeyword
+        };
+    }
+    $.ajax({
+        type: 'POST',//方法类型
+        url: url,
+        contentType: 'application/json',
+        data: JSON.stringify(data),
+        success: function (result) {
+            if (result.resultCode == 200) {
+                $('#floorModal').modal('hide');
+                swal("保存成功", {
+                    icon: "success",
+                });
+                reload();
+            } else {
+                $('#floorModal').modal('hide');
+                swal(result.message, {
+                    icon: "error",
+                });
+            }
+            ;
+        },
+        error: function () {
+            swal("操作失败", {
+                icon: "error",
+            });
+        }
+    });
+});
+
 
 /**
  * 删除楼层
@@ -116,4 +211,11 @@ function deleteFloor() {
             }
         }
     );
+}
+
+function reset() {
+    $("#redirectUrl").val('##');
+    $("#floorImage").attr("src", '/admin/dist/img/img-upload.png');
+    $("#floorImage").attr("style", "height: 64px;width: 64px;display:block;");
+    $('#edit-error-msg').css("display", "none");
 }

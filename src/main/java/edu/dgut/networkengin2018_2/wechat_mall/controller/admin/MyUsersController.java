@@ -40,8 +40,7 @@ public class MyUsersController {
     @RequestMapping(value = "/myusers/save", method = RequestMethod.POST)
     @ResponseBody
     public Result save(@RequestBody MyUser myUser) {
-        if (StringUtils.isEmpty(myUser.getUserName())
-                || Objects.isNull(myUser.getUserId())) {
+        if (StringUtils.isEmpty(myUser.getUserName())) {
             return ResultGenerator.genFailResult("参数异常！");
         }
         String result = myUsersService.insertMyUsers(myUser);

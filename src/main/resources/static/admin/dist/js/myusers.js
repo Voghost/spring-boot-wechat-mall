@@ -46,13 +46,13 @@ $(function () {
         }
     }
 
-    function deletedFormatter(cellvalue) {
+    /*function deletedFormatter(cellvalue) {
         if (cellvalue == 1) {
             return "<button type=\"button\" class=\"btn btn-block btn-secondary btn-sm\" style=\"width: 50%;\">注销</button>";
         } else if (cellvalue == 0) {
             return "<button type=\"button\" class=\"btn btn-block btn-success btn-sm\" style=\"width: 50%;\">正常</button>";
         }
-    }
+    }*/
 });
 
 /**
@@ -87,9 +87,9 @@ $('#saveButton').click(function () {
     if (id != null) {
         url = '/admin/myusers/update';
         data = {
-            "userId": userId,
+            "userId": id,
             "userName": userName,
-            "Password": password,
+            "password": password,
             "authority": authority
         };
     }
@@ -132,7 +132,7 @@ function MyUsersEdit() {
         if (r.resultCode == 200 && r.data != null) {
             //填充数据至modal
             $("#userName").val(r.data.userName);
-            $("#password").val(r.data.Password);
+            $("#password").val(r.data.password);
             $("#authority").val(r.data.authority);
         }
     });
@@ -179,7 +179,8 @@ function deleteMyUser() {
 
 
 function reset() {
-    $("#redirectUrl").val('##');
-    $("#userName").val('##');
+    $("#userName").val();
+    $("#password").val();
+    $("#authority").val();
     $('#edit-error-msg').css("display", "none");
 }

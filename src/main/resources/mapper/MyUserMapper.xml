@@ -2,4 +2,102 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="edu.dgut.networkengin2018_2.wechat_mall.dao.MyUserMapper">
 
+    <resultMap id="BaseResultMap" type="edu.dgut.networkengin2018_2.wechat_mall.entity.MyUser">
+        <id column="user_id" jdbcType="INTEGER" property="userId"/>
+        <result column="user_name" jdbcType="VARCHAR" property="userName"/>
+        <result column="user_password" jdbcType="VARCHAR" property="password"/>
+        <result column="user_authority" jdbcType="VARCHAR" property="authority"/>
+    </resultMap>
+
+    <!--相当于一个常量，后面可以引用-->
+    <sql id="BaseColumnList">
+        user_id,
+        user_name,user_password,user_authority
+    </sql>
+
+
+    <sql id="myusersColumns">
+        <trim suffixOverrides=",">
+            <if test="userId != null">user_id,</if>
+            <if test="userName != null">user_name,</if>
+            <if test="password != null">user_password,</if>
+            <if test="authority != null">user_authority,</if>
+        </trim>
+    </sql>
+
+    <sql id="myusersValues">
+        <trim suffixOverrides=",">
+            <if test="userId != null">#{userId},</if>
+            <if test="userName != null">#{userName},</if>
+            <if test="password != null">#{password},</if>
+            <if test="authority != null">#{authority},</if>
+        </trim>
+    </sql>
+
+    <insert id="insert" useGeneratedKeys="true" keyProperty="userId">
+        insert into tb_my_user (<include refid="myusersColumns"/>) values (<include refid="myusersValues"/>)
+    </insert>
+
+    <!--更新-->
+    <update id="updateByPrimaryKey" parameterType="edu.dgut.networkengin2018_2.wechat_mall.entity.MyUser">
+        update tb_my_user
+        <set>
+            <if test="userName != null">
+                user_name = #{userName},
+            </if>
+            <if test="password != null">
+                user_password = #{password},
+            </if>
+            <if test="authority != null">
+                user_authority = #{authority},
+            </if>
+        </set>
+        where user_id = #{userId}
+    </update>
+
+    <!--删除 通过主键-->
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+        delete
+        from tb_my_user
+        where user_id = #{userId}
+    </delete>
+
+    <!--获得所有列表-->
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap">
+        select *
+        from tb_my_user
+        where user_id = #{userId}
+    </select>
+
+    <!--通过 主键查找商品-->
+    <select id="getAllList" resultMap="BaseResultMap">
+        select *
+        from tb_my_user
+    </select>
+
+    <!--通过参数(map)<分页>查询-->
+    <select id="findMyUsersList" parameterType="java.util.Map" resultMap="BaseResultMap">
+        select
+        <include refid="BaseColumnList"/>
+        from tb_my_user
+        <where>
+        </where>
+        order by user_id desc
+        /*分页查询*/
+        <if test="start != null and limit != null">
+            limit #{start},#{limit}
+        </if>
+    </select>
+
+    <select id="getTotalMyUsers" resultType="java.lang.Integer">
+        select count(*) from tb_my_user
+    </select>
+
+    <delete id="deleteBatch">
+        delete from tb_my_user
+        where user_id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
 </mapper>

@@ -39,6 +39,7 @@ public class MySecurityConfigurerAdapter extends WebSecurityConfigurerAdapter {
                     .antMatchers("/admin/myuser/**").hasAnyRole("ADMIN")
                     .anyRequest().authenticated() /*用户登录后能访问*/
                     .and()
+                .headers().frameOptions().sameOrigin().and()
                 .formLogin()
                 .loginPage("/admin/login").permitAll()
                 .defaultSuccessUrl("/admin").and()

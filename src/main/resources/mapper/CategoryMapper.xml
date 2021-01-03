@@ -68,12 +68,18 @@
     </update>
 
 
-
     <!--删除 通过主键-->
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
         delete
         from tb_category
         where cat_id = #{catId}
+    </delete>
+    <delete id="deleteBatch">
+        delete from tb_category
+        where cat_id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
     </delete>
 
     <!--获得所有列表-->
@@ -110,7 +116,8 @@
     </select>
 
     <select id="getTotalCategories" resultType="java.lang.Integer">
-        select count(*) from tb_category
+        select count(*)
+        from tb_category
     </select>
     <select id="selectByLevelAndName" resultMap="BaseResultMap">
         select *

@@ -70,5 +70,7 @@ public interface CategoryMapper {
 
     List<Category> selectByLevel(Integer categoryLevel);
 
+    int deleteBatch(Integer[] ids);
+
 
 }

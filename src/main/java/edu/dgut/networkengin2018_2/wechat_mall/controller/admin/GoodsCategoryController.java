@@ -159,6 +159,17 @@ public class GoodsCategoryController {
     /**
      * 批量删除
      */
-
+    @RequestMapping(value = "/categories/delete", method = RequestMethod.POST)
+    @ResponseBody
+    public Result delete(@RequestBody Integer[] ids) {
+        if (ids.length < 1) {
+            return ResultGenerator.genFailResult("参数异常！");
+        }
+        if (goodsCategoryService.deleteBatch(ids)) {
+            return ResultGenerator.genSuccessResult();
+        } else {
+            return ResultGenerator.genFailResult("删除失败");
+        }
+    }
 
 }

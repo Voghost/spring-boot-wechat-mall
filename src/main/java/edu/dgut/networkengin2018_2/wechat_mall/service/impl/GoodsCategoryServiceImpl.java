@@ -66,7 +66,11 @@ public class GoodsCategoryServiceImpl implements GoodsCategoryService {
 
     @Override
     public Boolean deleteBatch(Integer[] ids) {
-        return null;
+        if (ids.length < 1) {
+            return false;
+        }
+        //删除分类数据
+        return categoryMapper.deleteBatch(ids) > 0;
     }
 
     @Override

@@ -184,6 +184,7 @@
                 and order_state = #{orderStatus}
             </if>
         </where>
+        order by order_create_time desc
     </select>
 
     <select id="getOrderByNumber" resultMap="BaseResultMap">

@@ -74,30 +74,30 @@ public class OrderApiController {
             Ordersgoods ordersGoodsTmp = new Ordersgoods();
 
             Integer goodsId = Integer.parseInt((String) goods.get(i).get("goods_id"));  //商品id
-            Integer goodsNumber  = (Integer) goods.get(i).get("goods_number"); //商品数量
+            Integer goodsNumber = (Integer) goods.get(i).get("goods_number"); //商品数量
 
             ordersGoodsTmp.setOrderGoodsId(goodsId);
             ordersGoodsTmp.setOrderGoodsNumber(goodsNumber);
 
             Goods tempGoods = goodsService.getGoodsById(goodsId);
-            Integer leftNumber = tempGoods.getGoodsNumber()-goodsNumber; //判断库存商品
-            if(leftNumber<0){
+            Integer leftNumber = tempGoods.getGoodsNumber() - goodsNumber; //判断库存商品
+            if (leftNumber < 0) {
                 Map<String, Object> result = new HashMap<>();
                 Map<String, Object> meta = new HashMap<>();
                 meta.put("msg", "商品库存不够");
                 meta.put("code", 400);
                 result.put("message", meta);
                 return result; //商品不够
-            }else if(leftNumber ==0){
-               tempGoods.setGoodsState(1); //商品数量不够
+            } else if (leftNumber == 0) {
+                tempGoods.setGoodsState(1); //商品数量不够
             }
-            tempGoods.setGoodsNumber(tempGoods.getGoodsNumber()-goodsNumber); //减去商品数量
-            goodsService.updateGoods(tempGoods);
+            tempGoods.setGoodsNumber(tempGoods.getGoodsNumber() - goodsNumber); //减去商品数量
 
 
-            ordersGoodsTmp.setOrderPrice(((Integer) goods.get(i).get("goods_price")).doubleValue());
+            ordersGoodsTmp.setOrderPrice(Double.parseDouble(goods.get(i).get("goods_price").toString()));
             ordersGoodsList.add(ordersGoodsTmp);
             totalPrice = totalPrice + (ordersGoodsTmp.getOrderPrice() * ordersGoodsTmp.getOrderGoodsNumber());
+            goodsService.updateGoods(tempGoods); //下单成功才减去商品数量
         }
 
         orders.setOrderUserId(userTemp.getUserId()); //设置用户id
@@ -161,7 +161,7 @@ public class OrderApiController {
             type = 0; //未支付
         } else if (type == 3) {
             type = 1; //支付未发货
-        }else if(type == 4){
+        } else if (type == 4) {
             type = 2; //已发货
         }
 

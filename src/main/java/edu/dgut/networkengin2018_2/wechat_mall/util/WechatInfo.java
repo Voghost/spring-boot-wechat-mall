@@ -18,7 +18,8 @@ public class WechatInfo {
   public WechatInfo(){
     Reader reader = null;
     try {
-      reader = new FileReader("src/main/resources/other/Wechat.csv");
+      reader = new FileReader("/home/voghost/someServer/messages/other/Wechat.csv");
+//      reader = new FileReader("src/main/resources/other/Wechat.csv");
     } catch (FileNotFoundException e) {
       e.printStackTrace();
     }

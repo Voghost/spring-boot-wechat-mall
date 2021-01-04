@@ -18,7 +18,11 @@ public class AliyunAccessKey {
     public AliyunAccessKey(){
         Reader reader = null;
         try {
-            reader = new FileReader("src/main/resources/other/AccessKey.csv");
+
+            // 服务器路径
+            reader = new FileReader("/home/voghost/someServer/messages/other/AccessKey.csv");
+            //本地测试路径
+//            reader = new FileReader("src/main/resources/other/AccessKey.csv");
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }

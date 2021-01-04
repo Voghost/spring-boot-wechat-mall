@@ -155,7 +155,6 @@ public class GoodsCategoryController {
     }
 
 
-
     /**
      * 批量删除
      */
@@ -171,5 +170,26 @@ public class GoodsCategoryController {
             return ResultGenerator.genFailResult("删除失败");
         }
     }
+
+    /**
+     * 批量修改销售状态
+     */
+    @RequestMapping(value = "/category/status/{isDeleted}", method = RequestMethod.PUT)
+    @ResponseBody
+    public Result delete(@RequestBody Integer[] ids, @PathVariable("isDeleted") int isDeleted) {
+        if (ids.length < 1) {
+            return ResultGenerator.genFailResult("参数异常！");
+        }
+        // 2 上架 1 下架 0删除
+        if (isDeleted != 2 && isDeleted != 1 && isDeleted != 0) {
+            return ResultGenerator.genFailResult("状态异常！");
+        }
+        if (goodsCategoryService.batchUpdateIsDeleted(ids,isDeleted)) {
+            return ResultGenerator.genSuccessResult();
+        } else {
+            return ResultGenerator.genFailResult("修改失败");
+        }
+    }
+
 
 }

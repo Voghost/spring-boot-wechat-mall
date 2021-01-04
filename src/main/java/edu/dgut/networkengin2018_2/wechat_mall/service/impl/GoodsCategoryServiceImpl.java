@@ -137,4 +137,9 @@ public class GoodsCategoryServiceImpl implements GoodsCategoryService {
         result.put("message", mapList1);
         return result;
     }
+
+    @Override
+    public Boolean batchUpdateIsDeleted(Integer[] ids, int isDeleted) {
+        return categoryMapper.batchUpdateIsDeleted(ids,isDeleted)>0;
+    }
 }

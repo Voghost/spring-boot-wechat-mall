@@ -9,6 +9,7 @@ $(function () {
             {label: 'id', name: 'catId', index: 'catId', width: 50, key: true, hidden: true},
             {label: '分类名称', name: 'catName', index: 'catName', width: 240},
             {label: '分类图片', name: 'catIcon', index: 'catIcon', width: 240, formatter: coverImageFormatter},
+            {label: '分类状态', name: 'catDeleted', index: 'catDeleted', width: 140, formatter: categoryIsDeletedFormatter},
         ],
         height: 560,
         rowNum: 10,
@@ -62,6 +63,16 @@ $(function () {
             }
         }
     });
+    //订单是否删除
+    function categoryIsDeletedFormatter(cellvalue) {
+        //商品上架状态 2-上架 1-下架
+        if (cellvalue == false) {
+            return "<button type=\"button\" class=\"btn btn-block btn-success btn-sm\" style=\"width: 80%;\">显示</button>";
+        }
+        if (cellvalue == true) {
+            return "<button type=\"button\" class=\"btn btn-block btn-secondary btn-sm\" style=\"width: 80%;\">隐藏</button>";
+        }
+    }
 });
 
 //图片加载函数
@@ -120,6 +131,89 @@ function categoryBack() {
         });
     }
 }
+
+/**
+ * 显示
+ */
+function putUpCategory() {
+    var ids = getSelectedRows();
+    if (ids == null) {
+        return;
+    }
+    swal({
+        title: "确认弹框",
+        text: "确认要执行上架操作吗?",
+        icon: "warning",
+        buttons: true,
+        dangerMode: true,
+    }).then((flag) => {
+            if (flag) {
+                $.ajax({
+                    type: "PUT",
+                    url: "/admin/category/status/0",
+                    contentType: "application/json",
+                    data: JSON.stringify(ids),
+                    success: function (r) {
+                        if (r.resultCode == 200) {
+                            swal("显示成功", {
+                                icon: "success",
+                            });
+                            $("#jqGrid").trigger("reloadGrid");
+                        } else {
+                            swal(r.message, {
+                                icon: "error",
+                            });
+                        }
+                    }
+                });
+            }
+        }
+    )
+    ;
+}
+
+/**
+ * 隐藏
+ */
+function putDownCategory() {
+    var ids = getSelectedRows();
+    if (ids == null) {
+        return;
+    }
+    swal({
+        title: "确认弹框",
+        text: "确认要执行下架操作吗?",
+        icon: "warning",
+        buttons: true,
+        dangerMode: true,
+    }).then((flag) => {
+            if (flag) {
+                $.ajax({
+                    type: "PUT",
+                    url: "/admin/category/status/1",
+                    contentType: "application/json",
+                    data: JSON.stringify(ids),
+                    success: function (r) {
+                        if (r.resultCode == 200) {
+                            swal("隐藏成功", {
+                                icon: "success",
+                            });
+                            $("#jqGrid").trigger("reloadGrid");
+                        } else {
+                            swal(r.message, {
+                                icon: "error",
+                            });
+                        }
+                    }
+                });
+            }
+        }
+    )
+    ;
+}
+
+
+
 
 //绑定modal上的保存按钮
 $('#saveButton').click(function () {

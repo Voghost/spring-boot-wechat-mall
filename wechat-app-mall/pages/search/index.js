@@ -41,9 +41,13 @@ Page({
     this.setData({
       goods: result.splice(0, 10)
     })
-    if(!result.length){
+    if(result.length<1){
       this.setData({
         hasGoods:false
+      })
+    }else{
+      this.setData({
+        hasGoods:true
       })
     }
   },

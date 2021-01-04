@@ -72,5 +72,7 @@ public interface CategoryMapper {
 
     int deleteBatch(Integer[] ids);
 
+    int batchUpdateIsDeleted(@Param("ids")Integer[] ids, @Param("isDeleted") int isDeleted);
+
 
 }

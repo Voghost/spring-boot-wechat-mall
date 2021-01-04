@@ -51,7 +51,16 @@ public interface GoodsCategoryService {
      */
     List<Category> selectByLevelAndParentIdsAndNumber(List<Integer> parentIds, int categoryLevel);
 
+
     Map<String,Object> getCategoryTree();
+
+    /**
+     * 批量修分类状态(显示、隐藏)
+     * @param ids
+     * @return
+     */
+    Boolean batchUpdateIsDeleted(Integer[] ids,int isDeleted);
+
 
 
 

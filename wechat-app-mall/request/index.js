@@ -9,7 +9,8 @@ export const request = (params) => {
   });
   //定义公共的URL
   //const baseURL = "https://api-hmugo-web.itheima.net/api/public/v1"
-  const baseURL ="http://localhost:8080/wechatapi"
+   const baseURL ="http://localhost:8080/wechatapi"
+  //const baseURL ="https://wechatmall.ghovos.top/wechatapi"
   return new Promise((resolve, reject) => {
     wx.request({
       ...params,

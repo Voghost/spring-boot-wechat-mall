@@ -19,7 +19,7 @@ public class Users {
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Date userLastLoginTime; //用户最后登录时间
 
-    private Boolean userIsActive; //用户是否激活
+    private Boolean userIsActive; // 用户是否激活
 
-    private String userToken;
+    private String userToken;     //
 }

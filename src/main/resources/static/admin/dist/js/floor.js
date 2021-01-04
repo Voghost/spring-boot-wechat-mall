@@ -75,7 +75,7 @@ $(function () {
  * jqGrid重新加载
  */
 function reload() {
-    initFlatPickr();
+    // initFlatPickr();
     var page = $("#jqGrid").jqGrid('getGridParam', 'page');
     $("#jqGrid").jqGrid('setGridParam', {
         page: page

@@ -201,4 +201,9 @@ public class GoodsServiceImpl implements GoodsService {
 
     }
 
+    @Override
+    public List<Goods> getAllGoodsForExcel() {
+       return goodsMapper.getAllList();
+    }
+
 }

@@ -61,7 +61,7 @@ public interface OrderService {
     List<Ordersgoods> getOrderGoods(Integer id);
 
 
-
+    List<Orders> getAllOrdersForExcel();
 
 
 

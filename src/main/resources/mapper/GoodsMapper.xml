@@ -132,7 +132,7 @@
                 goods_delete_time = #{goodsDeleteTime},
             </if>
             <if test="goodsHotNumber != null">
-                goodsHotNumber = #{goodsHotNumber},
+                goods_hot_number = #{goodsHotNumber},
             </if>
             <if test="goodsIsPromote != null">
                 goods_is_promote = #{goodsIsPromote},
@@ -260,6 +260,7 @@
         select *
         from tb_goods
         <where>
+            goods_state = '2'
             <if test="keyword != null and keyword != ''">
                 and (goods_name like CONCAT('%',#{keyword},'%') or goods_introduce like CONCAT('%',#{keyword},'%'))
             </if>

@@ -3,6 +3,7 @@ package edu.dgut.networkengin2018_2.wechat_mall.controller.admin;
 import edu.dgut.networkengin2018_2.wechat_mall.entity.Orders;
 import edu.dgut.networkengin2018_2.wechat_mall.entity.Ordersgoods;
 import edu.dgut.networkengin2018_2.wechat_mall.service.OrderService;
+import edu.dgut.networkengin2018_2.wechat_mall.util.DownExcel;
 import edu.dgut.networkengin2018_2.wechat_mall.util.PageQueryUtil;
 import edu.dgut.networkengin2018_2.wechat_mall.util.Result;
 import edu.dgut.networkengin2018_2.wechat_mall.util.ResultGenerator;
@@ -13,6 +14,8 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -107,5 +110,14 @@ public class OrderController {
             return ResultGenerator.genSuccessResult(ordersgoods);
         }
         return ResultGenerator.genFailResult("数据不存在");
+    }
+
+    /**
+     * 订单下载
+     */
+    @RequestMapping("/orders/download")
+    public void getExcel(HttpServletResponse response) throws IllegalAccessException, IOException,InstantiationException{
+       List<Orders> ordersList = orderService.getAllOrdersForExcel();
+        DownExcel.download(response,Orders.class,ordersList);
     }
 }

@@ -57,6 +57,12 @@
                             <button class="btn btn-danger" onclick="putDownGoods()"><i
                                     class="fa fa-arrow-down"></i>&nbsp;下架商品
                             </button>
+                            <button class="btn btn-file">
+                                <a th:href="@{/admin/goods/download}">
+                                    <i class="fa fa-download"></i>&nbsp;
+                                    下载全部商品excel
+                                </a>
+                            </button>
                         </div>
                         <table id="jqGrid" class="table table-bordered">
                         </table>

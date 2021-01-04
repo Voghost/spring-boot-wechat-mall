@@ -168,5 +168,10 @@ public class OrderServiceImpl implements OrderService {
         return null;
     }
 
+    @Override
+    public List<Orders> getAllOrdersForExcel() {
+        return ordersMapper.getAllList();
+    }
+
 
 }

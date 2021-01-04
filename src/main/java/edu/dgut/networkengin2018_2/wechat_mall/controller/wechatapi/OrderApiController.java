@@ -14,10 +14,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.activation.CommandInfo;
 import java.security.AllPermission;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Controller
 @RequestMapping("/wechatapi")
@@ -59,7 +56,7 @@ public class OrderApiController {
 
 
 //        String tmp = (String)map.get("consignee_addr");
-        /* if (map.get("consignee_addr") != null *//*&& (String)map.get("consignee_addr") !=""*//*) {
+        if (map.get("consignee_addr") != null /*&& (String)map.get("consignee_addr") !=""*/) {
             String userName = (String) ((Map<String, Object>) map.get("consignee_addr")).get("userName"); //名字
             String telNumber = (String) ((Map<String, Object>) map.get("consignee_addr")).get("telNumber"); //电话
             String postalCode = (String) ((Map<String, Object>) map.get("consignee_addr")).get("postalCode"); //邮政编码
@@ -70,15 +67,34 @@ public class OrderApiController {
             String address = provinceName + cityName + countyName + detailInfo + userName + "电话:" + telNumber + " 邮政编码:" + postalCode; //完整地址
             orders.setOrderAddress(address); //不为空设置地址
         }
-*/
         ArrayList<Map<String, Object>> goods = (ArrayList<Map<String, Object>>) map.get("goods");
 
         double totalPrice = 0;
         for (int i = 0; i < goods.size(); i++) {
             Ordersgoods ordersGoodsTmp = new Ordersgoods();
-            ordersGoodsTmp.setOrderGoodsId(Integer.parseInt((String) goods.get(i).get("goods_id")));
-//            ordersGoodsTmp.setOrderGoodsId((Integer) goods.get(i).get("goods_id")); // 修改后
-            ordersGoodsTmp.setOrderGoodsNumber((Integer) goods.get(i).get("goods_number"));
+
+            Integer goodsId = Integer.parseInt((String) goods.get(i).get("goods_id"));  //商品id
+            Integer goodsNumber  = (Integer) goods.get(i).get("goods_number"); //商品数量
+
+            ordersGoodsTmp.setOrderGoodsId(goodsId);
+            ordersGoodsTmp.setOrderGoodsNumber(goodsNumber);
+
+            Goods tempGoods = goodsService.getGoodsById(goodsId);
+            Integer leftNumber = tempGoods.getGoodsNumber()-goodsNumber; //判断库存商品
+            if(leftNumber<0){
+                Map<String, Object> result = new HashMap<>();
+                Map<String, Object> meta = new HashMap<>();
+                meta.put("msg", "商品库存不够");
+                meta.put("code", 400);
+                result.put("message", meta);
+                return result; //商品不够
+            }else if(leftNumber ==0){
+               tempGoods.setGoodsState(1); //商品数量不够
+            }
+            tempGoods.setGoodsNumber(tempGoods.getGoodsNumber()-goodsNumber); //减去商品数量
+            goodsService.updateGoods(tempGoods);
+
+
             ordersGoodsTmp.setOrderPrice(((Integer) goods.get(i).get("goods_price")).doubleValue());
             ordersGoodsList.add(ordersGoodsTmp);
             totalPrice = totalPrice + (ordersGoodsTmp.getOrderPrice() * ordersGoodsTmp.getOrderGoodsNumber());
@@ -144,7 +160,9 @@ public class OrderApiController {
         } else if (type == 2) {
             type = 0; //未支付
         } else if (type == 3) {
-            type = 1; //支付为发货
+            type = 1; //支付未发货
+        }else if(type == 4){
+            type = 2; //已发货
         }
 
         List<Orders> ordersList = orderService.getOrderByUserId(userTemp.getUserId(), type); //订单id

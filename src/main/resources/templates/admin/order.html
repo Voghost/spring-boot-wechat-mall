@@ -53,6 +53,12 @@
                             <button class="btn btn-danger" onclick="closeOrder()"><i
                                     class="fa fa-trash-o"></i>&nbsp;关闭订单
                             </button>
+                            <button class="btn btn-file">
+                                <a th:href="@{/admin/orders/download}">
+                                    <i class="fa fa-download"></i>&nbsp;
+                                    下载全部订单excel
+                                </a>
+                            </button>
                         </div>
                         <table id="jqGrid" class="table table-bordered">
                         </table>

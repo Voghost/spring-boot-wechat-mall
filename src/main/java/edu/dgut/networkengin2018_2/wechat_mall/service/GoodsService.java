@@ -81,6 +81,10 @@ public interface GoodsService {
     Map<String,Object> getGoodsForWechat(String keyword);
 
 
+    List<Goods> getAllGoodsForExcel();
+
+
+
 
 }
 

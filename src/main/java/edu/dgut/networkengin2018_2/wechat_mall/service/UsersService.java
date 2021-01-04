@@ -17,6 +17,8 @@ public interface UsersService {
 
      Boolean lockUsers(Integer[] ids, int lockStatus);
 
+     int getCountOfUser();
+
 
 
 }

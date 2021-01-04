@@ -23,8 +23,47 @@
                 <div class="card-body">
                     <div class="panel panel-default">
                         <div style="padding: 10px 0 20px 10px;">
+
+                            <!--基本订单统计-->
+                            <div class="row">
+                                <div class="col-lg-3 col-xs-6">
+                                    <div class="small-box bg-info">
+                                        <div class="inner">
+                                            <h3 th:text="${totalOrdersPrice}"></h3>
+                                            <p>总成交额</p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-3 col-xs-6" style="margin-left: 100px">
+                                    <div class="small-box bg-warning">
+                                        <div class="inner">
+                                            <h3 th:text="${ordersNumber}"></h3>
+                                            <p>总下单量</p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-3 col-xs-6" style="margin-left: 100px">
+                                    <div class="small-box bg-info-gradient">
+                                        <div class="inner">
+                                            <h3 th:text="${userNumber}"></h3>
+                                            <p>用户数量</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+<!--
+                            <div class="row">
+                                <div class="fa-bar-chart" style="height: 200px">
+                                    <h5 class="panel-title">下单统计</h5>
+                                    <canvas id="myOrders"></canvas>
+                                </div>
+                            </div>
+-->
+
                             <a href="https://gitee.com/voghost/spring-boot-wechat-mall" target="_blank">
-                                <img th:src="@{/admin/dist/img/newbee-logo.png}" style="width: 480px;height: 240px;">
                                 <p>
                                     微信小程序商店后台
                                 </p>
@@ -43,8 +82,10 @@
                             </ul>
                             <p>查看仓库</p>
                             <ul>
-                                <li><a href="https://github.com/voghost/spring-boot-wechat-mall" target="_blank">GitHub</a></li>
-                                <li><a href="https://gitee.com/voghost/spring-boot-wechat-mall" target="_blank">Gitee</a></li>
+                                <li><a href="https://github.com/voghost/spring-boot-wechat-mall"
+                                       target="_blank">GitHub</a></li>
+                                <li><a href="https://gitee.com/voghost/spring-boot-wechat-mall"
+                                       target="_blank">Gitee</a></li>
                             </ul>
                         </div>
                     </div>
@@ -65,5 +106,10 @@
 <script th:src="@{/admin/plugins/bootstrap/js/bootstrap.bundle.min.js}"></script>
 <!-- AdminLTE App -->
 <script th:src="@{/admin/dist/js/adminlte.min.js}"></script>
+<!--<script th:src="@{/admin/dist/js/plugins/chart.js}"></script>-->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js"
+        integrity="sha512-d9xgZrVZpmmQlfonhQUvTR7lMPtO7NkZMkA0ABN3PHCbKA5nqylQ/yWlFAyY6hYgdF1Qh6nYiuADWwKB4C2WSw=="
+        crossorigin="anonymous">
+</script>
 </body>
 </html>

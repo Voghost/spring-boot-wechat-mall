@@ -114,4 +114,9 @@ public class UserServiceImpl implements UsersService {
         return usersMapper.lockUserBatch(ids, lockStatus) > 0;
     }
 
+    @Override
+    public int getCountOfUser() {
+       return usersMapper.getTotalUser();
+    }
+
 }

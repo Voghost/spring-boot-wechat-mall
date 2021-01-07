@@ -35,4 +35,5 @@ public class UserSerivice implements UserDetailsService {
         User user = new User(myUser.getUserName(),"{noop}"+myUser.getPassword(),authorityList);
         return user;
     }
+
 }

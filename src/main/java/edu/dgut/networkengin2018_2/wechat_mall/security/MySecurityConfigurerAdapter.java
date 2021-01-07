@@ -26,7 +26,9 @@ public class MySecurityConfigurerAdapter extends WebSecurityConfigurerAdapter {
      */
     @Override
     public void configure(WebSecurity web) {
-        web.ignoring().antMatchers("/admin/dist/**", "/admin/plugins/**").antMatchers("/wechatapi/**");
+        web.ignoring().antMatchers("/admin/dist/**", "/admin/plugins/**")
+                .antMatchers("/wechatapi/**")
+                .antMatchers("/TC");
 
     }
 
@@ -35,10 +37,14 @@ public class MySecurityConfigurerAdapter extends WebSecurityConfigurerAdapter {
         http
                 .csrf().disable()
                 .authorizeRequests()
-                    .antMatchers("/admin/**").hasAnyRole("ADMIN","USER")
-                    .antMatchers("/admin/myuser/**").hasAnyRole("ADMIN")
-                    .anyRequest().authenticated() /*用户登录后能访问*/
-                    .and()
+                .antMatchers("/admin/myusers/**"
+                        , "/admin/category/**"
+                        , "/admin/users/**"
+                        , "/admin/floor/**"
+                        , "/admin/swiperdatas/**").hasRole("ADMIN")
+                .antMatchers("/admin/**").hasAnyRole("ADMIN", "USER")
+                //.anyRequest().authenticated() /*用户登录后能访问*/
+                .and()
                 .headers().frameOptions().sameOrigin().and()
                 .formLogin()
                 .loginPage("/admin/login").permitAll()
@@ -46,10 +52,16 @@ public class MySecurityConfigurerAdapter extends WebSecurityConfigurerAdapter {
                 .logout()
                 .logoutUrl("/admin/logout").permitAll()
                 .logoutSuccessUrl("/admin/login?logout");
+
 /*
         http
-                .antMatcher("/admin/**")
-                .authorizeRequests().anyRequest().hasAnyRole("ADMIN", "USER").and()
+                .csrf().disable()
+                .authorizeRequests()
+                .antMatchers("/admin/**").hasAnyRole("ADMIN","USER")
+                .antMatchers("/admin/myuser/**").hasAnyRole("ADMIN")
+                .anyRequest().authenticated()
+                .and()
+                .headers().frameOptions().sameOrigin().and()
                 .formLogin()
                 .loginPage("/admin/login").permitAll()
                 .defaultSuccessUrl("/admin").and()

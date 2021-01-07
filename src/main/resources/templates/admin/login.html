@@ -5,20 +5,6 @@
     <title>login</title>
     <link rel="stylesheet" th:href="@{/admin/dist/css/login.css}">
     <script src="https://ssl.captcha.qq.com/TCaptcha.js"></script>
-    <script>
-        let result ;
-
-        window.callback = function (res) {
-            console.log(res)
-            // res（用户主动关闭验证码）= {ret: 2, ticket: null}
-            // res（验证成功） = {ret: 0, ticket: "String", randstr: "String"}
-            if (res.ret === 0) {
-                // alert(res.ticket)   // 票据
-                document.myForm.submit();
-            }
-        }
-
-    </script>
 </head>
 <body>
 <h1 align="center" style="margin: 100px auto;  font-size: 40px; color:black">欢迎登录并夕夕后台</h1>
@@ -32,7 +18,8 @@
                         <!--                        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>-->
                         <input class="input" type="text" placeholder="用户名" name="username" required><br/>
                         <input class="input" type="password" placeholder="密码" name="password" required>
-                        <button id="TencentCaptcha" data-appid="2000719962" data-cbfn="callback" class="submit" type="button">
+                        <button id="TencentCaptcha" data-appid="2000719962" data-cbfn="callback" class="submit"
+                                type="button">
                             提交
                         </button>
                     </form>
@@ -42,5 +29,12 @@
     </div>
 </div>
 </div>
+<script th:src="@{/admin/dist/js/login.js}"></script>
+<!-- jQuery -->
+<script th:src="@{/admin/plugins/jquery/jquery.min.js}"></script>
+<!-- jQuery UI 1.11.4 -->
+<script th:src="@{/admin/plugins/jQueryUI/jquery-ui.min.js}"></script>
+<!-- ajaxupload -->
+<script th:src="@{/admin/plugins/ajaxupload/ajaxupload.js}"></script>
 </body>
 </html>

@@ -57,14 +57,8 @@ public interface OrderService {
      */
     String closeOrder(Integer[] ids);
 
-
     List<Ordersgoods> getOrderGoods(Integer id);
 
-
     List<Orders> getAllOrdersForExcel();
-
-
-
-
 
 }

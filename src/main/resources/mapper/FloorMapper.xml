@@ -6,13 +6,14 @@
         <result column="floor_name" jdbcType="VARCHAR" property="floorName"/>
         <result column="floor_image" jdbcType="VARCHAR" property="floorTitleImage"/>
         <result column="floor_keyword" jdbcType="VARCHAR" property="floorKeyword"/>
+        <result column="floor_weight" jdbcType="INTEGER" property="floorWeight"/>
     </resultMap>
 
 
     <insert id="insertFloor" parameterType="edu.dgut.networkengin2018_2.wechat_mall.entity.Floor"
             useGeneratedKeys="true" keyProperty="floorId">
-        insert into tb_floor (floor_id, floor_name, floor_image, floor_keyword)
-        values (#{floorId}, #{floorName}, #{floorTitleImage}, #{floorKeyword})
+        insert into tb_floor (floor_id, floor_name, floor_image, floor_keyword, floor_weight)
+        values (#{floorId}, #{floorName}, #{floorTitleImage}, #{floorKeyword}, #{floorWeight})
     </insert>
 
     <update id="updateFloor">
@@ -26,6 +27,9 @@
             </if>
             <if test="floorKeyword != null">
                 floor_keyword = #{floorKeyword},
+            </if>
+            <if test="floorWeight!= null">
+                floor_weight = #{floorWeight},
             </if>
         </set>
         where floor_id = #{floorId}
@@ -48,6 +52,20 @@
     <select id="findFloorList" resultMap="BaseResultMap">
         select *
         from tb_floor
+        <choose>
+            <when test="sidx== 'floorName' and order != null and order != ''">
+                order by floor_name ${order}
+            </when>
+            <when test="sidx== 'floorId' and order != null and order != ''">
+                order by floor_id ${order}
+            </when>
+            <when test="sidx== 'floorWeight' and order != null and order != ''">
+                order by goods_weight ${order}
+            </when>
+            <otherwise>
+                order by floor_weight desc
+            </otherwise>
+        </choose>
         <if test="start != null and limit != null">
             limit #{start},#{limit}
         </if>
@@ -67,6 +85,20 @@
     <select id="getAllFloorList" resultMap="BaseResultMap">
         select *
         from tb_floor
+        <choose>
+            <when test="sidx== 'floorName' and order != null and order != ''">
+                order by floor_name ${order}
+            </when>
+            <when test="sidx== 'floorId' and order != null and order != ''">
+                order by floor_id ${order}
+            </when>
+            <when test="sidx== 'floorWeight' and order != null and order != ''">
+                order by goods_weight ${order}
+            </when>
+            <otherwise>
+                order by floor_weight desc
+            </otherwise>
+        </choose>
     </select>
 
 </mapper>

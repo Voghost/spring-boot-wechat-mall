@@ -45,7 +45,7 @@ $(function () {
     });
 
     function operateFormatter(cellvalue, rowObject) {
-        console.log("rowid"+rowObject);
+        console.log("rowid" + rowObject);
         return "<a href=\'##\' onclick=openOrderItems(" + rowObject.rowId + ")>查看订单信息</a>" +
             "<br>" +
             "<a href=\'##\' onclick=openExpressInfo(" + rowObject.rowId + ")>查看收件人信息</a>";
@@ -65,20 +65,20 @@ $(function () {
         if (cellvalue == 3) {
             return "已到货,关闭";
         }
-/*
-        if (cellvalue == 4) {
-            return "交易成功";
-        }
-        if (cellvalue == -1) {
-            return "手动关闭";
-        }
-        if (cellvalue == -2) {
-            return "超时关闭";
-        }
-        if (cellvalue == -3) {
-            return "商家关闭";
-        }
-*/
+        /*
+                if (cellvalue == 4) {
+                    return "交易成功";
+                }
+                if (cellvalue == -1) {
+                    return "手动关闭";
+                }
+                if (cellvalue == -2) {
+                    return "超时关闭";
+                }
+                if (cellvalue == -3) {
+                    return "商家关闭";
+                }
+        */
     }
 
     function payTypeFormatter(cellvalue) {
@@ -117,18 +117,36 @@ function reload() {
  */
 function openOrderItems(orderId) {
     $('.modal-title').html('订单详情');
-    console.log("orderid"+orderId) // 测试
+    console.log("orderid" + orderId) // 测试
     $.ajax({
         type: 'GET',//方法类型
         url: '/admin/order-items/' + orderId,
         contentType: 'application/json',
+        async: false,
         success: function (result) {
             if (result.resultCode == 200) {
                 $('#orderItemModal').modal('show');
                 var itemString = '';
-                for (i = 0; i < result.data.length; i++) {
+                for (let i = 0; i < result.data.length; i++) {
+
+
+                    //嵌套查询
+                    $.ajax({
+                        type: 'GET',//方法类型
+                        url: '/admin/goods/info/' + result.data[i].orderGoodsId,
+                        async: false,
+                        contentType: 'application/json',
+                        success: function (goodsResult) {
+                            if (goodsResult.resultCode == 200) {
+                                // $('#orderItemModal').modal('show');
+                                // var itemString = '';
+                                itemString += "【" + (i + 1) + "】"
+                                    + goodsResult.data.goodsName + ' <font color=\'red\'> X ' + result.data[i].orderGoodsNumber + "</font>, 商品编号 <font color=\'red\'> " + result.data[i].orderGoodsId + "</font><br>";
+                            }
+                        }
+                    });
                     // itemString += result.data[i].goodsName + ' x ' + result.data[i].goodsCount + ' 商品编号 ' + result.data[i].goodsId + ";<br>";
-                    itemString += '商品编号' + result.data[i].orderGoodsId + ' x ' + result.data[i].orderGoodsNumber + ";<br>";
+                    // itemString += '商品编号' + result.data[i].orderGoodsId + ' x ' + result.data[i].orderGoodsNumber + ";<br>";
                 }
                 $("#orderItemString").html(itemString);
             } else {

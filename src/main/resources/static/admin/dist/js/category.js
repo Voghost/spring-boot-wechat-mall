@@ -63,6 +63,7 @@ $(function () {
             }
         }
     });
+
     //订单是否删除
     function categoryIsDeletedFormatter(cellvalue) {
         //商品上架状态 2-上架 1-下架
@@ -213,8 +214,6 @@ function putDownCategory() {
 }
 
 
-
-
 //绑定modal上的保存按钮
 $('#saveButton').click(function () {
     var catName = $("#categoryName").val();
@@ -222,57 +221,57 @@ $('#saveButton').click(function () {
     var catPid = $("#parentId").val();
     // var catIcon = $("#categoryIcon").val();
     var catIcon = $("#categoryImg")[0].src;
-    if (!validCN_ENString2_18(catName)) {
+    /*if (!validCN_ENString2_18(catName)) {
         $('#edit-error-msg').css("display", "block");
         $('#edit-error-msg').html("请输入符合规范的分类名称！");
-    } else {
-        var data = {
+    } else {*/
+    var data = {
+        "[[${_csrf.parameterName}]]": "[[${_csrf.token}]]",
+        "catName": catName,
+        "catLevel": catLevel,
+        "catPid": catPid,
+        "catIcon": catIcon
+    };
+    var url = '/admin/categories/save';
+    var id = getSelectedRowWithoutAlert();
+    if (id != null) {
+        url = '/admin/categories/update';
+        data = {
             "[[${_csrf.parameterName}]]": "[[${_csrf.token}]]",
+            "catId": id,
             "catName": catName,
             "catLevel": catLevel,
             "catPid": catPid,
             "catIcon": catIcon
         };
-        var url = '/admin/categories/save';
-        var id = getSelectedRowWithoutAlert();
-        if (id != null) {
-            url = '/admin/categories/update';
-            data = {
-                "[[${_csrf.parameterName}]]": "[[${_csrf.token}]]",
-                "catId": id,
-                "catName": catName,
-                "catLevel": catLevel,
-                "catPid": catPid,
-                "catIcon": catIcon
-            };
-        }
-        $.ajax({
-            type: 'POST',//方法类型
-            url: url,
-            contentType: 'application/json',
-            data: JSON.stringify(data),
-            success: function (result) {
-                if (result.resultCode == 200) {
-                    $('#categoryModal').modal('hide');
-                    swal("保存成功", {
-                        icon: "success",
-                    });
-                    reload();
-                } else {
-                    $('#categoryModal').modal('hide');
-                    swal(result.message, {
-                        icon: "error",
-                    });
-                }
-                ;
-            },
-            error: function () {
-                swal("操作失败", {
+    }
+    $.ajax({
+        type: 'POST',//方法类型
+        url: url,
+        contentType: 'application/json',
+        data: JSON.stringify(data),
+        success: function (result) {
+            if (result.resultCode == 200) {
+                $('#categoryModal').modal('hide');
+                swal("保存成功", {
+                    icon: "success",
+                });
+                reload();
+            } else {
+                $('#categoryModal').modal('hide');
+                swal(result.message, {
                     icon: "error",
                 });
             }
-        });
-    }
+            ;
+        },
+        error: function () {
+            swal("操作失败", {
+                icon: "error",
+            });
+        }
+    });
+    /*}*/
 });
 
 function categoryEdit() {
@@ -306,8 +305,6 @@ function categoryEdit() {
 
 /**
  * 分类的删除会牵涉到多级分类的修改和商品数据的修改，请谨慎删除分类数据，
- * 如果在商城页面不想显示相关分类可以通过调整rank值来调整显示顺序，
- * 不过代码我也写了一部分，如果想保留删除功能的话可以在此代码的基础上进行修改。
  */
 function deleteCagegory() {
 

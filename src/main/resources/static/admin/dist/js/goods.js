@@ -76,12 +76,32 @@ $(function () {
  * jqGrid重新加载
  */
 function reload() {
+    var goodsId = $('#goodsId').val() || '';
+    var goodsName = $('#goodsName').val() || '';
+    var goodsState= $('#goodsSellStatus').val() || '';
+    $("#jqGrid").jqGrid('setGridParam', {
+        page: 1,
+        postData: {
+            goodsId: goodsId,
+            goodsName: goodsName,
+            goodsState: goodsState
+        }
+    }).trigger("reloadGrid");
+}
+
+
+/**
+ * 原来的写法
+ */
+/*
+function reload() {
     initFlatPickr();
     var page = $("#jqGrid").jqGrid('getGridParam', 'page');
     $("#jqGrid").jqGrid('setGridParam', {
         page: page
     }).trigger("reloadGrid");
 }
+*/
 
 /**
  * 添加商品

@@ -53,6 +53,7 @@ public class FloorServiceImpl implements FloorService {
         temp.setFloorName(floor.getFloorName());
         temp.setFloorTitleImage(floor.getFloorTitleImage());
         temp.setFloorKeyword(floor.getFloorKeyword());
+        temp.setFloorWeight(floor.getFloorWeight());
 
         if (floorMapper.updateFloor(temp) > 0) {
             return "修改成功";

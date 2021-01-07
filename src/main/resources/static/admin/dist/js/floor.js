@@ -12,6 +12,7 @@ $(function () {
                 width: 120,
                 formatter: coverImageFormatter
             },
+            {label: '楼层权重', name: 'floorWeight', index: 'floorWeight', width: 50},
         ],
         height: 760,
         rowNum: 10,
@@ -83,7 +84,6 @@ function reload() {
 }
 
 
-
 /**
  * 添加楼层
  */
@@ -111,16 +111,12 @@ function editFloor() {
             $("#floorImage").attr("style", "height: 64px;width: 64px;display:block;");
             $("#floorName").val(r.data.floorName);
             $("#floorKeyword").val(r.data.floorKeyword);
+            $("#floorWeight").val(r.data.floorWeight);
         }
     });
     $('.modal-title').html('轮播图编辑');
     $('#floorModal').modal('show');
 }
-
-
-
-
-
 
 
 //绑定modal上的保存按钮
@@ -129,10 +125,12 @@ $('#saveButton').click(function () {
     var imageSrc = $('#floorImage')[0].src;
     var floorName = $('#floorName').val();
     var floorKeyword = $('#floorKeyword').val();
+    var floorWeight = $('#floorWeight').val();
     var data = {
         "floorTitleImage": imageSrc,
         "floorName": floorName,
-        "floorKeyword": floorKeyword
+        "floorKeyword": floorKeyword,
+        "floorWeight": floorWeight
     };
     var url = '/admin/floor/save';
     var id = getSelectedRowWithoutAlert();
@@ -142,7 +140,8 @@ $('#saveButton').click(function () {
             "floorId": id,
             "floorTitleImage": imageSrc,
             "floorName": floorName,
-            "floorKeyword": floorKeyword
+            "floorKeyword": floorKeyword,
+            "floorWeight": floorWeight
         };
     }
     $.ajax({

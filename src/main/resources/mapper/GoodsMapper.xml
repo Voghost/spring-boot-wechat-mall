@@ -185,14 +185,17 @@
         <include refid="BaseColumnList"/>
         from tb_goods
         <where>
+            <if test="goodsId !=null and goodsId !=''">
+                and goods_id = #{goodsId}
+            </if>
             <if test="goodsName !=null and goodsName!=''">
-                and goods_name like CONCAT ('%','#{goodsName}')
+                and goods_name like CONCAT ('%',#{goodsName},'%')
             </if>
             <if test="keyword!=null and keyword!=''">
                 and (goods_name like CONCAT('%',#{keyword},'%') or goods_introduce like CONCAT('%',#{keyword},'%'))
             </if>
             <if test="goodsState !=null and goodsState!=''">
-                and goods_state #{goodsState}
+                and goods_state = #{goodsState}
             </if>
             <if test="startTime != null and startTime.trim() != ''">
                 and create_time &gt; #{startTime}
@@ -238,14 +241,17 @@
     <select id="getTotalGoods" parameterType="Map" resultType="int">
         select count(*) from tb_goods
         <where>
+            <if test="goodsId !=null and goodsId !=''">
+                and goods_id = #{goodsId}
+            </if>
             <if test="goodsName != null and goodsName != ''">
-                and goods_name like CONCAT ('%','#{goodsName}')
+                and goods_name like CONCAT ('%',#{goodsName},'%')
             </if>
             <if test="keyword!=null and keyword!=''">
                 and (goods_name like CONCAT('%',#{keyword},'%') or goods_introduce like CONCAT('%',#{keyword},'%'))
             </if>
             <if test="goodsState !=null and goodsState!=''">
-                and goods_state #{goodsState}
+                and goods_state = #{goodsState}
             </if>
             <if test="startTime != null and startTime.trim() != ''">
                 and create_time &gt; #{startTime}

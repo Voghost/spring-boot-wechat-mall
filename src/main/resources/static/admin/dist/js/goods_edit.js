@@ -209,7 +209,7 @@ $('#saveButton').click(function () {
         return;
     }
 */
-    if (isNull(originalPrice) || originalPrice < 1) {
+    if (isNull(originalPrice) || originalPrice < 0) {
         swal("请输入商品价格", {
             icon: "error",
         });

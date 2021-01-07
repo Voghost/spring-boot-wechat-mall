@@ -8,4 +8,5 @@ public class Floor {
     String floorName; //楼层名字
     String floorTitleImage; //楼层标题url
     String floorKeyword;  //楼层关键字,用于商品查询
+    Integer floorWeight; //楼层权重
 }

@@ -23,7 +23,7 @@ public class MyUsersController {
 
     @GetMapping("/myusers")
     public String myusersPage(HttpServletRequest request){
-        request.setAttribute("path","myuser");
+        request.setAttribute("path","myusers");
         return "admin/myusers";
     }
 

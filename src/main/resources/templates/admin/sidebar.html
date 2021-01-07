@@ -116,16 +116,19 @@
                 <li class="nav-header">系统管理</li>
                 <li class="nav-item">
                     <a th:href="@{/admin/myusers}"
-                       th:class="${path}=='profile'?'nav-link active':'nav-link'">
+                       th:class="${path}=='myusers'?'nav-link active':'nav-link'">
                         <i class="fa fa-user-secret nav-icon"></i>
-                        <p>用户</p>
+                        <p>用户管理</p>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <form th:action="@{/admin/logout}" method="post">
-                        <input class="submit" type="submit" value="安全退出">
-<!--                        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>-->
-                    </form>
+                    <div class="nav-link">
+                        <form th:action="@{/admin/logout}" method="post">
+                            <i class="fa fa-sign-out nav-icon"></i>
+                            <input class="btn btn-danger" type="submit" value="安全退出">
+                            <!--                        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>-->
+                        </form>
+                    </div>
 <!--
                     <a th:href="@{/admin/logout}" class="nav-link">
                         <i class="fa fa-sign-out nav-icon"></i>

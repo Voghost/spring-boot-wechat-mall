@@ -69,7 +69,7 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public PageResultUtil getOrderPage(PageQueryUtil pageQueryUtil) {
         List<Orders> orders = ordersMapper.findOrdersList(pageQueryUtil);
-        int total =ordersMapper.getTotalOrders();
+        int total =ordersMapper.getTotalOrders(pageQueryUtil);
         PageResultUtil pageResult = new PageResultUtil(orders, total, pageQueryUtil.getLimit(), pageQueryUtil.getPage());
         return pageResult;
     }

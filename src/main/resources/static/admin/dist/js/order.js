@@ -103,6 +103,29 @@ $(function () {
 /**
  * jqGrid重新加载
  */
+/**
+ * jqGrid重新加载
+ */
+function reload() {
+    var orderNumber = $('#orderNumbmer').val() || '';
+    var orderUserId= $('#orderUserId').val() || '';
+    var orderState= $('#orderState').val() || '';
+    var startTime= $('#startTime').val() || '';
+    var endTime= $('#endTime').val() || '';
+    $("#jqGrid").jqGrid('setGridParam', {
+        page: 1,
+        postData: {
+            orderNumber:orderNumber,
+            orderUserId: orderUserId,
+            orderState: orderState,
+            startTime: startTime,
+            endTime:endTime
+        }
+    }).trigger("reloadGrid");
+}
+
+
+/*
 function reload() {
     initFlatPickr();
     var page = $("#jqGrid").jqGrid('getGridParam', 'page');
@@ -110,6 +133,7 @@ function reload() {
         page: page
     }).trigger("reloadGrid");
 }
+*/
 
 /**
  * 查看订单项信息

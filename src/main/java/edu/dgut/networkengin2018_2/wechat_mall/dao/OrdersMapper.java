@@ -49,7 +49,7 @@ public interface OrdersMapper {
      */
     int updateByPrimaryKey(Orders orders);
 
-    int getTotalOrders();
+    int getTotalOrders(PageQueryUtil pageQueryUtil);
 
     /**
      * 寻找用户id和订单状态的orders

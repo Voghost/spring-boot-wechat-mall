@@ -14,7 +14,8 @@
 
     <!--相当于一个常量，后面可以引用-->
     <sql id="BaseColumnList">
-        order_id,
+        order_id
+        ,
         order_user_id,order_number,order_price,order_state,order_create_time,order_update_time,order_address
     </sql>
 
@@ -94,7 +95,7 @@
 
     <update id="checkDone">
         update tb_orders
-        set order_state = 2,  order_update_time = now()
+        set order_state = 2, order_update_time = now()
         where order_id in
         <foreach collection="orderIds" item="item" index="index"
                  open="(" separator="," close=")">#{item}
@@ -136,6 +137,21 @@
         <include refid="BaseColumnList"/>
         from tb_orders
         <where>
+            <if test="orderNumber !=null and orderNumber !=''">
+                and order_number = #{orderNumber}
+            </if>
+            <if test="orderUserId !=null and orderUserId!=''">
+                and order_user_id = #{orderUserId}
+            </if>
+            <if test="orderState !=null and orderState !=''">
+                and order_state = #{orderState}
+            </if>
+            <if test="startTime != null and startTime.trim() != ''">
+                and order_create_time &gt; #{startTime}
+            </if>
+            <if test="endTime != null and endTime.trim() != ''">
+                and order_create_time &lt; #{endTime}
+            </if>
         </where>
 
         <choose>
@@ -170,7 +186,25 @@
 
     <select id="getTotalOrders" resultType="java.lang.Integer">
         select count(*)
+
         from tb_orders
+        <where>
+            <if test="orderNumber !=null and orderNumber !=''">
+                and order_number = #{orderNumber}
+            </if>
+            <if test="orderUserId !=null and orderUserId!=''">
+                and order_user_id = #{orderUserId}
+            </if>
+            <if test="orderState !=null and orderState !=''">
+                and order_state = #{orderState}
+            </if>
+            <if test="startTime != null and startTime.trim() != ''">
+                and order_create_time &gt; #{startTime}
+            </if>
+            <if test="endTime != null and endTime.trim() != ''">
+                and order_create_time &lt; #{endTime}
+            </if>
+        </where>
     </select>
 
     <select id="getOrderByUserIdAndOrderStatus" resultMap="BaseResultMap">
@@ -199,7 +233,7 @@
         from tb_orders
         where order_id in
         <foreach collection="orderIds" item="item" index="index" open="(" separator="," close=")">
-              #{item}
+            #{item}
         </foreach>
     </select>
 
